@@ -1,19 +1,22 @@
+from __future__ import print_function
+from utils import print_aec, str_aec
 
-#from games import Game
-from games import EvalFunc
 
-class TicTacToe():
+class TicTacToe(object):
 
-    WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001, 0b010010010, 0b100100100, 0b100010001, 0b001010100]
+    WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
+            0b010010010, 0b100100100, 0b100010001, 0b001010100]
 
     def __init__(self):
         self.reset()
-        
+
     def __str__(self):
         outStr = ''
-        if not self.is_over():
-            outStr += 'Next player: ' + str(self.cur_player()) + '\n'
-            outStr += 'Moves: ' + str(self.num_moves()) + '\n'
+        if self.is_over():
+            outStr += str_aec('Game Over!', 'bold_green') + '\n'
+        else:
+            outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player()) + '\n'
+            outStr += str_aec('Moves: ', 'bold_green') + str(self.num_moves()) + '\n'
         outStr += '\n'
         for i in range(9):
             if self.crosses & (1 << i):
@@ -46,7 +49,8 @@ class TicTacToe():
         return count
 
     def legal_moves(self):
-        if self.is_win(): return []
+        if self.is_win():
+            return []
         self.legal = ~(self.crosses | self.noughts)
         return list(filter(lambda move: self.legal & (1 << move), range(9)))
 
@@ -97,15 +101,15 @@ class TicTacToe():
         self.crosses = 0
         self.noughts = 0
 
-class TicUtility(EvalFunc):
+
+class TicUtility(object):
 
     def eval(self, game, player):
         if game.outcomes()[player] == 'W':
-            return  1.0
+            return 1.0
         elif game.outcomes()[player] == 'L':
             return -1.0
         elif game.outcomes()[player] == 'D':
-            return  0.0
+            return 0.0
         print('something is wrong' + game.outcomes()[player])
         return 0.0
-

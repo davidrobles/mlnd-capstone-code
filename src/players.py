@@ -3,6 +3,7 @@ from time import time
 import random
 import operator
 
+
 class RandomPlayer(Player):
 
     def move(self, game, time_due=0):
@@ -10,6 +11,7 @@ class RandomPlayer(Player):
 
     def __str__(self):
         return 'Random'
+
 
 class Minimax(Player):
 
@@ -49,6 +51,7 @@ class Minimax(Player):
                 best_move = move
         return [best_move, best_score]
 
+
 class Negamax(Player):
 
     def __init__(self, ef, max_depth):
@@ -75,6 +78,7 @@ class Negamax(Player):
                 best_score = cur_score
                 best_move = move
         return [best_move, best_score]
+
 
 class ABNegamax(Player):
 
@@ -105,8 +109,9 @@ class ABNegamax(Player):
                     return [best_move, best_score]
         return [best_move, best_score]
 
+
 class MonteCarlo(Player):
-    
+
     def __init__(self, uf):
         self.uf = uf
         self.rp = RandomPlayer()
