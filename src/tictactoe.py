@@ -13,6 +13,10 @@ class TicTacToe(object):
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
 
+    #############
+    # TicTacToe #
+    #############
+
     def __init__(self):
         self.reset()
 
@@ -49,12 +53,6 @@ class TicTacToe(object):
     def cur_board(self):
         return self.crosses if self.cur_player() == 0 else self.noughts
 
-    def legal_moves(self):
-        if self.is_win():
-            return []
-        self.legal = ~(self.crosses | self.noughts)
-        return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
-
     def is_win(self):
         return self.check_win(self.crosses) or self.check_win(self.noughts)
 
@@ -75,14 +73,18 @@ class TicTacToe(object):
     def is_over(self):
         return len(self.legal_moves()) == 0
 
+    def legal_moves(self):
+        """Returns the list of legal moves for the player in turn"""
+        if self.is_win():
+            return []
+        self.legal = ~(self.crosses | self.noughts)
+        return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
+
     def make_move(self, move):
         self.set_cur_board(self.cur_board() | (1 << (move - 1)))
 
     def name(self):
         return "Tic Tac Toe"
-
-    def num_moves(self):
-        return len(self.legal_moves())
 
     def outcomes(self):
         if not self.is_over():
