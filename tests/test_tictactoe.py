@@ -18,6 +18,14 @@ class TestTicTacToe(unittest.TestCase):
     def test_is_not_over_at_start(self):
         self.assertFalse(self.game.is_over())
 
+    def test_is_over_at_end_of_game(self):
+        self.game.make_move(1)
+        self.game.make_move(4)
+        self.game.make_move(2)
+        self.game.make_move(5)
+        self.game.make_move(3)
+        self.assertTrue(self.game.is_over())
+
     def test_cur_player_after_two_moves(self):
         self.game.make_move(3)
         self.game.make_move(7)
