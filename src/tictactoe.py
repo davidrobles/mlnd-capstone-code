@@ -49,13 +49,6 @@ class TicTacToe(object):
     def cur_board(self):
         return self.crosses if self.cur_player() == 0 else self.noughts
 
-    def bit_count(self, int_type):
-        count = 0
-        while int_type:
-            int_type &= int_type - 1
-            count += 1
-        return count
-
     def legal_moves(self):
         if self.is_win():
             return []
@@ -80,17 +73,10 @@ class TicTacToe(object):
         return -1 if self.is_over() else (len(self.legal_moves()) + 1) % 2
 
     def is_over(self):
-        return self.is_win() or len(self.legal_moves()) == 0
+        return len(self.legal_moves()) == 0
 
     def make_move(self, move):
-        print('Trying to move: ', move)
-        # TODO: Check for ilegal moves?
-        move -= 1
-        # bit_ms = self.bit_moves()
-        # if move < 0 or move >= self.num_moves():
-        #     print('Illegal move!')
-        # self.set_cur_board(self.cur_board() | bit_ms[move])
-        self.set_cur_board(self.cur_board() | (1 << move))
+        self.set_cur_board(self.cur_board() | (1 << (move - 1)))
 
     def name(self):
         return "Tic Tac Toe"
