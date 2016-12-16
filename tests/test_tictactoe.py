@@ -9,16 +9,16 @@ class TestTicTacToe(unittest.TestCase):
         self.game = TicTacToe()
 
     def test_cur_player_start(self):
-        self.assertEqual(self.game.cur_player(), 0)
+        self.assertEqual(self.game.cur_player, 0)
 
     def test_cur_player_after_one_move(self):
         self.game.make_move(3)
-        self.assertEqual(self.game.cur_player(), 1)
+        self.assertEqual(self.game.cur_player, 1)
 
     def test_cur_player_after_two_moves(self):
         self.game.make_move(3)
         self.game.make_move(7)
-        self.assertEqual(self.game.cur_player(), 0)
+        self.assertEqual(self.game.cur_player, 0)
 
     def test_legal_moves_start(self):
         actual = self.game.legal_moves()

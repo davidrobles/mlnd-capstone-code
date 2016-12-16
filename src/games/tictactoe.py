@@ -25,7 +25,7 @@ class TicTacToe(object):
         if self.is_over():
             outStr += str_aec('Game Over!', 'bold_green') + '\n'
         else:
-            outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player()) + '\n'
+            outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player) + '\n'
             s = '[' + ', '.join([str(s) for s in self.legal_moves()]) + ']'
             outStr += str_aec('Moves: ', 'bold_green') + s + '\n'
         outStr += '\n'
@@ -53,12 +53,9 @@ class TicTacToe(object):
     def copy(self):
         """Returns a copy of the game"""
         tic = TicTacToe()
+        tic.cur_player = self.cur_player
         tic.boards = self.boards[:]
         return tic
-
-    def cur_player(self):
-        """Returns the index of the player in turn: 0 (Player 1), 1 (Player 2)"""
-        return -1 if self.is_over() else (len(self.legal_moves()) + 1) % 2
 
     def is_over(self):
         """Returns true if the game is over"""
@@ -73,7 +70,8 @@ class TicTacToe(object):
 
     def make_move(self, move):
         """Takes a move for the player in turn"""
-        self.boards[self.cur_player()] |= (1 << (move - 1))
+        self.boards[self.cur_player] |= (1 << (move - 1))
+        self.cur_player = (self.cur_player + 1) % 2
 
     def name(self):
         """Name of the game"""
@@ -91,6 +89,7 @@ class TicTacToe(object):
 
     def reset(self):
         """Restarts the game"""
+        self.cur_player = 0
         self.boards = [0, 0]
 
 
