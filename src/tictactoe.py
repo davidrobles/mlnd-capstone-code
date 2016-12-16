@@ -1,8 +1,14 @@
 from __future__ import print_function
-from utils import print_aec, str_aec
+from aec import print_aec, str_aec
 
 
 class TicTacToe(object):
+
+    """
+    1 2 3
+    4 5 6
+    7 8 9
+    """
 
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
@@ -16,7 +22,9 @@ class TicTacToe(object):
             outStr += str_aec('Game Over!', 'bold_green') + '\n'
         else:
             outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player()) + '\n'
-            outStr += str_aec('Moves: ', 'bold_green') + str(self.num_moves()) + '\n'
+            s = '[' + ', '.join([str(s) for s in self.legal_moves()]) + ']'
+            # outStr += str_aec('Moves: ', 'bold_green') + str(self.num_moves()) + '\n'
+            outStr += str_aec('Moves: ', 'bold_green') + s + '\n'
         outStr += '\n'
         for i in range(9):
             if self.crosses & (1 << i):
@@ -52,10 +60,7 @@ class TicTacToe(object):
         if self.is_win():
             return []
         self.legal = ~(self.crosses | self.noughts)
-        return list(filter(lambda move: self.legal & (1 << move), range(9)))
-
-    def bit_moves(self):
-        return list(map(lambda move: (1 << move), self.legal_moves()))
+        return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
 
     def is_win(self):
         return self.check_win(self.crosses) or self.check_win(self.noughts)
@@ -71,16 +76,21 @@ class TicTacToe(object):
         return tic
 
     def cur_player(self):
-        return -1 if self.is_over() else (len(self.bit_moves()) + 1) % 2
+        """Returns the index of the player in turn: 0 (Player 1), 1 (Player 2)"""
+        return -1 if self.is_over() else (len(self.legal_moves()) + 1) % 2
 
     def is_over(self):
-        return self.is_win() or len(self.bit_moves()) == 0
+        return self.is_win() or len(self.legal_moves()) == 0
 
-    def move(self, move):
-        bit_ms = self.bit_moves()
-        if move < 0 or move >= self.num_moves():
-            print('Illegal move!')
-        self.set_cur_board(self.cur_board() | bit_ms[move])
+    def make_move(self, move):
+        print('Trying to move: ', move)
+        # TODO: Check for ilegal moves?
+        move -= 1
+        # bit_ms = self.bit_moves()
+        # if move < 0 or move >= self.num_moves():
+        #     print('Illegal move!')
+        # self.set_cur_board(self.cur_board() | bit_ms[move])
+        self.set_cur_board(self.cur_board() | (1 << move))
 
     def name(self):
         return "Tic Tac Toe"
