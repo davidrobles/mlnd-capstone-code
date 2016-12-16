@@ -20,14 +20,9 @@ def play_match(game, players):
 
 def play_series(game, players, n_matches=100):
     """Plays a series of 'n_matches' matches between the given players"""
-    game = game.copy()
     stats = {'p1_wins': 0, 'p2_wins': 0, 'draws': 0}
     for __ in range(n_matches):
-        while not game.is_over():
-            cur_player = players[game.cur_player()]
-            move = cur_player.chooseMove(game.copy())
-            game.make_move(move)
-        outcomes = game.outcomes()
+        outcomes = play_match(game, players)
         if outcomes[0] == 'W':
             stats['p1_wins'] += 1
         elif outcomes[1] == 'W':
