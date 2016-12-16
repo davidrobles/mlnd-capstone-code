@@ -9,8 +9,17 @@ def play_random_game(game):
         game.make_move(rand_move)
         print(game)
 
+def play_match(game, players):
+    """Plays a match between the given players"""
+    game = game.copy()
+    while not game.is_over():
+        cur_player = players[game.cur_player()]
+        move = cur_player.chooseMove(game.copy())
+        game.make_move(move)
+    return game.outcomes()
 
 def play_series(game, players, n_matches=100):
+    """Plays a series of 'n_matches' matches between the given players"""
     game = game.copy()
     stats = {'p1_wins': 0, 'p2_wins': 0, 'draws': 0}
     for __ in range(n_matches):
