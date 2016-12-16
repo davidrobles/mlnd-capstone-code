@@ -1,21 +1,22 @@
 from __future__ import print_function
 import random
+from players import RandPlayer
 
 def play_random_game(game):
     """Plays a game taking uniformly random moves"""
-    print(game)
-    while not game.is_over():
-        rand_move = random.choice(game.legal_moves())
-        game.make_move(rand_move)
-        print(game)
+    print(play_match(game, [RandPlayer(), RandPlayer()]))
 
-def play_match(game, players):
+def play_match(game, players, verbose=True):
     """Plays a match between the given players"""
     game = game.copy()
+    if verbose:
+        print(game)
     while not game.is_over():
         cur_player = players[game.cur_player()]
         move = cur_player.chooseMove(game.copy())
         game.make_move(move)
+        if verbose:
+            print(game)
     return game.outcomes()
 
 def play_series(game, players, n_matches=100):
