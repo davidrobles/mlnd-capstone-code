@@ -96,6 +96,3 @@ class TestTicTacToe(unittest.TestCase):
         self.assertItemsEqual(self.game.legal_moves(), clone.legal_moves())
         self.assertEqual(self.game.cur_player, clone.cur_player)
         self.assertEqual(self.game, clone)
-
-if __name__ == 'main':
-    unittest.main()
