@@ -10,6 +10,8 @@ class TicTacToe(object):
     7 8 9
     """
 
+    name = 'Tic Tac Toe'
+
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
 
@@ -88,10 +90,6 @@ class TicTacToe(object):
         for move in moves:
             self.make_move(move)
         return self
-
-    def name(self):
-        """Name of the game"""
-        return "Tic Tac Toe"
 
     def outcomes(self):
         """Returns a list of outcomes for each player at the end of the game"""

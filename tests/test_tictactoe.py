@@ -7,6 +7,9 @@ class TestTicTacToe(unittest.TestCase):
     def setUp(self):
         self.game = TicTacToe()
 
+    def test_name(self):
+        self.assertEqual(TicTacToe.name, 'Tic Tac Toe')
+
     def test_copy(self):
         self.game.make_moves([1, 3, 2])
         clone = self.game.copy()
