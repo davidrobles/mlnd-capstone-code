@@ -30,6 +30,9 @@ class TestTicTacToe(unittest.TestCase):
         self.game.make_move(3)
         self.assertTrue(self.game.is_over())
 
+    def test_make_move_returns_self(self):
+        self.assertIs(self.game.make_move(1), self.game)
+
     def test_legal_moves_start(self):
         actual = self.game.legal_moves()
         expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]

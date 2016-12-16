@@ -73,6 +73,7 @@ class TicTacToe(object):
         """Takes a move for the player in turn"""
         self.boards[self.cur_player] |= (1 << (move - 1))
         self._cur_player = (self.cur_player + 1) % 2
+        return self
 
     def name(self):
         """Name of the game"""
