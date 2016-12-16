@@ -30,9 +30,9 @@ class TicTacToe(object):
             outStr += str_aec('Moves: ', 'bold_green') + s + '\n'
         outStr += '\n'
         for i in range(9):
-            if self.crosses & (1 << i):
+            if self.boards[0] & (1 << i):
                 outStr += str_aec(' X ', 'bold_red')
-            elif self.noughts & (1 << i):
+            elif self.boards[1] & (1 << i):
                 outStr += str_aec(' O ', 'bold_blue')
             else:
                 outStr += ' - '
@@ -43,17 +43,8 @@ class TicTacToe(object):
     def check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
-    def set_cur_board(self, board):
-        if self.cur_player() == 0:
-            self.crosses = board
-        else:
-            self.noughts = board
-
-    def cur_board(self):
-        return self.crosses if self.cur_player() == 0 else self.noughts
-
     def is_win(self):
-        return self.check_win(self.crosses) or self.check_win(self.noughts)
+        return self.check_win(self.boards[0]) or self.check_win(self.boards[0])
 
     ########
     # Game #
@@ -61,8 +52,7 @@ class TicTacToe(object):
 
     def copy(self):
         tic = TicTacToe()
-        tic.crosses = self.crosses
-        tic.noughts = self.noughts
+        tic.boards = self.boards[:]
         return tic
 
     def cur_player(self):
@@ -76,11 +66,11 @@ class TicTacToe(object):
         """Returns the list of legal moves for the player in turn"""
         if self.is_win():
             return []
-        self.legal = ~(self.crosses | self.noughts)
+        self.legal = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
 
     def make_move(self, move):
-        self.set_cur_board(self.cur_board() | (1 << (move - 1)))
+        self.boards[self.cur_player()] |= (1 << (move - 1))
 
     def name(self):
         return "Tic Tac Toe"
@@ -88,15 +78,14 @@ class TicTacToe(object):
     def outcomes(self):
         if not self.is_over():
             return ['NA', 'NA']
-        elif self.check_win(self.crosses):
+        elif self.check_win(self.boards[0]):
             return ['W', 'L']
-        elif self.check_win(self.noughts):
+        elif self.check_win(self.boards[1]):
             return ['L', 'W']
         return ['D', 'D']
 
     def reset(self):
-        self.crosses = 0
-        self.noughts = 0
+        self.boards = [0, 0]
 
 
 class TicUtility(object):
