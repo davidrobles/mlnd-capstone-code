@@ -47,6 +47,14 @@ class TestTicTacToe(unittest.TestCase):
         expected = [1, 2, 4, 5, 6, 8, 9]
         self.assertItemsEqual(actual, expected)
 
+    def test_legal_moves_are_empty_when_is_over(self):
+        self.game.make_move(1)
+        self.game.make_move(4)
+        self.game.make_move(2)
+        self.game.make_move(5)
+        self.game.make_move(3)
+        self.assertTrue(len(self.game.legal_moves()) == 0)
+
 
 if __name__ == 'main':
     unittest.main()
