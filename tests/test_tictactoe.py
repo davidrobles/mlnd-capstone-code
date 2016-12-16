@@ -1,5 +1,3 @@
-# import sys
-# sys.path.insert(0, '/home/drobles/projects/mlnd-capstone-code/src/')
 import unittest
 from games import TicTacToe
 
