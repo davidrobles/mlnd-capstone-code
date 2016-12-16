@@ -44,7 +44,7 @@ class TicTacToe(object):
         return any((board & win) == win for win in TicTacToe.WINS)
 
     def is_win(self):
-        return self.check_win(self.boards[0]) or self.check_win(self.boards[0])
+        return self.check_win(self.boards[0]) or self.check_win(self.boards[1])
 
     ########
     # Game #
