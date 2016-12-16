@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+
 def str_aec(text, color):
     """Returns text wrapped by the given ansi color code"""
     AEC_COLORS = {
@@ -25,6 +26,7 @@ def str_aec(text, color):
         raise Exception(u"AEC color '{0}' does not exist".format(color))
     a, b = AEC_COLORS[color]
     return u'\033[{0};{1}m{2}\033[0m'.format(a, b, text)
+
 
 def print_aec(text, color, end='\n'):
     """Prints text wrapped by the given ansi color code"""

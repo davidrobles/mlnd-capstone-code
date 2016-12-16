@@ -1,6 +1,7 @@
 import unittest
 from games import TicTacToe
 
+
 class TestTicTacToe(unittest.TestCase):
 
     def setUp(self):
