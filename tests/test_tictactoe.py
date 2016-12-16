@@ -35,7 +35,7 @@ class TestTicTacToe(unittest.TestCase):
         expected = [4, 5, 6, 7, 8, 9]
         self.assertItemsEqual(actual, expected)
 
-    def test_make__moves_returns_self(self):
+    def test_make_moves_returns_self(self):
         actual = self.game.make_moves([1, 2, 3])
         expected = self.game
         self.assertEquals(actual, expected)
