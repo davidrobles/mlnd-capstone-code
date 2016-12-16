@@ -7,9 +7,6 @@ class TestTicTacToe(unittest.TestCase):
     def setUp(self):
         self.game = TicTacToe()
 
-    def test_name(self):
-        self.assertEqual(TicTacToe.name, 'Tic Tac Toe')
-
     def test_copy(self):
         self.game.make_moves([1, 3, 2])
         clone = self.game.copy()
@@ -35,20 +32,6 @@ class TestTicTacToe(unittest.TestCase):
         self.game.make_moves([1, 4, 2, 5, 3])
         self.assertTrue(self.game.is_over())
 
-    def test_make_move_returns_self(self):
-        self.assertIs(self.game.make_move(1), self.game)
-
-    def test_make_moves(self):
-        self.game.make_moves([1, 2, 3])
-        actual = self.game.legal_moves()
-        expected = [4, 5, 6, 7, 8, 9]
-        self.assertItemsEqual(actual, expected)
-
-    def test_make_moves_returns_self(self):
-        actual = self.game.make_moves([1, 2, 3])
-        expected = self.game
-        self.assertEquals(actual, expected)
-
     def test_legal_moves_start(self):
         actual = self.game.legal_moves()
         expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -69,6 +52,23 @@ class TestTicTacToe(unittest.TestCase):
     def test_legal_moves_are_empty_when_is_over(self):
         self.game.make_moves([1, 4, 2, 5, 3])
         self.assertTrue(len(self.game.legal_moves()) == 0)
+
+    def test_make_move_returns_self(self):
+        self.assertIs(self.game.make_move(1), self.game)
+
+    def test_make_moves(self):
+        self.game.make_moves([1, 2, 3])
+        actual = self.game.legal_moves()
+        expected = [4, 5, 6, 7, 8, 9]
+        self.assertItemsEqual(actual, expected)
+
+    def test_make_moves_returns_self(self):
+        actual = self.game.make_moves([1, 2, 3])
+        expected = self.game
+        self.assertEquals(actual, expected)
+
+    def test_name(self):
+        self.assertEqual(TicTacToe.name, 'Tic Tac Toe')
 
     def test_outcomes_win_first_player(self):
         self.game.make_moves([1, 4, 2, 5, 3])
