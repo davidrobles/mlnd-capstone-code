@@ -1,5 +1,5 @@
-import sys
-sys.path.insert(0, '/home/drobles/projects/mlnd-capstone-code/src/')
+# import sys
+# sys.path.insert(0, '/home/drobles/projects/mlnd-capstone-code/src/')
 import unittest
 from games import TicTacToe
 
@@ -37,6 +37,7 @@ class TestTicTacToe(unittest.TestCase):
         actual = self.game.legal_moves()
         expected = [1, 2, 4, 5, 6, 8, 9]
         self.assertItemsEqual(actual, expected)
+
 
 if __name__ == 'main':
     unittest.main()
