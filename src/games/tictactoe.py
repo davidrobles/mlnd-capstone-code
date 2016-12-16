@@ -43,9 +43,6 @@ class TicTacToe(object):
     def check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
-    def is_win(self):
-        return self.check_win(self.boards[0]) or self.check_win(self.boards[1])
-
     ########
     # Game #
     ########
@@ -67,11 +64,11 @@ class TicTacToe(object):
 
     def legal_moves(self):
         """Returns the list of legal moves for the player in turn"""
-        if self.is_win():
+        if self.check_win(self.boards[0]) or self.check_win(self.boards[1]):
             return []
         # TODO remove self.legal?
-        self.legal = ~(self.boards[0] | self.boards[1])
-        return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
+        legal_board = ~(self.boards[0] | self.boards[1])
+        return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
 
     def make_move(self, move):
         """Takes a move for the player in turn"""
