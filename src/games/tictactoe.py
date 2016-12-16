@@ -66,7 +66,6 @@ class TicTacToe(object):
         """Returns the list of legal moves for the player in turn"""
         if self.check_win(self.boards[0]) or self.check_win(self.boards[1]):
             return []
-        # TODO remove self.legal?
         legal_board = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
 
