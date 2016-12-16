@@ -84,6 +84,11 @@ class TicTacToe(object):
         self._cur_player = (self.cur_player + 1) % 2
         return self
 
+    def make_moves(self, moves):
+        for move in moves:
+            self.make_move(move)
+        return self
+
     def name(self):
         """Name of the game"""
         return "Tic Tac Toe"
