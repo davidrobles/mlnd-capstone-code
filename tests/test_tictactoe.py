@@ -88,5 +88,14 @@ class TestTicTacToe(unittest.TestCase):
         self.game.make_move(9) # 1
         self.assertItemsEqual(self.game.outcomes(), ['D', 'D'])
 
+    def test_copy(self):
+        self.game.make_move(1) # 1
+        self.game.make_move(3) # 2
+        self.game.make_move(2) # 1
+        clone = self.game.copy()
+        self.assertItemsEqual(self.game.legal_moves(), clone.legal_moves())
+        self.assertEqual(self.game.cur_player, clone.cur_player)
+        self.assertEqual(self.game, clone)
+
 if __name__ == 'main':
     unittest.main()

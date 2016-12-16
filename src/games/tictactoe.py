@@ -43,6 +43,15 @@ class TicTacToe(object):
     def check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
+    def __eq__(self, other):
+        if self.cur_player != other.cur_player:
+            return False
+        if self.boards[0] != other.boards[0]:
+            return False
+        if self.boards[1] != other.boards[1]:
+            return False
+        return True
+
     ########
     # Game #
     ########
