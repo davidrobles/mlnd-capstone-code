@@ -53,9 +53,13 @@ class TicTacToe(object):
     def copy(self):
         """Returns a copy of the game"""
         tic = TicTacToe()
-        tic.cur_player = self.cur_player
+        tic._cur_player = self._cur_player
         tic.boards = self.boards[:]
         return tic
+
+    @property
+    def cur_player(self):
+        return self._cur_player
 
     def is_over(self):
         """Returns true if the game is over"""
@@ -65,13 +69,14 @@ class TicTacToe(object):
         """Returns the list of legal moves for the player in turn"""
         if self.is_win():
             return []
+        # TODO remove self.legal?
         self.legal = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if self.legal & (1 << (move - 1))]
 
     def make_move(self, move):
         """Takes a move for the player in turn"""
         self.boards[self.cur_player] |= (1 << (move - 1))
-        self.cur_player = (self.cur_player + 1) % 2
+        self._cur_player = (self.cur_player + 1) % 2
 
     def name(self):
         """Name of the game"""
@@ -89,7 +94,7 @@ class TicTacToe(object):
 
     def reset(self):
         """Restarts the game"""
-        self.cur_player = 0
+        self._cur_player = 0
         self.boards = [0, 0]
 
 
