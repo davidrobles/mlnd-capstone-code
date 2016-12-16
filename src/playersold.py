@@ -4,15 +4,6 @@ import random
 import operator
 
 
-class RandPlayer(object):
-
-    def chooseMove(self, game):
-        return random.choice(game.legal_moves())
-
-    def __str__(self):
-        return 'Random'
-
-
 # class Minimax(Player):
 
 #     def hola(self):
