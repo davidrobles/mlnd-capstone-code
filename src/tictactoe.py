@@ -27,14 +27,13 @@ class TicTacToe(object):
         else:
             outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player()) + '\n'
             s = '[' + ', '.join([str(s) for s in self.legal_moves()]) + ']'
-            # outStr += str_aec('Moves: ', 'bold_green') + str(self.num_moves()) + '\n'
             outStr += str_aec('Moves: ', 'bold_green') + s + '\n'
         outStr += '\n'
         for i in range(9):
             if self.crosses & (1 << i):
-                outStr += ' X '
+                outStr += str_aec(' X ', 'bold_red')
             elif self.noughts & (1 << i):
-                outStr += ' O '
+                outStr += str_aec(' O ', 'bold_blue')
             else:
                 outStr += ' - '
             if i % 3 == 2:
