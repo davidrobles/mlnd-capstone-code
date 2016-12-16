@@ -49,13 +49,41 @@ class TestTicTacToe(unittest.TestCase):
         self.assertItemsEqual(actual, expected)
 
     def test_legal_moves_are_empty_when_is_over(self):
-        self.game.make_move(1)
-        self.game.make_move(4)
-        self.game.make_move(2)
-        self.game.make_move(5)
-        self.game.make_move(3)
+        self.game.make_move(1) # 1
+        self.game.make_move(4) # 2
+        self.game.make_move(2) # 1
+        self.game.make_move(5) # 2
+        self.game.make_move(3) # 1
         self.assertTrue(len(self.game.legal_moves()) == 0)
 
+    def test_outcomes_win_first_player(self):
+        self.game.make_move(1) # 1
+        self.game.make_move(4) # 2
+        self.game.make_move(2) # 1
+        self.game.make_move(5) # 2
+        self.game.make_move(3) # 1
+        self.assertItemsEqual(self.game.outcomes(), ['W', 'L'])
+
+    def test_outcomes_win_second_player(self):
+        self.game.make_move(1) # 1
+        self.game.make_move(4) # 2
+        self.game.make_move(2) # 1
+        self.game.make_move(5) # 2
+        self.game.make_move(9) # 1
+        self.game.make_move(6) # 2
+        self.assertItemsEqual(self.game.outcomes(), ['L', 'W'])
+
+    def test_outcomes_draw(self):
+        self.game.make_move(1) # 1
+        self.game.make_move(3) # 2
+        self.game.make_move(2) # 1
+        self.game.make_move(4) # 2
+        self.game.make_move(6) # 1
+        self.game.make_move(5) # 2
+        self.game.make_move(7) # 1
+        self.game.make_move(8) # 2
+        self.game.make_move(9) # 1
+        self.assertItemsEqual(self.game.outcomes(), ['D', 'D'])
 
 if __name__ == 'main':
     unittest.main()

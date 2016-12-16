@@ -79,10 +79,8 @@ class TicTacToe(object):
         return "Tic Tac Toe"
 
     def outcomes(self):
-        """Returns a list of outcomes for each player"""
-        if not self.is_over():
-            return ['NA', 'NA']
-        elif self.check_win(self.boards[0]):
+        """Returns a list of outcomes for each player at the end of the game"""
+        if self.check_win(self.boards[0]):
             return ['W', 'L']
         elif self.check_win(self.boards[1]):
             return ['L', 'W']
