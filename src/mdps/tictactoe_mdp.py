@@ -4,8 +4,8 @@ from utils import ZobristHashing
 
 class TicTacToeMDP(object):
 
-    '''A Markov Decision Process for Tic Tac Toe based
-    on a deterministic player
+    '''
+    A Markov Decision Process for Tic Tac Toe based on a deterministic player.
     '''
 
     def __init__(self, player):
