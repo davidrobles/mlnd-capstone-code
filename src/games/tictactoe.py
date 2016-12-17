@@ -2,6 +2,42 @@ from __future__ import print_function
 from aec import print_aec, str_aec
 
 
+class TicTacToeView(object):
+
+    def next_player(self, game):
+        return str_aec('Next player: ', 'bold_green') + str(game.cur_player) + '\n'
+
+    def moves(self, game):
+        s = '[' + ', '.join([str(s) for s in game.legal_moves()]) + ']'
+        out = ''
+        out += str_aec('Moves: ', 'bold_green') + s + '\n'
+        return out
+
+    def board(self, game):
+        out = ''
+        for i in range(9):
+            if game.boards[0] & (1 << i):
+                out += str_aec(' X ', 'bold_red')
+            elif game.boards[1] & (1 << i):
+                out += str_aec(' O ', 'bold_blue')
+            else:
+                out += ' - '
+            if i % 3 == 2:
+                out += '\n'
+        return out
+
+    def __call__(self, game):
+        out = ''
+        if game.is_over():
+            out += str_aec('Game Over!', 'bold_green') + '\n'
+        else:
+            out += self.next_player(game)
+            out += self.moves(game)
+        out += '\n'
+        out += self.board(game)
+        return out
+
+
 class TicTacToe(object):
 
     """
@@ -23,23 +59,10 @@ class TicTacToe(object):
         self.reset()
 
     def __str__(self):
+        view = TicTacToeView()
         outStr = ''
-        if self.is_over():
-            outStr += str_aec('Game Over!', 'bold_green') + '\n'
-        else:
-            outStr += str_aec('Next player: ', 'bold_green') + str(self.cur_player) + '\n'
-            s = '[' + ', '.join([str(s) for s in self.legal_moves()]) + ']'
-            outStr += str_aec('Moves: ', 'bold_green') + s + '\n'
+        outStr += view(self)
         outStr += '\n'
-        for i in range(9):
-            if self.boards[0] & (1 << i):
-                outStr += str_aec(' X ', 'bold_red')
-            elif self.boards[1] & (1 << i):
-                outStr += str_aec(' O ', 'bold_blue')
-            else:
-                outStr += ' - '
-            if i % 3 == 2:
-                outStr += '\n'
         return outStr
 
     def check_win(self, board):

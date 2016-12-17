@@ -14,7 +14,7 @@ def play_match(game, players, verbose=True):
     if verbose:
         print(game)
     while not game.is_over():
-        cur_player = players[game.cur_player()]
+        cur_player = players[game.cur_player]
         move = cur_player.chooseMove(game.copy())
         game.make_move(move)
         if verbose:
