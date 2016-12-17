@@ -14,15 +14,18 @@ def play_match(game, players, verbose=True):
             print(game)
 
 
-def play_series(game, players, n_matches=100, verbose=True):
+def play_series(game, players, n_matches=100, alternate=False, verbose=True):
     """Plays a series of 'n_matches' matches between the given players"""
     stats = {'p1win': 0, 'p2win': 0, 'draw': 0}
+    match_players = [players[0], players[1]]
     for n_match in range(n_matches):
         print('Match {}:'.format(n_match), end=' ')
-        play_match(game, players, verbose=False)
+        play_match(game, match_players, verbose=False)
         stats[game.outcome] += 1
         print(game.outcomes())
         game.reset()
+        if alternate:
+            match_players[0], match_players[1] = match_players[1], match_players[0]
     print(stats)
 
 
