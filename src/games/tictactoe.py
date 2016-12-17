@@ -29,10 +29,13 @@ class TicTacToeView(object):
                 s += '\n'
         return s
 
+    def _game_over(self):
+        return str_aec('Game Over!', 'bold_green') + '\n'
+
     def render(self):
         s = u''
         if self.game.is_over():
-            s += str_aec('Game Over!', 'bold_green') + '\n'
+            s += self._game_over()
         else:
             s += self._next_player()
             s += self._moves()
