@@ -10,8 +10,7 @@ zobrist = ZobristHashing(n_positions=9, n_pieces=2)
 
 def count_positions(game, hashed_boards):
     board_hash = zobrist.hash(game.board)
-    if board_hash not in hashed_boards:
-        hashed_boards.add(board_hash)
+    hashed_boards.add(board_hash)
     for move in game.legal_moves():
         new_game = game.copy()
         new_game.make_move(move)
