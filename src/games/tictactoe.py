@@ -17,17 +17,17 @@ class TicTacToeView(object):
         return out
 
     def _board(self):
-        out = u''
+        s = u''
         for i in range(9):
             if self.game.boards[0] & (1 << i):
-                out += str_aec(' X ', 'bold_red')
+                s += str_aec(' X ', 'bold_red')
             elif self.game.boards[1] & (1 << i):
-                out += str_aec(' O ', 'bold_blue')
+                s += str_aec(' O ', 'bold_blue')
             else:
-                out += ' - '
+                s += ' - '
             if i % 3 == 2:
-                out += '\n'
-        return out
+                s += '\n'
+        return s
 
     def render(self):
         s = u''
