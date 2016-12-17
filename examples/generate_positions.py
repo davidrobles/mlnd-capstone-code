@@ -24,8 +24,8 @@ class ZobristHashing(object):
 game = TicTacToe()
 count = 0
 transp = set()
-
 zobrist = ZobristHashing()
+
 
 def traverse(game, depth=0):
     global count
@@ -40,6 +40,7 @@ def traverse(game, depth=0):
         new_game.make_move(move)
         max_depth = max(max_depth, traverse(new_game, depth + 1))
     return max_depth
+
 
 max_depth = traverse(game)
 print('Total game positions: {}'.format(count))
