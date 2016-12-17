@@ -3,7 +3,7 @@ import random
 
 class RandPlayer(object):
 
-    def chooseMove(self, game):
+    def choose_move(self, game):
         return random.choice(game.legal_moves())
 
     def __str__(self):

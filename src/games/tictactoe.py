@@ -130,12 +130,3 @@ class TicTacToeView(object):
         return s
 
 
-class TicUtility(object):
-
-    def eval(self, game, player):
-        if game.outcomes()[player] == 'W':
-            return 1.0
-        elif game.outcomes()[player] == 'L':
-            return -1.0
-        else:
-            return 0.0

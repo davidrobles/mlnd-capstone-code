@@ -1,11 +1,5 @@
 from __future__ import print_function
 import random
-from players import RandPlayer
-
-
-def play_random_game(game):
-    """Plays a game taking uniformly random moves"""
-    print(play_match(game, [RandPlayer(), RandPlayer()]))
 
 
 def play_match(game, players, verbose=True):
@@ -15,7 +9,7 @@ def play_match(game, players, verbose=True):
         print(game)
     while not game.is_over():
         cur_player = players[game.cur_player]
-        move = cur_player.chooseMove(game.copy())
+        move = cur_player.choose_move(game.copy())
         game.make_move(move)
         if verbose:
             print(game)
@@ -35,3 +29,12 @@ def play_series(game, players, n_matches=100):
             stats['draws'] += 1
         game.reset()
     print(stats)
+
+
+def default_util_func(game, player):
+    if game.outcomes()[player] == 'W':
+        return 1.0
+    elif game.outcomes()[player] == 'L':
+        return -1.0
+    else:
+        return 0.0
