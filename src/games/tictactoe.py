@@ -4,21 +4,24 @@ from aec import print_aec, str_aec
 
 class TicTacToeView(object):
 
-    def next_player(self, game):
-        return str_aec('Next player: ', 'bold_green') + str(game.cur_player) + '\n'
+    def __init__(self, game):
+        self.game = game
 
-    def moves(self, game):
-        s = '[' + ', '.join([str(s) for s in game.legal_moves()]) + ']'
+    def _next_player(self):
+        return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player) + '\n'
+
+    def _moves(self):
+        s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
         out = ''
         out += str_aec('Moves: ', 'bold_green') + s + '\n'
         return out
 
-    def board(self, game):
+    def _board(self):
         out = ''
         for i in range(9):
-            if game.boards[0] & (1 << i):
+            if self.game.boards[0] & (1 << i):
                 out += str_aec(' X ', 'bold_red')
-            elif game.boards[1] & (1 << i):
+            elif self.game.boards[1] & (1 << i):
                 out += str_aec(' O ', 'bold_blue')
             else:
                 out += ' - '
@@ -26,15 +29,15 @@ class TicTacToeView(object):
                 out += '\n'
         return out
 
-    def __call__(self, game):
+    def render(self):
         out = ''
-        if game.is_over():
+        if self.game.is_over():
             out += str_aec('Game Over!', 'bold_green') + '\n'
         else:
-            out += self.next_player(game)
-            out += self.moves(game)
+            out += self._next_player()
+            out += self._moves()
         out += '\n'
-        out += self.board(game)
+        out += self._board()
         return out
 
 
@@ -59,11 +62,7 @@ class TicTacToe(object):
         self.reset()
 
     def __str__(self):
-        view = TicTacToeView()
-        outStr = ''
-        outStr += view(self)
-        outStr += '\n'
-        return outStr
+        return TicTacToeView(self).render()
 
     def check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
