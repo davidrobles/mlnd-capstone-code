@@ -25,7 +25,7 @@ class TicTacToe(object):
     def __str__(self):
         return TicTacToeView(self).render()
 
-    def check_win(self, board):
+    def _check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
     def __eq__(self, other):
@@ -58,7 +58,7 @@ class TicTacToe(object):
 
     def legal_moves(self):
         """Returns the list of legal moves for the player in turn"""
-        if self.check_win(self.boards[0]) or self.check_win(self.boards[1]):
+        if self._check_win(self.boards[0]) or self._check_win(self.boards[1]):
             return []
         legal_board = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
@@ -76,9 +76,9 @@ class TicTacToe(object):
 
     def outcomes(self):
         """Returns a list of outcomes for each player at the end of the game"""
-        if self.check_win(self.boards[0]):
+        if self._check_win(self.boards[0]):
             return ['W', 'L']
-        elif self.check_win(self.boards[1]):
+        elif self._check_win(self.boards[1]):
             return ['L', 'W']
         return ['D', 'D']
 
