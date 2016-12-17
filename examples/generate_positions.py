@@ -2,34 +2,38 @@ from games import TicTacToe
 from players import RandPlayer
 from utils import play_series
 
+class ZobristHashing(object):
+
+    def __init__(self):
+        self.table = self._init_zobrist()
+
+    def _init_zobrist(self):
+        import random
+        table = [[] for _ in range(9)]
+        for i in range(9):
+            for j in range(2):
+                table[i].append(random.randint(0, 10000000))
+        return table
+
+    def hash(self, board):
+        h = 0
+        for i in range(9):
+            if board[i] != ' ':
+                j = board[i]
+                h = h ^ self.table[i][j]
+        return h
+
+
 game = TicTacToe()
 count = 0
 transp = set()
 
-def init_zobrist():
-    import random
-    table = [[] for _ in range(9)]
-    for i in range(9):
-        for j in range(2):
-            table[i].append(random.randint(0, 10000000))
-    return table
-
-table = init_zobrist()
-
-def hash(board):
-    global table
-    h = 0
-    for i in range(9):
-        if board[i] != ' ':
-            j = board[i]
-            h = h ^ table[i][j]
-    return h
-
+zobrist = ZobristHashing()
 
 def traverse(game, depth=0):
     global count
     global transp
-    h = hash(game.board)
+    h = zobrist.hash(game.board)
     if h not in transp:
         count +=1
         transp.add(h)
