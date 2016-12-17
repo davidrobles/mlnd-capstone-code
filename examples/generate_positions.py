@@ -8,7 +8,7 @@ from utils import play_series, ZobristHashing
 
 zobrist = ZobristHashing(n_positions=9, n_pieces=2)
 
-def traverse(game, table):
+def count_positions(game, table):
     count = 0
     h = zobrist.hash(game.board)
     if h not in table:
@@ -17,9 +17,9 @@ def traverse(game, table):
     for move in game.legal_moves():
         new_game = game.copy()
         new_game.make_move(move)
-        count += traverse(new_game, table)
+        count += count_positions(new_game, table)
     return count
 
 game = TicTacToe()
-count = traverse(game, set())
+count = count_positions(game, set())
 print('Total game positions: {}'.format(count))
