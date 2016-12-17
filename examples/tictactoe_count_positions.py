@@ -3,8 +3,7 @@
 Total game positions: 5,478
 '''
 from games import TicTacToe
-from players import RandPlayer
-from utils import play_series, ZobristHashing
+from utils import ZobristHashing
 
 zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
 
