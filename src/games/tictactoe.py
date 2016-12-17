@@ -12,12 +12,12 @@ class TicTacToeView(object):
 
     def _moves(self):
         s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
-        out = ''
+        out = u''
         out += str_aec('Moves: ', 'bold_green') + s + '\n'
         return out
 
     def _board(self):
-        out = ''
+        out = u''
         for i in range(9):
             if self.game.boards[0] & (1 << i):
                 out += str_aec(' X ', 'bold_red')
@@ -30,15 +30,15 @@ class TicTacToeView(object):
         return out
 
     def render(self):
-        out = ''
+        s = u''
         if self.game.is_over():
-            out += str_aec('Game Over!', 'bold_green') + '\n'
+            s += str_aec('Game Over!', 'bold_green') + '\n'
         else:
-            out += self._next_player()
-            out += self._moves()
-        out += '\n'
-        out += self._board()
-        return out
+            s += self._next_player()
+            s += self._moves()
+        s += '\n'
+        s += self._board()
+        return s
 
 
 class TicTacToe(object):
