@@ -41,7 +41,7 @@ class ZobristHashing(object):
         self.n_positions = n_positions
         self.n_pieces = n_pieces
 
-    def hash(self, board):
+    def __call__(self, board):
         result = 0
         for i in range(self.n_positions):
             if board[i] != ' ':

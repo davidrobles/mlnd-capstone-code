@@ -6,10 +6,10 @@ from games import TicTacToe
 from players import RandPlayer
 from utils import play_series, ZobristHashing
 
-zobrist = ZobristHashing(n_positions=9, n_pieces=2)
+zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
 
 def count_positions(game, hashed_boards):
-    board_hash = zobrist.hash(game.board)
+    board_hash = zobrist_hash(game.board)
     hashed_boards.add(board_hash)
     for move in game.legal_moves():
         new_game = game.copy()
