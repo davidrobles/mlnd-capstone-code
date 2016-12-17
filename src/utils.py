@@ -32,3 +32,23 @@ def play_series(game, players, n_matches=100, alternate=False, verbose=True):
 def default_util_func(game, player):
     player_outcome = game.outcomes()[player]
     return {'W': 1.0, 'L': -1.0, 'D': 0.0}[player_outcome]
+
+
+class ZobristHashing(object):
+
+    def __init__(self, n_positions, n_pieces):
+        self.n_positions = n_positions
+        self.n_pieces = n_pieces
+        self.table = self._init_zobrist()
+
+    def _init_zobrist(self):
+        import random
+        return [random.getrandbits(32) for i in range(self.n_positions * self.n_pieces)]
+
+    def hash(self, board):
+        result = 0
+        for i in range(self.n_positions):
+            if board[i] != ' ':
+                piece = board[i]
+                result = result ^ self.table[i * self.n_pieces + piece]
+        return result
