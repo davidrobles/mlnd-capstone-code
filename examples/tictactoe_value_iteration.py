@@ -16,15 +16,34 @@ class TicTacToeMDP(object):
     def __init__(self):
         self.hashed_states = {}
         self.zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
-        self._states = self.generate_states(self.game)
+        self._generate_states(TicTacToe())
 
+    def _generate_states(self, game):
+        '''Generates all the states for the game'''
+        board_hash = self.zobrist_hash(game.board)
+        if board_hash not in self.hashed_states:
+            self.hashed_states[board_hash] = game
+        for move in game.legal_moves():
+            new_game = game.copy()
+            new_game.make_move(move)
+            self._generate_states(new_game)
+
+    def __str__(self):
+        return '<MDP states={}>'.format(len(self.states))
+
+    #######
+    # MDP # 
+    #######
+
+    @property
     def states(self):
         '''Returns a list of all states'''
-        pass
+        return self.hashed_states.values()
 
-    def transitions(state, action):
+    def transitions(self, state, action):
+        '''Returns a dictionary of
+        This function is not available for a reinforcement learning agent.
         '''
-        This function is not available for a reinforcement learning agent.'''
         pass
 
     def actions(self, state):
@@ -48,17 +67,6 @@ class ValueIteration(object):
         self.gamma = gamme
         self.table = {}
 
-    def generate_states(self, game):
-        '''Generates all the states for the game'''
-        board_hash = self.zobrist_hash(game.board)
-        if board_hash in self.hashed_boards:
-            hashed_boards.add(board_hash)
-            self.
-        for move in game.legal_moves():
-            new_game = game.copy()
-            new_game.make_move(move)
-            count_positions(new_game, hashed_boards)
-
     # def learn(self):
     #     delta = 0
     #     while True:
@@ -70,3 +78,6 @@ class ValueIteration(object):
     #         if delta < theta:
     #             break
     #     print('DP Value Iteration finished')
+
+mdp = TicTacToeMDP()
+print(mdp)
