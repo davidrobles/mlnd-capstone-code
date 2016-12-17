@@ -18,6 +18,18 @@ class TicTacToe(object):
     def __init__(self):
         self.reset()
 
+    @property
+    def board(self):
+        b = []
+        for i in range(9):
+            if self.boards[0] & (1 << i):
+                b.append(0)
+            elif self.boards[1] & (1 << i):
+                b.append(1)
+            else:
+                b.append(' ')
+        return b
+
     def _check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
@@ -29,6 +41,9 @@ class TicTacToe(object):
         if self.boards[1] != other.boards[1]:
             return False
         return True
+
+    def __repr__(self):
+        return TicTacToeView(self).render()
 
     def __str__(self):
         return TicTacToeView(self).render()
