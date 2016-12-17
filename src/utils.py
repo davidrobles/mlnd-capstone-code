@@ -46,5 +46,5 @@ class ZobristHashing(object):
         for i in range(self.n_positions):
             if board[i] != ' ':
                 piece = board[i]
-                result = result ^ self.table[i * self.n_pieces + piece]
+                result ^= self.table[i * self.n_pieces + piece]
         return result
