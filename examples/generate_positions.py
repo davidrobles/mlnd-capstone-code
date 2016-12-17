@@ -9,10 +9,9 @@ class ZobristHashing(object):
 
     def _init_zobrist(self):
         import random
-        table = [[] for _ in range(9)]
-        for i in range(9):
-            for j in range(2):
-                table[i].append(random.getrandbits(32))
+        table = [0 for _ in range(9*2)]
+        for i in range(9*2):
+            table[i] = (random.getrandbits(32))
         return table
 
     def hash(self, board):
@@ -20,7 +19,7 @@ class ZobristHashing(object):
         for i in range(9):
             if board[i] != ' ':
                 j = board[i]
-                h = h ^ self.table[i][j]
+                h = h ^ self.table[i*2+j]
         return h
 
 
