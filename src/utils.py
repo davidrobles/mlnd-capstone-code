@@ -16,10 +16,11 @@ def play_match(game, players, verbose=True):
     return game.outcomes()
 
 
-def play_series(game, players, n_matches=100):
+def play_series(game, players, n_matches=100, verbose=True):
     """Plays a series of 'n_matches' matches between the given players"""
     stats = {'p1_wins': 0, 'p2_wins': 0, 'draws': 0}
-    for __ in range(n_matches):
+    for n_match in range(n_matches):
+        print('Match {}:'.format(n_match), end=' ')
         outcomes = play_match(game, players, verbose=False)
         if outcomes[0] == 'W':
             stats['p1_wins'] += 1
@@ -27,6 +28,7 @@ def play_series(game, players, n_matches=100):
             stats['p2_wins'] += 1
         else:
             stats['draws'] += 1
+        print(outcomes)
         game.reset()
     print(stats)
 
