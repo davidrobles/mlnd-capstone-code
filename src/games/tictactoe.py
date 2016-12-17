@@ -97,7 +97,7 @@ class TicTacToeView(object):
         return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player) + '\n'
 
     def _moves(self):
-        s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
+        s = '[{}]'.format(', '.join([str(s) for s in self.game.legal_moves()]))
         out = ''
         out += str_aec('Moves: ', 'bold_green') + s + '\n'
         return out
