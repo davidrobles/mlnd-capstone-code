@@ -48,10 +48,13 @@ class TicTacToeMDP(object):
         '''Returns a dictionary of.
         This function is not available for a reinforcement learning agent.
         '''
-        d = {}
-        for move in []:
-            pass
-        return {}
+        chosen_move = self.player.choose_move(game)
+        if chosen_move != move:
+            return {}
+        new_game = game.copy()
+        new_game.make_move(move)
+        hashed = self.zobrist_hash(new_game.board)
+        return {hashed: 1.0}
 
     def actions(self, game):
         '''Returns a list of possible moves in the game'''
