@@ -15,15 +15,8 @@ class TicTacToe(object):
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
 
-    #############
-    # TicTacToe #
-    #############
-
     def __init__(self):
         self.reset()
-
-    def __str__(self):
-        return TicTacToeView(self).render()
 
     def _check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
@@ -36,6 +29,9 @@ class TicTacToe(object):
         if self.boards[1] != other.boards[1]:
             return False
         return True
+
+    def __str__(self):
+        return TicTacToeView(self).render()
 
     ########
     # Game #
@@ -136,5 +132,3 @@ class TicTacToeView(object):
         s += '\n'
         s += self._board()
         return s
-
-
