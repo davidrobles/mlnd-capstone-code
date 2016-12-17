@@ -25,8 +25,11 @@ count_positions(game.copy(), hashed_boards)
 
 class NewPlayer(object):
 
-    def choose_move(self, game):
-        return hashed_boards[zobrist_hash(game.board)]
+    def __init__(self, table):
+        self.table = table
 
-players = [RandPlayer(), NewPlayer()]
+    def choose_move(self, game):
+        return self.table[zobrist_hash(game.board)]
+
+players = [RandPlayer(), NewPlayer(hashed_boards)]
 play_series(game, players)
