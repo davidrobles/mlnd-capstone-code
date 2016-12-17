@@ -34,9 +34,5 @@ def play_series(game, players, n_matches=100, verbose=True):
 
 
 def default_util_func(game, player):
-    if game.outcomes()[player] == 'W':
-        return 1.0
-    elif game.outcomes()[player] == 'L':
-        return -1.0
-    else:
-        return 0.0
+    player_outcome = game.outcomes()[player]
+    return {'W': 1.0, 'L': -1.0, 'D': 0.0}[player_outcome]
