@@ -6,7 +6,6 @@ from games import TicTacToe
 from players import RandPlayer
 from utils import play_series, ZobristHashing
 
-# transp = set()
 zobrist = ZobristHashing(n_positions=9, n_pieces=2)
 
 def traverse(game, table):
