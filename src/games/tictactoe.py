@@ -137,7 +137,5 @@ class TicUtility(object):
             return 1.0
         elif game.outcomes()[player] == 'L':
             return -1.0
-        elif game.outcomes()[player] == 'D':
+        else:
             return 0.0
-        print('something is wrong' + game.outcomes()[player])
-        return 0.0
