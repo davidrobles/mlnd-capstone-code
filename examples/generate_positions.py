@@ -12,7 +12,7 @@ class ZobristHashing(object):
         table = [[] for _ in range(9)]
         for i in range(9):
             for j in range(2):
-                table[i].append(random.randint(0, 10000000))
+                table[i].append(random.getrandbits(32))
         return table
 
     def hash(self, board):
