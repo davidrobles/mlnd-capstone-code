@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 from aec import print_aec, str_aec
 
 
@@ -12,12 +12,12 @@ class TicTacToeView(object):
 
     def _moves(self):
         s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
-        out = u''
+        out = ''
         out += str_aec('Moves: ', 'bold_green') + s + '\n'
         return out
 
     def _board(self):
-        s = u''
+        s = ''
         for i in range(9):
             if self.game.boards[0] & (1 << i):
                 s += str_aec(' X ', 'bold_red')
@@ -33,7 +33,7 @@ class TicTacToeView(object):
         return str_aec('Game Over!', 'bold_green') + '\n'
 
     def render(self):
-        s = u''
+        s = ''
         if self.game.is_over():
             s += self._game_over()
         else:
