@@ -2,6 +2,7 @@ from games import TicTacToe
 from players import RandPlayer
 from utils import play_series
 
+
 class ZobristHashing(object):
 
     def __init__(self):
@@ -9,18 +10,15 @@ class ZobristHashing(object):
 
     def _init_zobrist(self):
         import random
-        table = [0 for _ in range(9*2)]
-        for i in range(9*2):
-            table[i] = (random.getrandbits(32))
-        return table
+        return [random.getrandbits(32) for i in range(9*2)]
 
     def hash(self, board):
-        h = 0
+        result = 0
         for i in range(9):
             if board[i] != ' ':
-                j = board[i]
-                h = h ^ self.table[i*2+j]
-        return h
+                piece = board[i]
+                result = result ^ self.table[i * 2 + piece]
+        return result
 
 
 game = TicTacToe()
