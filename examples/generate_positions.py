@@ -1,3 +1,7 @@
+'''Calculates the number of different positions in Tic Tac Toe.
+
+Total game positions: 5,478
+'''
 from games import TicTacToe
 from players import RandPlayer
 from utils import play_series, ZobristHashing
