@@ -2,48 +2,6 @@ from __future__ import print_function, unicode_literals
 from aec import print_aec, str_aec
 
 
-class TicTacToeView(object):
-
-    def __init__(self, game):
-        self.game = game
-
-    def _next_player(self):
-        return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player) + '\n'
-
-    def _moves(self):
-        s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
-        out = ''
-        out += str_aec('Moves: ', 'bold_green') + s + '\n'
-        return out
-
-    def _board(self):
-        s = ''
-        for i in range(9):
-            if self.game.boards[0] & (1 << i):
-                s += str_aec(' X ', 'bold_red')
-            elif self.game.boards[1] & (1 << i):
-                s += str_aec(' O ', 'bold_blue')
-            else:
-                s += ' - '
-            if i % 3 == 2:
-                s += '\n'
-        return s
-
-    def _game_over(self):
-        return str_aec('Game Over!', 'bold_green') + '\n'
-
-    def render(self):
-        s = ''
-        if self.game.is_over():
-            s += self._game_over()
-        else:
-            s += self._next_player()
-            s += self._moves()
-        s += '\n'
-        s += self._board()
-        return s
-
-
 class TicTacToe(object):
 
     """
@@ -128,6 +86,48 @@ class TicTacToe(object):
         """Restarts the game"""
         self._cur_player = 0
         self.boards = [0, 0]
+
+
+class TicTacToeView(object):
+
+    def __init__(self, game):
+        self.game = game
+
+    def _next_player(self):
+        return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player) + '\n'
+
+    def _moves(self):
+        s = '[' + ', '.join([str(s) for s in self.game.legal_moves()]) + ']'
+        out = ''
+        out += str_aec('Moves: ', 'bold_green') + s + '\n'
+        return out
+
+    def _board(self):
+        s = ''
+        for i in range(9):
+            if self.game.boards[0] & (1 << i):
+                s += str_aec(' X ', 'bold_red')
+            elif self.game.boards[1] & (1 << i):
+                s += str_aec(' O ', 'bold_blue')
+            else:
+                s += ' - '
+            if i % 3 == 2:
+                s += '\n'
+        return s
+
+    def _game_over(self):
+        return str_aec('Game Over!', 'bold_green') + '\n'
+
+    def render(self):
+        s = ''
+        if self.game.is_over():
+            s += self._game_over()
+        else:
+            s += self._next_player()
+            s += self._moves()
+        s += '\n'
+        s += self._board()
+        return s
 
 
 class TicUtility(object):
