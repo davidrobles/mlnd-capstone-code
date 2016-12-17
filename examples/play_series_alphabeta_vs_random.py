@@ -4,4 +4,5 @@ from utils import play_series
 
 game = TicTacToe()
 players = [AlphaBeta(), RandPlayer()]
-play_series(game, players, n_matches=100)
+n_matches=100
+play_series(game, players, n_matches)
