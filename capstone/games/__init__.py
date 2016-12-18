@@ -6,7 +6,6 @@ import six
 class Game(object):
     '''Interface for abstract strategy games'''
 
-
     @abc.abstractmethod
     def copy(self):
         pass
@@ -44,6 +43,7 @@ class Game(object):
     @abc.abstractmethod
     def reset(self):
         pass
+
 
 from .connect4 import Connect4
 from .tictactoe import TicTacToe

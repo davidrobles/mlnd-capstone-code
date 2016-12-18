@@ -6,7 +6,6 @@ import six
 class MDP(object):
     '''Markov Decision Process'''
 
-
     @abc.abstractproperty
     def states(self):
         pass
@@ -22,5 +21,6 @@ class MDP(object):
     @abc.abstractmethod
     def reward(self, state, action, next_state):
         pass
+
 
 from .tictactoe import TicTacToeMDP

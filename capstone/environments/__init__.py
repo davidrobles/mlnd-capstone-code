@@ -6,7 +6,6 @@ import six
 class Environment(object):
     '''An environment for reinforcement learning interactions.'''
 
-
     @abc.abstractmethod
     def cur_state(self):
         '''Returns the current state'''
