@@ -1,6 +1,6 @@
-from games import TicTacToe
-from players import AlphaBeta, RandPlayer
-from utils import play_series
+from capstone.games import TicTacToe
+from capstone.players import AlphaBeta, RandPlayer
+from capstone.utils import play_series
 
 game = TicTacToe()
 # players = [AlphaBeta(), RandPlayer()]

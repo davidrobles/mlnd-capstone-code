@@ -1,5 +1,5 @@
 from __future__ import print_function, unicode_literals
-from aec import print_aec, str_aec
+from ..aec import print_aec, str_aec
 from .import Game
 
 
