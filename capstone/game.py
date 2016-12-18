@@ -42,10 +42,5 @@ class Game(object):
         pass
 
     @abc.abstractmethod
-    def outcomes(self, moves):
-        '''Returns a list of outcomes for each player at the end of the game'''
-        pass
-
-    @abc.abstractmethod
     def reset(self):
         pass
