@@ -4,7 +4,8 @@ import six
 
 @six.add_metaclass(abc.ABCMeta)
 class MDP(object):
-    '''Markov Decision Process
+    '''
+    Markov Decision Process
 
     This interface is based on the one used in:
     UC Berkeley CS188 (Intro to AI)
@@ -21,15 +22,15 @@ class MDP(object):
 
     @abc.abstractmethod
     def actions(self, state):
-        '''Returns a list of possible actions in the given state'''
+        '''Returns a list of possible actions in the given state.'''
         pass
 
     @abc.abstractmethod
     def transitions(self, state, action):
         '''
-        Returns a list of (next_state, probability) pairs representing the
-        states reachable from 'state' by taking 'action' along with their
-        transition probabilities.
+        Returns a dict of (next_state: probability) key/values, where
+        'next_state' is reachable from 'state' by taking 'action'. The sum of
+        all probabilities should be 1.0.
         Note that in Q-Learning and reinforcment learning in general, we do
         not know these probabilities nor do we directly model them.
         '''
@@ -38,8 +39,8 @@ class MDP(object):
     @abc.abstractmethod
     def reward(self, state, action, next_state):
         '''
-        Returns the reward of being in 'state', taking 'action', and moving
-        to the 'next_state'.
+        Returns the reward of being in 'state', taking 'action', and ending up
+        in 'next_state'.
         Not available in reinforcement learning.
         '''
         pass
