@@ -1,4 +1,4 @@
-from . import MDP
+from .. import MDP
 from ..games import TicTacToe
 from ..utils import ZobristHashing
 

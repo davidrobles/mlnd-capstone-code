@@ -1,4 +1,4 @@
-from . import Environment
+from .. import Environment
 
 
 class TicTacToeEnv(Environment):

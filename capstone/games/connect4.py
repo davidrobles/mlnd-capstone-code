@@ -1,6 +1,5 @@
-from __future__ import print_function
-from ..utils import print_aec, str_aec
+from .. import Game
 
 
-class Connect4(object):
+class Connect4(Game):
     pass
