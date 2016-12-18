@@ -1,5 +1,5 @@
 test:
-	PYTHONPATH=src/ python -m unittest discover tests/ -v
+	PYTHONPATH=capstone/ python -m unittest discover tests/ -v
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
