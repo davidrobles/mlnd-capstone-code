@@ -63,18 +63,15 @@ class TicTacToe(Game):
         return self._cur_player
 
     def is_over(self):
-        """Returns true if the game is over"""
         return len(self.legal_moves()) == 0
 
     def legal_moves(self):
-        """Returns the list of legal moves for the player in turn"""
         if self._check_win(self.boards[0]) or self._check_win(self.boards[1]):
             return []
         legal_board = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
 
     def make_move(self, move):
-        """Takes a move for the player in turn"""
         self.boards[self.cur_player()] |= (1 << (move - 1))
         self._cur_player = (self.cur_player() + 1) % 2
         return self
