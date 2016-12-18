@@ -35,7 +35,7 @@ class TicTacToe(Game):
         return any((board & win) == win for win in TicTacToe.WINS)
 
     def __eq__(self, other):
-        if self.cur_player != other.cur_player:
+        if self.cur_player() != other.cur_player():
             return False
         if self.boards[0] != other.boards[0]:
             return False
@@ -60,7 +60,6 @@ class TicTacToe(Game):
         tic.boards = self.boards[:]
         return tic
 
-    @property
     def cur_player(self):
         return self._cur_player
 
@@ -77,8 +76,8 @@ class TicTacToe(Game):
 
     def make_move(self, move):
         """Takes a move for the player in turn"""
-        self.boards[self.cur_player] |= (1 << (move - 1))
-        self._cur_player = (self.cur_player + 1) % 2
+        self.boards[self.cur_player()] |= (1 << (move - 1))
+        self._cur_player = (self.cur_player() + 1) % 2
         return self
 
     def make_moves(self, *moves):
@@ -114,7 +113,7 @@ class TicTacToeView(object):
         self.game = game
 
     def _next_player(self):
-        return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player) + '\n'
+        return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player()) + '\n'
 
     def _moves(self):
         s = '[{}]'.format(', '.join([str(s) for s in self.game.legal_moves()]))

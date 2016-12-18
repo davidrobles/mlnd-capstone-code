@@ -13,7 +13,7 @@ class AlphaBeta(Player):
 
     def _ab(self, game, cur_depth, alpha, beta):
         if game.is_over() or cur_depth == self.max_depth:
-            return None, self.eval_func(game, game.cur_player)
+            return None, self.eval_func(game, game.cur_player())
         best_move = -1
         best_score = -100000000
         for move in game.legal_moves():

@@ -11,19 +11,19 @@ class TestTicTacToe(unittest.TestCase):
         self.game.make_moves(1, 3, 2)
         clone = self.game.copy()
         self.assertItemsEqual(self.game.legal_moves(), clone.legal_moves())
-        self.assertEqual(self.game.cur_player, clone.cur_player)
+        self.assertEqual(self.game.cur_player(), clone.cur_player())
         self.assertEqual(self.game, clone)
 
     def test_cur_player_start(self):
-        self.assertEqual(self.game.cur_player, 0)
+        self.assertEqual(self.game.cur_player(), 0)
 
     def test_cur_player_after_one_move(self):
         self.game.make_move(3)
-        self.assertEqual(self.game.cur_player, 1)
+        self.assertEqual(self.game.cur_player(), 1)
 
     def test_cur_player_after_two_moves(self):
         self.game.make_moves(3, 7)
-        self.assertEqual(self.game.cur_player, 0)
+        self.assertEqual(self.game.cur_player(), 0)
 
     def test_is_not_over_at_start(self):
         self.assertFalse(self.game.is_over())

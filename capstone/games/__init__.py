@@ -10,7 +10,7 @@ class Game(object):
     def copy(self):
         pass
 
-    @abc.abstractproperty
+    @abc.abstractmethod
     def cur_player(self):
         pass
 

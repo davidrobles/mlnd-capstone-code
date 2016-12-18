@@ -61,4 +61,4 @@ class TicTacToeMDP(MDP):
         from utils import default_util_func
         if not next_state.is_over():
             return 0
-        return default_util_func(next_state, state.cur_player)
+        return default_util_func(next_state, state.cur_player())
