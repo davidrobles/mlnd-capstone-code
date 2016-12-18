@@ -34,7 +34,6 @@ class TicTacToeMDP(MDP):
 
     @property
     def states(self):
-        '''Returns a list of all states'''
         return self.hashed_states.values()
 
     def transitions(self, game, move):
@@ -50,14 +49,9 @@ class TicTacToeMDP(MDP):
         return {hashed: 1.0}
 
     def actions(self, game):
-        '''Returns a list of possible moves in the game'''
         return game.legal_moves()
 
     def reward(self, state, action, next_state):
-        '''Returns the reward of being in 'state', taking 'action',
-        and moving to the 'next_state'. This function is not available
-        for a reinforcement learning agent.
-        '''
         from ..util import default_util_func
         if not next_state.is_over():
             return 0
