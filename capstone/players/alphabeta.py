@@ -1,6 +1,6 @@
 import random
 from . import Player
-from ..utils import default_util_func
+from ..util import default_util_func
 
 
 class AlphaBeta(Player):

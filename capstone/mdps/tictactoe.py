@@ -1,6 +1,6 @@
 from .. import MDP
 from ..games import TicTacToe
-from ..utils import ZobristHashing
+from ..util import ZobristHashing
 
 
 class TicTacToeMDP(MDP):
@@ -58,7 +58,7 @@ class TicTacToeMDP(MDP):
         and moving to the 'next_state'. This function is not available
         for a reinforcement learning agent.
         '''
-        from ..utils import default_util_func
+        from ..util import default_util_func
         if not next_state.is_over():
             return 0
         return default_util_func(next_state, state.cur_player())
