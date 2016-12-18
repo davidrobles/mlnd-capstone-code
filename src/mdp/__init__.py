@@ -20,3 +20,5 @@ class MDP(object):
     @abstractmethod
     def reward(self, state, action, next_state):
         pass
+
+from .tictactoe import TicTacToeMDP
