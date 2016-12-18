@@ -3,6 +3,8 @@ from abc import ABCMeta, abstractmethod, abstractproperty
 
 class MDP(object):
 
+    '''Markov Decision Process'''
+
     __metaclass__ = ABCMeta
 
     @abstractproperty
