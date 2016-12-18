@@ -3,7 +3,6 @@ from capstone.players import AlphaBeta, RandPlayer
 from capstone.utils import play_series
 
 game = TicTacToe()
-# players = [AlphaBeta(), RandPlayer()]
-players = [RandPlayer(), AlphaBeta()]
-n_matches=100
+players = [AlphaBeta(), RandPlayer()]
+n_matches=10
 play_series(game, players, n_matches)

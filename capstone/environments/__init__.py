@@ -1,28 +1,28 @@
-from abc import ABCMeta, abstractmethod
+import abc
+import six
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Environment(object):
-
     '''An environment for reinforcement learning interactions.'''
 
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
+    @abc.abstractmethod
     def cur_state(self):
         '''Returns the current state'''
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def actions(self, state):
         '''Returns the possible actions from the given state'''
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def do_action(self, action):
         '''Performs the given action in the current state'''
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def reset(self):
         '''Resets the current state to the start state'''
         pass

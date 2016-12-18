@@ -1,25 +1,25 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+import abc
+import six
 
 
+@six.add_metaclass(abc.ABCMeta)
 class MDP(object):
-
     '''Markov Decision Process'''
 
-    __metaclass__ = ABCMeta
 
-    @abstractproperty
+    @abc.abstractproperty
     def states(self):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def actions(self, state):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def transitions(self, state, action):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def reward(self, state, action, next_state):
         pass
 

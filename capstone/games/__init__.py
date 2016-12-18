@@ -1,56 +1,49 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+import abc
+import six
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Game(object):
+    '''Interface for abstract strategy games'''
 
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
+    @abc.abstractmethod
     def copy(self):
         pass
 
-    @abstractproperty
+    @abc.abstractproperty
     def cur_player(self):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def is_over(self):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def legal_moves(self):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def make_move(self, move):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def make_moves(self, moves):
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def outcomes(self, moves):
         """Returns a list of outcomes for each player at the end of the game"""
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def outcomes(self, moves):
         """Returns a list of outcomes for each player at the end of the game"""
         pass
 
-    @abstractmethod
+    @abc.abstractmethod
     def reset(self):
         pass
-
-
-
-
-
-
-
-
-
 
 from .connect4 import Connect4
 from .tictactoe import TicTacToe
