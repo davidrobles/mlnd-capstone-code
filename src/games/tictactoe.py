@@ -1,8 +1,9 @@
 from __future__ import print_function, unicode_literals
 from aec import print_aec, str_aec
+from .import Game
 
 
-class TicTacToe(object):
+class TicTacToe(Game):
 
     """
     1 2 3
