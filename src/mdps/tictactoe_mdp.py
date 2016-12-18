@@ -1,8 +1,10 @@
 from games import TicTacToe
 from utils import ZobristHashing
 
+from . import MDP
 
-class TicTacToeMDP(object):
+
+class TicTacToeMDP(MDP):
 
     '''
     A Markov Decision Process for Tic Tac Toe based on a deterministic player.

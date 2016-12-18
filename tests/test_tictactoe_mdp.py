@@ -32,4 +32,4 @@ class TestTicTacToeMDP(unittest.TestCase):
         action = 3
         next_state = cur_state.copy().make_move(action)
         reward = self.mdp.reward(cur_state, action, next_state)
-        self.assertEqual(reward, 0)
+        self.assertEqual(reward, 1)
