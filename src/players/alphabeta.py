@@ -1,8 +1,9 @@
 import random
+from . import Player
 from utils import default_util_func
 
 
-class AlphaBeta(object):
+class AlphaBeta(Player):
 
     name = 'Alpha-Beta Pruning'
 

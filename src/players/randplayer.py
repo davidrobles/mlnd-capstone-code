@@ -1,7 +1,8 @@
 import random
+from . import Player
 
 
-class RandPlayer(object):
+class RandPlayer(Player):
 
     name = 'Random Player'
 
