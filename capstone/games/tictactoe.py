@@ -62,9 +62,6 @@ class TicTacToe(Game):
     def cur_player(self):
         return self._cur_player
 
-    def is_over(self):
-        return len(self.legal_moves()) == 0
-
     def legal_moves(self):
         if self._check_win(self.boards[0]) or self._check_win(self.boards[1]):
             return []

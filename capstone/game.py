@@ -16,10 +16,9 @@ class Game(object):
         '''Returns the index of the player in turn: 0 (Player 1) or 1 (Player 2)'''
         pass
 
-    @abc.abstractmethod
     def is_over(self):
         '''Returns true if the game is over'''
-        pass
+        return len(self.legal_moves()) == 0
 
     @abc.abstractmethod
     def legal_moves(self):
