@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 
 
 class Environment(object):
@@ -7,20 +7,24 @@ class Environment(object):
 
     __metaclass__ = ABCMeta
 
-    @abstractproperty
+    @abstractmethod
     def cur_state(self):
+        '''Returns the current state'''
         pass
 
     @abstractmethod
     def actions(self, state):
+        '''Returns the possible actions from the given state'''
         pass
 
     @abstractmethod
-    def do_action(self, state, action):
+    def do_action(self, action):
+        '''Performs the given action in the current state'''
         pass
 
     @abstractmethod
     def reset(self):
+        '''Resets the current state to the start state'''
         pass
 
     def is_terminal(self):
