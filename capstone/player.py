@@ -7,5 +7,6 @@ class Player(object):
     '''Interface for a Player of a Game'''
 
     @abc.abstractmethod
-    def choose_move(self, move):
+    def choose_move(self, game):
+        '''Returns the chosen move from game.legal_moves().'''
         pass
