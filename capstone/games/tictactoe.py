@@ -31,15 +31,9 @@ class TicTacToe(Game):
                 b.append(' ')
         return b
 
-    def _piece(self, ix):
-        if self.boards[0] & (1 << ix):
-            return str_aec('X', 'bold_red')
-        elif self.boards[1] & (1 << ix):
-            return str_aec('O', 'bold_blue')
-        else:
-            return '-'
-
-    def _check_win(self, board):
+    def _check_win(self, player_idx):
+        '''Returns true if there is a winning board for the given player'''
+        board = self.boards[player_idx]
         return any((board & win) == win for win in TicTacToe.WINS)
 
     def __eq__(self, other):
@@ -71,7 +65,7 @@ class TicTacToe(Game):
         return self._cur_player
 
     def legal_moves(self):
-        if self._check_win(self.boards[0]) or self._check_win(self.boards[1]):
+        if any([self._check_win(pix) for pix in range(2)]):
             return []
         legal_board = ~(self.boards[0] | self.boards[1])
         return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
@@ -83,17 +77,17 @@ class TicTacToe(Game):
 
     def outcomes(self):
         """Returns a list of outcomes for each player at the end of the game"""
-        if self._check_win(self.boards[0]):
+        if self._check_win(0):
             return ['W', 'L']
-        elif self._check_win(self.boards[1]):
+        elif self._check_win(1):
             return ['L', 'W']
         return ['D', 'D']
 
     @property
     def outcome(self):
-        if self._check_win(self.boards[0]):
+        if self._check_win(0):
             return 'p1win'
-        elif self._check_win(self.boards[1]):
+        elif self._check_win(1):
             return 'p2win'
         return 'draw'
 
@@ -108,6 +102,14 @@ class TicTacToeView(object):
     def __init__(self, game):
         self.game = game
 
+    def _info(self):
+        if self.game.is_over():
+            return self._game_over() + '\n'
+        return self._next_player() + self._moves() + '\n'
+
+    def _game_over(self):
+        return str_aec('Game Over!', 'bold_green') + '\n'
+
     def _next_player(self):
         return str_aec('Next player: ', 'bold_green') + str(self.game.cur_player()) + '\n'
 
@@ -118,20 +120,18 @@ class TicTacToeView(object):
         return out
 
     def _board(self):
-        s = ''
-        for i in range(9):
-            s += ' {} '.format(self.game._piece(i))
-            if i % 3 == 2:
-                s += '\n'
-        return s
+        return '\n'.join([self._row(row) for row in range(3)]) + '\n'
 
-    def _game_over(self):
-        return str_aec('Game Over!', 'bold_green')
+    def _row(self, row):
+        return ' '.join([self._piece((row * 3) + col) for col in range(3)])
 
-    def _info(self):
-        if self.game.is_over():
-            return self._game_over() + '\n'
-        return self._next_player() + self._moves() + '\n'
+    def _piece(self, ix):
+        if self.game.boards[0] & (1 << ix):
+            return str_aec('X', 'bold_red')
+        elif self.game.boards[1] & (1 << ix):
+            return str_aec('O', 'bold_blue')
+        else:
+            return '-'
 
     def _outcomes(self):
         return '\n' + str(self.game.outcomes()) if self.game.is_over() else ''
