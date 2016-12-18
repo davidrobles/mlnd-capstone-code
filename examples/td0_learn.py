@@ -1,9 +1,10 @@
 '''Implements TD(0) to learn a value function for Tic Tac Toe
 '''
 import random
-from games import TicTacToe
-from players import RandPlayer
-from utils import play_series, ZobristHashing
+from capstone.games import TicTacToe
+from capstone.players import RandPlayer
+from capstone.utils import play_series, ZobristHashing
+
 
 class TD0(object):
 

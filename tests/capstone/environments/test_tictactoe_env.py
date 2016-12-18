@@ -1,5 +1,5 @@
 import unittest
-from environments import TicTacToeEnv
+from capstone.environments import TicTacToeEnv
 
 
 class TestTicTacToeEnv(unittest.TestCase):

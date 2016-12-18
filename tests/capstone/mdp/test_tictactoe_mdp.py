@@ -1,6 +1,6 @@
 import unittest
-from games import TicTacToe
-from mdp import TicTacToeMDP
+from capstone.games import TicTacToe
+from capstone.mdp import TicTacToeMDP
 
 
 class TestTicTacToeMDP(unittest.TestCase):

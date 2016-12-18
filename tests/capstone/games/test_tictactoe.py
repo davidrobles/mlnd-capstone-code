@@ -1,5 +1,5 @@
 import unittest
-from games import TicTacToe
+from capstone.games import TicTacToe
 
 
 class TestTicTacToe(unittest.TestCase):
