@@ -1,6 +1,6 @@
 from __future__ import print_function, unicode_literals
 from .import Game
-from ..aec import print_aec, str_aec
+from ..utils import print_aec, str_aec
 
 
 class TicTacToe(Game):
