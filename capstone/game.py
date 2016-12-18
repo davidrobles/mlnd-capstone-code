@@ -30,10 +30,11 @@ class Game(object):
         '''Makes one move for the player in turn'''
         pass
 
-    @abc.abstractmethod
     def make_moves(self, *moves):
         '''Makes a series of moves'''
-        pass
+        for move in moves:
+            self.make_move(move)
+        return self
 
     @abc.abstractmethod
     def outcomes(self, moves):
