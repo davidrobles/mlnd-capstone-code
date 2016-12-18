@@ -31,6 +31,14 @@ class TicTacToe(Game):
                 b.append(' ')
         return b
 
+    def _piece(self, ix):
+        if self.boards[0] & (1 << ix):
+            return str_aec('X', 'bold_red')
+        elif self.boards[1] & (1 << ix):
+            return str_aec('O', 'bold_blue')
+        else:
+            return '-'
+
     def _check_win(self, board):
         return any((board & win) == win for win in TicTacToe.WINS)
 
@@ -112,26 +120,25 @@ class TicTacToeView(object):
     def _board(self):
         s = ''
         for i in range(9):
-            if self.game.boards[0] & (1 << i):
-                s += str_aec(' X ', 'bold_red')
-            elif self.game.boards[1] & (1 << i):
-                s += str_aec(' O ', 'bold_blue')
-            else:
-                s += ' - '
+            s += ' {} '.format(self.game._piece(i))
             if i % 3 == 2:
                 s += '\n'
         return s
 
     def _game_over(self):
-        return str_aec('Game Over!', 'bold_green') + '\n'
+        return str_aec('Game Over!', 'bold_green')
+
+    def _info(self):
+        if self.game.is_over():
+            return self._game_over() + '\n'
+        return self._next_player() + self._moves() + '\n'
+
+    def _outcomes(self):
+        return '\n' + str(self.game.outcomes()) if self.game.is_over() else ''
 
     def render(self):
-        s = ''
-        if self.game.is_over():
-            s += self._game_over()
-        else:
-            s += self._next_player()
-            s += self._moves()
-        s += '\n'
-        s += self._board()
-        return s
+        return '{info}{board}{outcomes}'.format(
+            info=self._info(),
+            board=self._board(),
+            outcomes=self._outcomes()
+        )
