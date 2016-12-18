@@ -1,7 +1,6 @@
-from games import TicTacToe
-from utils import ZobristHashing
-
 from . import MDP
+from ..games import TicTacToe
+from ..utils import ZobristHashing
 
 
 class TicTacToeMDP(MDP):
