@@ -1,1 +1,1 @@
-from .tictactoe import DeterministicOpponentMDP
+from .tictactoe import GameMDP

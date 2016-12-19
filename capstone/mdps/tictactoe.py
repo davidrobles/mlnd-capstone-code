@@ -3,9 +3,10 @@ from ..games import TicTacToe
 from ..util import ZobristHashing
 
 
-class DeterministicOpponentMDP(MDP):
+class GameMDP(MDP):
     '''
-    A Markov Decision Process for Tic Tac Toe based on a deterministic opponent.
+    A Markov Decision Process for a Game. Converts a game into an MPD by
+    using a deterministic opponent player.
     '''
 
     def __init__(self, game, player, pix):
