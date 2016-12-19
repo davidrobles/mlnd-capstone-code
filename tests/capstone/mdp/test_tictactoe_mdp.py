@@ -9,9 +9,6 @@ class TestTicTacToeMDP(unittest.TestCase):
 
     mdp = TicTacToeMDP(None)
 
-    def setUp(self):
-        pass
-
     def test_states(self):
         self.assertEqual(len(self.mdp.states), 5478)
 
