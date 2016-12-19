@@ -11,7 +11,7 @@ class TicTacToe(Game):
     7 8 9
     """
 
-    name = 'Tic Tac Toe'
+    name = 'Tic-Tac-Toe'
 
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]

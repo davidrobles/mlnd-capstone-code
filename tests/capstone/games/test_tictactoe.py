@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import unittest
 from capstone.games import TicTacToe
 
@@ -6,6 +7,9 @@ class TestTicTacToe(unittest.TestCase):
 
     def setUp(self):
         self.game = TicTacToe()
+
+    def test_name(self):
+        self.assertEqual(TicTacToe.name, 'Tic-Tac-Toe')
 
     def test_copy(self):
         self.game.make_moves(1, 3, 2)
@@ -66,9 +70,6 @@ class TestTicTacToe(unittest.TestCase):
         actual = self.game.make_moves(1, 2, 3)
         expected = self.game
         self.assertEquals(actual, expected)
-
-    def test_name(self):
-        self.assertEqual(TicTacToe.name, 'Tic Tac Toe')
 
     def test_outcomes_win_first_player(self):
         self.game.make_moves(1, 4, 2, 5, 3)
