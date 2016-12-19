@@ -18,7 +18,7 @@ class TestGameMDP(unittest.TestCase):
         cur_state = TicTacToe()
         actual_actions = list(range(1, 10))
         expected_actions = self.mdp.actions(cur_state)
-        self.assertItemsEqual(actual_actions, expected_actions)
+        self.assertEqual(actual_actions, expected_actions)
 
     def test_actions_at_end_of_game_are_empty(self):
         game = TicTacToe()

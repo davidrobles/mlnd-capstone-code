@@ -14,7 +14,7 @@ class TestTicTacToe(unittest.TestCase):
     def test_copy(self):
         self.game.make_moves(1, 3, 2)
         clone = self.game.copy()
-        self.assertItemsEqual(self.game.legal_moves(), clone.legal_moves())
+        self.assertEqual(self.game.legal_moves(), clone.legal_moves())
         self.assertEqual(self.game.cur_player(), clone.cur_player())
         self.assertEqual(self.game, clone)
 
@@ -39,19 +39,19 @@ class TestTicTacToe(unittest.TestCase):
     def test_legal_moves_start(self):
         actual = self.game.legal_moves()
         expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        self.assertItemsEqual(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_legal_moves_after_one_move(self):
         self.game.make_move(1)
         actual = self.game.legal_moves()
         expected = [2, 3, 4, 5, 6, 7, 8, 9]
-        self.assertItemsEqual(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_legal_moves_after_two_moves(self):
         self.game.make_moves(3, 7)
         actual = self.game.legal_moves()
         expected = [1, 2, 4, 5, 6, 8, 9]
-        self.assertItemsEqual(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_legal_moves_are_empty_when_is_over(self):
         self.game.make_moves(1, 4, 2, 5, 3)
@@ -64,7 +64,7 @@ class TestTicTacToe(unittest.TestCase):
         self.game.make_moves(1, 2, 3)
         actual = self.game.legal_moves()
         expected = [4, 5, 6, 7, 8, 9]
-        self.assertItemsEqual(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_make_moves_returns_self(self):
         self.assertIs(self.game.make_moves(1, 2, 3), self.game)
@@ -79,18 +79,18 @@ class TestTicTacToe(unittest.TestCase):
         # O O -
         # - - -
         self.game.make_moves(1, 4, 2, 5, 3)
-        self.assertItemsEqual(self.game.outcomes(), ['W', 'L'])
+        self.assertEqual(self.game.outcomes(), ['W', 'L'])
 
     def test_outcomes_win_second_player(self):
         # X X -
         # O O O
         # - - X
         self.game.make_moves(1, 4, 2, 5, 9, 6)
-        self.assertItemsEqual(self.game.outcomes(), ['L', 'W'])
+        self.assertEqual(self.game.outcomes(), ['L', 'W'])
 
     def test_outcomes_draw(self):
         # X X O
         # O O X
         # X O X
         self.game.make_moves(1, 3, 2, 4, 6, 5, 7, 8, 9)
-        self.assertItemsEqual(self.game.outcomes(), ['D', 'D'])
+        self.assertEqual(self.game.outcomes(), ['D', 'D'])
