@@ -3,37 +3,34 @@ from ..games import TicTacToe
 from ..util import ZobristHashing
 
 
-_hashed_states = {}
-_zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
-
-
-def generate_states(game):
-    '''Generates all the states for the game'''
-    board_hash = _zobrist_hash(game.board)
-    if board_hash not in _hashed_states:
-        _hashed_states[board_hash] = game
-    for move in game.legal_moves():
-        new_game = game.copy()
-        new_game.make_move(move)
-        generate_states(new_game)
-
-
-generate_states(TicTacToe())
-
-
 class DeterministicOpponentMDP(MDP):
     '''
     A Markov Decision Process for Tic Tac Toe based on a deterministic opponent.
     '''
 
-    def __init__(self, player, pix):
+    def __init__(self, game, player, pix):
         '''
         player: the opponent player
         pix: the index of the agent that will interact with the environment
              that uses this MDP. It can be 0 or 1.
         '''
+        self.game = game
         self.player = player
         self.pix = pix
+        self._hashed_states = {}
+        self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
+        self._generate_states(self.game)
+
+    def _generate_states(self, game):
+        '''Generates all the states for the game'''
+        board_hash = self._zobrist_hash(game.board)
+        if board_hash not in self._hashed_states:
+            self._hashed_states[board_hash] = game
+        for move in game.legal_moves():
+            new_game = game.copy()
+            new_game.make_move(move)
+            self._generate_states(new_game)
+
 
     def __str__(self):
         return '<MDP states={}>'.format(len(self.states))
@@ -44,7 +41,7 @@ class DeterministicOpponentMDP(MDP):
 
     @property
     def states(self):
-        return _hashed_states.values()
+        return self._hashed_states.values()
 
     def transitions(self, game, move):
         '''Returns a dictionary of.

@@ -8,7 +8,8 @@ from capstone.util import play_match
 class TestDeterministicOpponentMDP(unittest.TestCase):
 
     def setUp(self):
-        self.mdp = DeterministicOpponentMDP(None, 0)
+        self.game = TicTacToe()
+        self.mdp = DeterministicOpponentMDP(self.game, None, 0)
 
     def test_states(self):
         self.assertEqual(len(self.mdp.states), 5478)
@@ -42,7 +43,7 @@ class TestDeterministicOpponentMDP(unittest.TestCase):
 
     def test_reward_when_agent_moves_first_and_wins(self):
         ab = AlphaBeta()
-        mdp = DeterministicOpponentMDP(ab, 0)
+        mdp = DeterministicOpponentMDP(self.game, ab, 0)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
         action = 3
         next_state = cur_state.copy().make_move(action)
@@ -51,7 +52,7 @@ class TestDeterministicOpponentMDP(unittest.TestCase):
 
     def test_reward_when_agent_moves_first_and_losses(self):
         ab = AlphaBeta()
-        mdp = DeterministicOpponentMDP(ab, 0)
+        mdp = DeterministicOpponentMDP(self.game, ab, 0)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
         action = 6
         next_state = cur_state.copy().make_move(action)
@@ -60,7 +61,7 @@ class TestDeterministicOpponentMDP(unittest.TestCase):
 
     def test_reward_when_agent_moves_second_and_wins(self):
         ab = AlphaBeta()
-        mdp = DeterministicOpponentMDP(ab, 1)
+        mdp = DeterministicOpponentMDP(self.game, ab, 1)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
         action = 6
         next_state = cur_state.copy().make_move(action)
@@ -69,7 +70,7 @@ class TestDeterministicOpponentMDP(unittest.TestCase):
 
     def test_reward_when_agent_moves_second_and_losses(self):
         ab = AlphaBeta()
-        mdp = DeterministicOpponentMDP(ab, 1)
+        mdp = DeterministicOpponentMDP(self.game, ab, 1)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
         action = 3
         next_state = cur_state.copy().make_move(action)
