@@ -57,5 +57,5 @@ class TicTacToeMDP(MDP):
             return 0
         return default_util_func(next_state, state.cur_player())
 
-    def is_terminal(state):
-        pass
+    def is_terminal(self, state):
+        return state.is_over()
