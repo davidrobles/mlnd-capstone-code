@@ -18,6 +18,16 @@ class TestTicTacToe(unittest.TestCase):
         self.assertEqual(self.game.cur_player(), clone.cur_player())
         self.assertEqual(self.game, clone)
 
+    def test_equal(self):
+        moves = [1, 2]
+        self.game.make_moves(*moves)
+        other = TicTacToe().make_moves(*moves)
+        self.assertEqual(self.game, other)
+
+    def test_not_equal(self):
+        other = TicTacToe().make_moves(1)
+        self.assertNotEqual(self.game, other)
+
     def test_cur_player_start(self):
         self.assertEqual(self.game.cur_player(), 0)
 
