@@ -86,14 +86,6 @@ class TicTacToe(Game):
             return ['L', 'W']
         return ['D', 'D']
 
-    @property
-    def outcome(self):
-        if self._check_win(0):
-            return 'p1win'
-        elif self._check_win(1):
-            return 'p2win'
-        return 'draw'
-
     def reset(self):
         """Restarts the game"""
         self._cur_player = 0

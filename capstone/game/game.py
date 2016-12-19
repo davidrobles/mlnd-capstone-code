@@ -43,11 +43,15 @@ class Game(object):
         return self
 
     @abc.abstractmethod
-    def outcomes(self, moves):
+    def outcomes(self):
         '''
         Returns a list of outcomes for each player at the end of the game.
         '''
         pass
+
+    def outcome(self, player_idx):
+        '''Returns the outcome for the given player'''
+        return self.outcomes()[player_idx]
 
     @abc.abstractmethod
     def reset(self):
