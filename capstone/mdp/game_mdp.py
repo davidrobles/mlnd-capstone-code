@@ -6,7 +6,7 @@ from ..util import ZobristHashing
 class GameMDP(MDP):
     '''
     A Markov Decision Process for a Game. Converts a game into an MPD by
-    using a deterministic opponent player.
+    using a deterministic player as an opponent.
     '''
 
     def __init__(self, game, player, pix):
