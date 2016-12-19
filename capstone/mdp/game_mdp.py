@@ -9,15 +9,15 @@ class GameMDP(MDP):
     using a deterministic player as an opponent.
     '''
 
-    def __init__(self, game, player, pix):
+    def __init__(self, game, opp_player, opp_player_idx):
         '''
-        player: the opponent player
-        pix: the index of the agent that will interact with the environment
-             that uses this MDP. It can be 0 or 1.
+        opp_player: the opponent player
+        opp_player_idx: the player idx position of the opponent player in
+                        the game
         '''
         self.game = game
-        self.player = player
-        self.pix = pix
+        self.opp_player = opp_player
+        self.opp_player_idx = opp_player_idx
         self._hashed_states = {}
         self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
 
@@ -43,7 +43,7 @@ class GameMDP(MDP):
         return self._hashed_states.values()
 
     def transitions(self, game, move):
-        chosen_move = self.player.choose_move(game)
+        chosen_move = self.opp_player.choose_move(game)
         if chosen_move != move:
             return {}
         new_game = game.copy()
@@ -58,7 +58,7 @@ class GameMDP(MDP):
         from ..util import default_util_func
         if not next_state.is_over():
             return 0
-        return default_util_func(next_state, self.pix)
+        return default_util_func(next_state, (self.opp_player_idx + 1) % 2)
 
     def is_terminal(self, state):
         return state.is_over()
