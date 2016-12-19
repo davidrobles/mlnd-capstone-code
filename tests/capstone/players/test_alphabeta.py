@@ -7,8 +7,6 @@ class TestAlphaBeta(unittest.TestCase):
     def setUp(self):
         self.ab = AlphaBeta()
 
-    def test_has_name(self):
-        self.assertEqual(AlphaBeta.name, "Alpha-Beta Pruning")
-
-    def test_can_instantiate(self):
-        pass
+    def test_name(self):
+        self.assertEqual(AlphaBeta.name, 'Alpha-Beta Pruning')
+        self.assertEqual(self.ab.name, 'Alpha-Beta Pruning')
