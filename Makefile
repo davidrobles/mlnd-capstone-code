@@ -1,5 +1,5 @@
 test:
-	PYTHONPATH=. python -m unittest discover . -v
+	PYTHONPATH=. python3 -m unittest discover . -v
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +

@@ -72,7 +72,7 @@ class TestTicTacToe(unittest.TestCase):
     def test_make_moves_returns_self(self):
         actual = self.game.make_moves(1, 2, 3)
         expected = self.game
-        self.assertEquals(actual, expected)
+        self.assertEqual(actual, expected)
 
     def test_outcomes_win_first_player(self):
         # X X X
