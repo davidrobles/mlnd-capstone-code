@@ -14,21 +14,19 @@ class AlphaBeta(Player):
     def _ab(self, game, cur_depth, alpha, beta):
         if game.is_over() or cur_depth == self.max_depth:
             return None, self.eval_func(game, game.cur_player())
-        best_move = -1
+        best_move = None
         best_score = -100000000
         for move in game.legal_moves():
-            new_game = game.copy()
-            new_game.make_move(move)
-            new_depth = cur_depth + 1
-            new_alpha = -beta
-            new_beta = -max([alpha, best_score])
-            _, score = self._ab(new_game, new_depth, new_alpha, new_beta)
+            _, score = self._ab(game=game.copy().make_move(move),
+                                cur_depth=cur_depth + 1,
+                                alpha=-beta,
+                                beta=-max(alpha, best_score))
             score = -score
             if score > best_score:
                 best_score = score
                 best_move = move
                 if best_score >= beta:
-                    return [best_move, best_score]
+                    return best_move, best_score
         return best_move, best_score
 
     ##########
