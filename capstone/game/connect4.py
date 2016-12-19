@@ -1,4 +1,4 @@
-from .. import Game
+from . import Game
 
 
 class Connect4(Game):

@@ -1,7 +1,7 @@
 import unittest
-from capstone.games import TicTacToe
-from capstone.mdps import GameMDP
-from capstone.players import AlphaBeta, RandPlayer
+from capstone.game import TicTacToe
+from capstone.mdp import GameMDP
+from capstone.player import AlphaBeta, RandPlayer
 from capstone.util import play_match
 
 

@@ -1,4 +1,4 @@
-from capstone.players import RandPlayer
+from capstone.player import RandPlayer
 from capstone.util import ZobristHashing
 
 # class TabularTD0(object):

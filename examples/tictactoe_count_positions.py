@@ -2,7 +2,7 @@
 
 Total game positions: 5,478
 '''
-from capstone.games import TicTacToe
+from capstone.game import TicTacToe
 from capstone.util import ZobristHashing
 
 zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)

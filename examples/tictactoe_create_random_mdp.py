@@ -1,8 +1,8 @@
 '''Randomly creates a player that makes the same move in a given board position.
 '''
 import random
-from capstone.games import TicTacToe
-from capstone.players import RandPlayer
+from capstone.game import TicTacToe
+from capstone.player import RandPlayer
 from capstone.util import play_series, ZobristHashing
 
 zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)

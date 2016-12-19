@@ -1,5 +1,5 @@
 import unittest
-from capstone.players import RandPlayer
+from capstone.player import RandPlayer
 
 
 class TestRandPlayer(unittest.TestCase):

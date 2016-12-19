@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import unittest
-from capstone.games import TicTacToe
+from capstone.game import TicTacToe
 
 
 class TestTicTacToe(unittest.TestCase):
@@ -65,6 +65,9 @@ class TestTicTacToe(unittest.TestCase):
         actual = self.game.legal_moves()
         expected = [4, 5, 6, 7, 8, 9]
         self.assertItemsEqual(actual, expected)
+
+    def test_make_moves_returns_self(self):
+        self.assertIs(self.game.make_moves(1, 2, 3), self.game)
 
     def test_make_moves_returns_self(self):
         actual = self.game.make_moves(1, 2, 3)

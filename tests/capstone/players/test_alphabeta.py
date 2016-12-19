@@ -1,5 +1,5 @@
 import unittest
-from capstone.players import AlphaBeta
+from capstone.player import AlphaBeta
 
 
 class TestAlphaBeta(unittest.TestCase):

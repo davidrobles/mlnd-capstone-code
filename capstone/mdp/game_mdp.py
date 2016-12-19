@@ -1,5 +1,5 @@
-from .. import MDP
-from ..games import TicTacToe
+from . import MDP
+from ..game import TicTacToe
 from ..util import ZobristHashing
 
 
