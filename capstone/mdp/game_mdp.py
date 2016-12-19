@@ -43,9 +43,6 @@ class GameMDP(MDP):
         return self._hashed_states.values()
 
     def transitions(self, game, move):
-        '''Returns a dictionary of.
-        This function is not available for a reinforcement learning agent.
-        '''
         chosen_move = self.player.choose_move(game)
         if chosen_move != move:
             return {}
