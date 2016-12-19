@@ -11,7 +11,6 @@ the MDP for Tic Tac Toe where the opponent ALWAYS makes the same move.
 However, is not possible for Connect 4 because the state is too large.
 '''
 from capstone.games import TicTacToe
-from capstone.mdps import TicTacToeMDP
 
 # class ValueIteration(object):
 
@@ -33,16 +32,3 @@ from capstone.mdps import TicTacToeMDP
     #         if delta < theta:
     #             break
     #     print('DP Value Iteration finished')
-
-def reward_example():
-    game = TicTacToe()
-    mdp = TicTacToeMDP(None)
-    print(mdp)
-    game.make_moves([1, 4, 2, 5])
-    cur_state = game
-    action = 3
-    next_state = game.copy().make_move(3)
-    reward = mdp.reward(cur_state, action, next_state)
-    print('Reward: {}'.format(reward))
-
-reward_example()

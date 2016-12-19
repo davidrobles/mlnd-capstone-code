@@ -21,7 +21,7 @@ def generate_states(game):
 generate_states(TicTacToe())
 
 
-class TicTacToeMDP(MDP):
+class DeterministicOpponentMDP(MDP):
     '''
     A Markov Decision Process for Tic Tac Toe based on a deterministic opponent.
     '''

@@ -1,1 +1,1 @@
-from .tictactoe import TicTacToeMDP
+from .tictactoe import DeterministicOpponentMDP
