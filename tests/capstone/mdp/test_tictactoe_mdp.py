@@ -15,14 +15,7 @@ class TestTicTacToeMDP(unittest.TestCase):
     def test_states(self):
         self.assertEqual(len(self.mdp.states), 5478)
 
-    def test_reward_before_game_is_over(self):
-        cur_state = TicTacToe()
-        action = 1
-        next_state = cur_state.copy().make_move(action)
-        reward = self.mdp.reward(cur_state, action, next_state)
-        self.assertEqual(reward, 0)
-
-    def test_reward_when_game_is_over(self):
+    def test_reward_when_game_is_not_over_is_zero(self):
         cur_state = TicTacToe()
         action = 1
         next_state = cur_state.copy().make_move(action)
