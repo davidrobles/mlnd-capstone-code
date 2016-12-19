@@ -1,13 +1,14 @@
 import unittest
 from capstone.games import TicTacToe
 from capstone.mdps import TicTacToeMDP
-from capstone.players import RandPlayer
+from capstone.players import AlphaBeta, RandPlayer
 from capstone.util import play_match
 
 
 class TestTicTacToeMDP(unittest.TestCase):
 
-    mdp = TicTacToeMDP(None)
+    def setUp(self):
+        self.mdp = TicTacToeMDP(None, 0)
 
     def test_states(self):
         self.assertEqual(len(self.mdp.states), 5478)
@@ -32,12 +33,48 @@ class TestTicTacToeMDP(unittest.TestCase):
         reward = self.mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 0)
 
-    def test_reward_when_game_is_over_and_first_player_wins(self):
+    def test_reward_when_game_is_over_and_is_draw(self):
+        cur_state = TicTacToe().make_moves(1, 3, 2, 4, 6, 5, 7, 8)
+        action = 9
+        next_state = cur_state.copy().make_move(action)
+        reward = self.mdp.reward(cur_state, action, next_state)
+        self.assertEqual(reward, 0.0)
+
+    def test_reward_when_agent_moves_first_and_wins(self):
+        ab = AlphaBeta()
+        mdp = TicTacToeMDP(ab, 0)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
         action = 3
         next_state = cur_state.copy().make_move(action)
-        reward = self.mdp.reward(cur_state, action, next_state)
-        self.assertEqual(reward, 1)
+        reward = mdp.reward(cur_state, action, next_state)
+        self.assertEqual(reward, 1.0)
+
+    def test_reward_when_agent_moves_first_and_losses(self):
+        ab = AlphaBeta()
+        mdp = TicTacToeMDP(ab, 0)
+        cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
+        action = 6
+        next_state = cur_state.copy().make_move(action)
+        reward = mdp.reward(cur_state, action, next_state)
+        self.assertEqual(reward, -1.0)
+
+    def test_reward_when_agent_moves_second_and_wins(self):
+        ab = AlphaBeta()
+        mdp = TicTacToeMDP(ab, 1)
+        cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
+        action = 6
+        next_state = cur_state.copy().make_move(action)
+        reward = mdp.reward(cur_state, action, next_state)
+        self.assertEqual(reward, 1.0)
+
+    def test_reward_when_agent_moves_second_and_losses(self):
+        ab = AlphaBeta()
+        mdp = TicTacToeMDP(ab, 1)
+        cur_state = TicTacToe().make_moves(1, 4, 2, 5)
+        action = 3
+        next_state = cur_state.copy().make_move(action)
+        reward = mdp.reward(cur_state, action, next_state)
+        self.assertEqual(reward, -1.0)
 
     def test_non_terminal_state(self):
         game = TicTacToe().make_moves(1, 2)
