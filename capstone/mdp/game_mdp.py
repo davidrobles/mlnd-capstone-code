@@ -1,7 +1,7 @@
 from copy import copy
 from . import MDP
 from ..game import TicTacToe
-from ..util import ZobristHashing
+from ..util import default_util_func, ZobristHashing
 
 
 class GameMDP(MDP):
@@ -58,7 +58,6 @@ class GameMDP(MDP):
         return game.legal_moves()
 
     def reward(self, state, action, next_state):
-        from ..util import default_util_func
         if not next_state.is_over():
             return 0
         return default_util_func(next_state, (self._opp_player_idx + 1) % 2)
