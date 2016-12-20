@@ -1,8 +1,8 @@
 import unittest
-from capstone.environment import TicTacToeEnv
+from capstone.environment import Environment
 
 
-class TestTicTacToeEnv(unittest.TestCase):
+class TestEnvironment(unittest.TestCase):
 
     def test_states(self):
         pass
