@@ -10,24 +10,20 @@ class TestGameMDP(unittest.TestCase):
     def setUp(self):
         self.game = TicTacToe()
         self.mdp = GameMDP(self.game, None, 0)
+        self.players = [RandPlayer(), RandPlayer()]
 
     # def test_states(self):
     #     self.assertEqual(len(self.mdp.states()), 5478)
 
     def test_actions(self):
-        cur_state = TicTacToe()
-        actual_actions = list(range(1, 10))
-        expected_actions = self.mdp.actions(cur_state)
-        self.assertEqual(actual_actions, expected_actions)
+        self.assertEqual(self.mdp.actions(self.game), list(range(1, 10)))
 
     def test_actions_at_end_of_game_are_empty(self):
-        game = TicTacToe()
-        players = [RandPlayer(), RandPlayer()]
-        play_match(game, players, verbose=False)
-        self.assertEqual(self.mdp.actions(game), [])
+        play_match(self.game, self.players, verbose=False)
+        self.assertEqual(self.mdp.actions(self.game), [])
 
     def test_reward_when_game_is_not_over_is_zero(self):
-        cur_state = TicTacToe()
+        cur_state = self.game
         action = 1
         next_state = cur_state.copy().make_move(action)
         reward = self.mdp.reward(cur_state, action, next_state)
@@ -123,15 +119,13 @@ class TestGameMDP(unittest.TestCase):
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, -1.0)
 
-    def test_non_terminal_state(self):
-        game = TicTacToe().make_moves(1, 2)
-        self.assertFalse(self.mdp.is_terminal(game))
-
     def test_terminal_state(self):
-        game = TicTacToe()
-        players = [RandPlayer(), RandPlayer()]
-        play_match(game, players, verbose=False)
-        self.assertTrue(self.mdp.is_terminal(game))
+        play_match(self.game, self.players, verbose=False)
+        self.assertTrue(self.mdp.is_terminal(self.game))
+
+    def test_non_terminal_state(self):
+        self.game.make_move(1)
+        self.assertFalse(self.mdp.is_terminal(self.game))
 
     def test_transitions(self):
         # X - O
@@ -150,7 +144,6 @@ class TestGameMDP(unittest.TestCase):
         self.assertEqual(prob, 1.0)
 
     def test_transitions_empty_when_game_is_over(self):
-        players = [RandPlayer(), RandPlayer()]
-        play_match(self.game, players, verbose=False)
+        play_match(self.game, self.players, verbose=False)
         self.assertEqual(self.mdp.actions(self.game), [])
         self.assertEqual(self.mdp.transitions(self.game, None), {})
