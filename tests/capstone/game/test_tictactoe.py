@@ -97,22 +97,25 @@ class TestTicTacToe(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_outcomes_win_first_player(self):
-        # X X X
-        # O O -
-        # - - -
-        self.game.make_moves(1, 4, 2, 5, 3)
-        self.assertEqual(self.game.outcomes(), ['W', 'L'])
+        game = TicTacToe(
+            'XXX'
+            'OO-'
+            '---'
+        )
+        self.assertEqual(game.outcomes(), ['W', 'L'])
 
     def test_outcomes_win_second_player(self):
-        # X X -
-        # O O O
-        # - - X
-        self.game.make_moves(1, 4, 2, 5, 9, 6)
-        self.assertEqual(self.game.outcomes(), ['L', 'W'])
+        game = TicTacToe(
+            'XX-'
+            'OOO'
+            '--X'
+        )
+        self.assertEqual(game.outcomes(), ['L', 'W'])
 
     def test_outcomes_draw(self):
-        # X X O
-        # O O X
-        # X O X
-        self.game.make_moves(1, 3, 2, 4, 6, 5, 7, 8, 9)
-        self.assertEqual(self.game.outcomes(), ['D', 'D'])
+        game = TicTacToe(
+            'XXO'
+            'OOX'
+            'XOX'
+        )
+        self.assertEqual(game.outcomes(), ['D', 'D'])
