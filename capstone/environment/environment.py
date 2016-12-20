@@ -1,5 +1,4 @@
 import abc
-import copy
 import six
 
 
@@ -18,18 +17,16 @@ class Environment(object):
     @abc.abstractmethod
     def cur_state(self):
         '''Returns the current state.'''
-        return copy.copy(self._cur_state)
+        return self._cur_state.copy()
 
     @abc.abstractmethod
     def do_action(self, action):
         '''Performs the given action in the current state.'''
-        prev = copy.copy(self._cur_state)
-        transitions = self._mdp.transitions(self._cur_state, action)
-        import pdb
-        pdb.set_trace()
+        prev = self.cur_state()
+        transitions = self._mdp.transitions(self.cur_state(), action)
         for next_state, prob in transitions:
             self._cur_state = next_state
-        return self._mdp.reward(prev, action, self.cur_state())
+        # return self._mdp.reward(prev, action, self.cur_state())
 
     def is_terminal(self):
         state = self.cur_state()

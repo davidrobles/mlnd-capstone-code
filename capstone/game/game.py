@@ -6,9 +6,11 @@ import six
 class Game(object):
     '''Interface for abstract strategy games.'''
 
+
+    @abc.abstractmethod
     def copy(self):
-        from copy import copy as _copy
-        return _copy(self)
+        '''Returns a copy of the game'''
+        pass
 
     @abc.abstractmethod
     def cur_player(self):

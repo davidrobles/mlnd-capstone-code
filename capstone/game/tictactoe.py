@@ -22,6 +22,12 @@ class TicTacToe(Game):
     def __init__(self):
         self.reset()
 
+    def copy(self):
+        tic = TicTacToe()
+        tic._cur_player = self._cur_player
+        tic._boards = self._boards[:]
+        return tic
+
     @property
     def board(self):
         b = []
