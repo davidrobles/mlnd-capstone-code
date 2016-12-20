@@ -17,7 +17,7 @@ class GameMDP(MDP):
         self._game = game
         self._opp_player = opp_player
         self._opp_idx = opp_idx
-        self._agent_idx = (self._opp_idx + 1) % 2
+        self._agent_idx = (opp_idx + 1) % 2
         self._hashed_states = {}
         self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
 
@@ -34,7 +34,7 @@ class GameMDP(MDP):
     def is_terminal(self, game):
         return game.is_over()
 
-    def reward(self, game, action, next_game):
+    def reward(self, game, move, next_game):
         return utility(next_game, self._agent_idx) if next_game.is_over() else 0
 
     def start_state(self):
