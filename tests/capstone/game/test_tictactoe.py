@@ -17,7 +17,7 @@ class TestTicTacToe(unittest.TestCase):
             'O-X'
             '-O-'
         )
-        self.assertEqual(game.legal_moves(), [2, 5, 7 , 9])
+        self.assertEqual(game.legal_moves(), [2, 5, 7, 9])
         self.assertEqual(game.cur_player(), 1)
 
     def test_copy(self):
