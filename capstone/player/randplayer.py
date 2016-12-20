@@ -4,10 +4,13 @@ from . import Player
 
 class RandPlayer(Player):
 
-    name = 'Random Player'
+    name = 'RandPlayer'
 
     def __str__(self):
-        return 'Random Player'
+        return 'RandPlayer'
+
+    def __repr__(self):
+        return 'RandPlayer'
 
     ##########
     # Player #

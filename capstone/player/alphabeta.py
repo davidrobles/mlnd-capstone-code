@@ -5,11 +5,17 @@ from ..util import utility
 
 class AlphaBeta(Player):
 
-    name = 'Alpha-Beta Pruning'
+    name = 'Alpha-Beta'
 
     def __init__(self, eval_func=utility, max_depth=1000):
         self._eval = eval_func
         self._max_depth = max_depth
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
     def _ab(self, game, cur_depth, alpha, beta):
         if game.is_over() or cur_depth == self._max_depth:

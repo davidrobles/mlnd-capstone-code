@@ -8,5 +8,5 @@ class TestAlphaBeta(unittest.TestCase):
         self.ab = AlphaBeta()
 
     def test_name(self):
-        self.assertEqual(AlphaBeta.name, 'Alpha-Beta Pruning')
-        self.assertEqual(self.ab.name, 'Alpha-Beta Pruning')
+        self.assertEqual(AlphaBeta.name, 'Alpha-Beta')
+        self.assertEqual(self.ab.name, 'Alpha-Beta')
