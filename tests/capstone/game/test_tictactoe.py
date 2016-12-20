@@ -30,12 +30,6 @@ class TestTicTacToe(unittest.TestCase):
         self.assertEqual(game_copy.legal_moves(), self.game.legal_moves())
         self.assertIsNot(game_copy.legal_moves(), self.game.legal_moves())
 
-    def test_equal(self):
-        moves = [1, 2]
-        self.game.make_moves(*moves)
-        other = TicTacToe().make_moves(*moves)
-        self.assertEqual(self.game, other)
-
     def test_not_equal(self):
         other = TicTacToe().make_moves(1)
         self.assertNotEqual(self.game, other)
@@ -50,6 +44,12 @@ class TestTicTacToe(unittest.TestCase):
     def test_cur_player_after_two_moves(self):
         self.game.make_moves(1, 2)
         self.assertEqual(self.game.cur_player(), 0)
+
+    def test_equal(self):
+        moves = [1, 2]
+        self.game.make_moves(*moves)
+        other = TicTacToe().make_moves(*moves)
+        self.assertEqual(self.game, other)
 
     def test_is_not_over_at_start(self):
         self.assertFalse(self.game.is_over())
