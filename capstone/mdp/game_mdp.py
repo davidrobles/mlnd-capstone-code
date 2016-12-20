@@ -29,6 +29,17 @@ class GameMDP(MDP):
     # MDP #
     #######
 
+    def actions(self, game):
+        return game.legal_moves()
+
+    def is_terminal(self, state):
+        return state.is_over()
+
+    def reward(self, state, action, next_state):
+        if not next_state.is_over():
+            return 0
+        return default_util_func(next_state, (self._opp_player_idx + 1) % 2)
+
     def start_state(self):
         return copy(self._game)
 
@@ -53,14 +64,3 @@ class GameMDP(MDP):
         new_game.make_move(move)
         hashed = _zobrist_hash(new_game.board)
         return {hashed: 1.0}
-
-    def actions(self, game):
-        return game.legal_moves()
-
-    def reward(self, state, action, next_state):
-        if not next_state.is_over():
-            return 0
-        return default_util_func(next_state, (self._opp_player_idx + 1) % 2)
-
-    def is_terminal(self, state):
-        return state.is_over()
