@@ -56,10 +56,8 @@ class GameMDP(MDP):
         return self._hashed_states.values()
 
     def transitions(self, game, move):
-        chosen_move = self._opp_player.choose_move(game)
-        if chosen_move != move:
-            return {}
-        new_game = game.copy()
-        new_game.make_move(move)
-        hashed = _zobrist_hash(new_game.board)
-        return {hashed: 1.0}
+        new_game = game.copy().make_move(move)
+        if new_game.cur_player() == self._opp_player_idx:
+            chosen_move = self._opp_player.choose_move(new_game)
+            new_game.make_move(chosen_move)
+        return [(new_game, 1.0)]
