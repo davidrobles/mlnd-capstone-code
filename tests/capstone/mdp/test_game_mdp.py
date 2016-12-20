@@ -50,10 +50,20 @@ class TestGameMDP(unittest.TestCase):
 
     def test_reward_when_agent_moves_first_and_wins(self):
         ab = AlphaBeta()
-        mdp = GameMDP(self.game, ab, 1)
+        opp_idx = 1
+        mdp = GameMDP(self.game, ab, opp_idx)
+        # Agent moves first, Opponent second
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
+        # cur_state:
+        # X X -
+        # O O -
+        # - - -
         action = 3
         next_state = cur_state.copy().make_move(action)
+        # next_state:
+        # X X X
+        # O O -
+        # - - -
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 1.0)
 
