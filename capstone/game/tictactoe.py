@@ -115,9 +115,9 @@ class TicTacToeView(object):
         return ' '.join([self._piece((row * 3) + col) for col in range(3)])
 
     def _piece(self, ix):
-        if self.game.boards[0] & (1 << ix):
+        if self.game._boards[0] & (1 << ix):
             return str_aec('X', 'bold_red')
-        elif self.game.boards[1] & (1 << ix):
+        elif self.game._boards[1] & (1 << ix):
             return str_aec('O', 'bold_blue')
         else:
             return '-'

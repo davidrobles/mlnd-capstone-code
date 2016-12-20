@@ -25,6 +25,8 @@ class Environment(object):
         '''Performs the given action in the current state.'''
         prev = copy.copy(self._cur_state)
         transitions = self._mdp.transitions(self._cur_state, action)
+        import pdb
+        pdb.set_trace()
         for next_state, prob in transitions:
             self._cur_state = next_state
         return self._mdp.reward(prev, action, self.cur_state())

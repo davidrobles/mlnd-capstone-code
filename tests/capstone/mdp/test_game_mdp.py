@@ -86,3 +86,19 @@ class TestGameMDP(unittest.TestCase):
         players = [RandPlayer(), RandPlayer()]
         play_match(game, players, verbose=False)
         self.assertTrue(self.mdp.is_terminal(game))
+
+    def test_transitions(self):
+        # X - O
+        # - - X
+        # - - O
+        game = TicTacToe().make_moves(1, 3, 6, 9)
+        # Create an mdp where AlphaBeta is the
+        # second player to move
+        mdp = GameMDP(game, AlphaBeta(), 1)
+        # Put X in 7 slot, and the mdp should
+        # make the transition assuming O moving 4
+        transitions = mdp.transitions(game, 7)
+        self.assertEqual(len(transitions), 1)
+        next_game, prob = transitions[0]
+        self.assertEqual(game.copy().make_moves(7, 4), next_game)
+        self.assertEqual(prob, 1.0)
