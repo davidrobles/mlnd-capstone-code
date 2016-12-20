@@ -24,8 +24,7 @@ class TestGameMDP(unittest.TestCase):
         game = TicTacToe()
         players = [RandPlayer(), RandPlayer()]
         play_match(game, players, verbose=False)
-        actual_n_actions = len(self.mdp.actions(game))
-        self.assertEqual(actual_n_actions, 0)
+        self.assertEqual(self.mdp.actions(game), [])
 
     def test_reward_when_game_is_not_over_is_zero(self):
         cur_state = TicTacToe()
