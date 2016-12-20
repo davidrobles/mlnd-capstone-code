@@ -31,7 +31,6 @@ class GameMDP(MDP):
     def start_state(self):
         return game.copy()
 
-    @property
     def states(self):
         if not self._hashed_states:
             def generate_states(game):

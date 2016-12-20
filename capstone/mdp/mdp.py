@@ -12,7 +12,7 @@ class MDP(object):
     http://ai.berkeley.edu/
     '''
 
-    @abc.abstractproperty
+    @abc.abstractmethod
     def states(self):
         '''
         Returns a list of all states.

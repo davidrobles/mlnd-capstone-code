@@ -12,7 +12,7 @@ class TestGameMDP(unittest.TestCase):
         self.mdp = GameMDP(self.game, None, 0)
 
     def test_states(self):
-        self.assertEqual(len(self.mdp.states), 5478)
+        self.assertEqual(len(self.mdp.states()), 5478)
 
     def test_actions(self):
         cur_state = TicTacToe()
