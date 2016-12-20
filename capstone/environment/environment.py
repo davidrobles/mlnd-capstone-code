@@ -13,7 +13,7 @@ class Environment(object):
     @abc.abstractmethod
     def actions(self):
         '''Returns the available actions from the current state.'''
-        return self._mdp.actions(self._cur_state)
+        return self._mdp.actions(self.cur_state())
 
     @abc.abstractmethod
     def cur_state(self):
