@@ -35,9 +35,7 @@ class GameMDP(MDP):
         return game.is_over()
 
     def reward(self, game, action, next_game):
-        if not next_game.is_over():
-            return 0
-        return utility(next_game, self._agent_idx)
+        return utility(next_game, self._agent_idx) if next_game.is_over() else 0
 
     def start_state(self):
         return self._game.copy()
