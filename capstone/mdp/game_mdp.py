@@ -17,7 +17,7 @@ class GameMDP(MDP):
         self._game = game
         self._opp_player = opp_player
         self._opp_idx = opp_idx
-        self._agent_idx = (opp_idx + 1) % 2
+        self._agent_idx = opp_idx ^ 1
         self._hashed_states = {}
         self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
 

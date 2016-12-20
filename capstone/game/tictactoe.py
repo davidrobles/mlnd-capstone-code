@@ -75,7 +75,7 @@ class TicTacToe(Game):
 
     def make_move(self, move):
         self._boards[self.cur_player()] |= (1 << (move - 1))
-        self._cur_player = (self.cur_player() + 1) % 2
+        self._cur_player ^= 1
         return self
 
     def outcomes(self):
