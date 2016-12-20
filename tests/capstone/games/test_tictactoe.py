@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import copy
 import unittest
 from capstone.game import TicTacToe
 
@@ -12,11 +13,14 @@ class TestTicTacToe(unittest.TestCase):
         self.assertEqual(TicTacToe.name, 'Tic-Tac-Toe')
 
     def test_copy(self):
-        self.game.make_moves(1, 3, 2)
-        clone = self.game.copy()
-        self.assertEqual(self.game.legal_moves(), clone.legal_moves())
-        self.assertEqual(self.game.cur_player(), clone.cur_player())
-        self.assertEqual(self.game, clone)
+        self.game.make_moves(1, 2)
+        game_copy = copy.copy(self.game)
+        self.assertEqual(game_copy, self.game)
+        self.assertIsNot(game_copy, self.game)
+        self.assertIsInstance(game_copy, TicTacToe)
+        self.assertIsInstance(game_copy, TicTacToe)
+        self.assertEqual(game_copy.legal_moves(), self.game.legal_moves())
+        self.assertIsNot(game_copy.legal_moves(), self.game.legal_moves())
 
     def test_equal(self):
         moves = [1, 2]

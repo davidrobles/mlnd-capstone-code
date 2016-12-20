@@ -58,12 +58,6 @@ class TicTacToe(Game):
     # Game #
     ########
 
-    def copy(self):
-        tic = TicTacToe()
-        tic._cur_player = self._cur_player
-        tic._boards = self._boards[:]
-        return tic
-
     def cur_player(self):
         return self._cur_player
 

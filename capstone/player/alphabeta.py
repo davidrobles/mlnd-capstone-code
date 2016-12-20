@@ -1,3 +1,4 @@
+from copy import copy
 import random
 from . import Player
 from ..util import default_util_func
@@ -17,7 +18,7 @@ class AlphaBeta(Player):
         best_move = None
         best_score = -100000000
         for move in game.legal_moves():
-            _, score = self._ab(game=game.copy().make_move(move),
+            _, score = self._ab(game=copy(game).make_move(move),
                                 cur_depth=cur_depth + 1,
                                 alpha=-beta,
                                 beta=-max(alpha, best_score))

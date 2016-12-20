@@ -1,4 +1,5 @@
 from __future__ import print_function
+from copy import copy
 import random
 
 
@@ -8,7 +9,7 @@ def play_match(game, players, verbose=True):
         print(game)
     while not game.is_over():
         cur_player = players[game.cur_player()]
-        move = cur_player.choose_move(game.copy())
+        move = cur_player.choose_move(copy(game))
         game.make_move(move)
         if verbose:
             print(game)

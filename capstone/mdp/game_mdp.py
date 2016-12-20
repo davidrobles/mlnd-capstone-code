@@ -1,3 +1,4 @@
+from copy import copy
 from . import MDP
 from ..game import TicTacToe
 from ..util import ZobristHashing
@@ -29,7 +30,7 @@ class GameMDP(MDP):
     #######
 
     def start_state(self):
-        return game.copy()
+        return copy(game)
 
     def states(self):
         if not self._hashed_states:
@@ -39,7 +40,7 @@ class GameMDP(MDP):
                 if board_hash not in self._hashed_states:
                     self._hashed_states[board_hash] = game
                 for move in game.legal_moves():
-                    new_game = game.copy().make_move(move)
+                    new_game = copy(game).make_move(move)
                     generate_states(new_game)
             generate_states(self.game)
         return self._hashed_states.values()
@@ -48,7 +49,7 @@ class GameMDP(MDP):
         chosen_move = self.opp_player.choose_move(game)
         if chosen_move != move:
             return {}
-        new_game = game.copy()
+        new_game = copy(game)
         new_game.make_move(move)
         hashed = _zobrist_hash(new_game.board)
         return {hashed: 1.0}

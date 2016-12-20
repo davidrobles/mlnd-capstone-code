@@ -7,11 +7,6 @@ class Game(object):
     '''Interface for abstract strategy games.'''
 
     @abc.abstractmethod
-    def copy(self):
-        '''Returns a copy of the current game.'''
-        pass
-
-    @abc.abstractmethod
     def cur_player(self):
         '''
         Returns the index of the player in turn, starting with 0:
