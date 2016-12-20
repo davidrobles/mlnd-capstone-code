@@ -7,7 +7,7 @@ class Environment(object):
     '''An environment for reinforcement learning interactions.'''
 
     @abc.abstractmethod
-    def actions(self, ):
+    def actions(self):
         '''Returns the available actions from the current state.'''
         pass
 
