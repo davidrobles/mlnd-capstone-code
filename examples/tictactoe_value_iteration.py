@@ -11,7 +11,6 @@ the MDP for Tic Tac Toe where the opponent ALWAYS makes the same move.
 However, is not possible for Connect 4 because the state is too large.
 '''
 from capstone.game import TicTacToe
-from copy import copy
 
 # class ValueIteration(object):
 
@@ -25,8 +24,8 @@ from copy import copy
     # def learn(self):
     #     delta = 0
     #     while True:
-    .copy()#         for move in game.legal_moves():
-    #             new_game = copy(game)
+    #         for move in game.legal_moves():
+    #             new_game = game.copy()
     #             new_game.make_move(move)
     #             old_value = self.table[zobrist_hash(new_game)]
     #             new_value = -1000000

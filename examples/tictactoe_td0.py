@@ -38,7 +38,7 @@ class TabularTD0(object):
 
     def step(self):
         move = self.policy.choose_move(self.game)
-        cur_state = copy(self.game)
+        cur_state = self.game.copy()
         cur_state_hash = self.zobrist_hash(cur_state)
         reward = self.game.make_move(action)
         next_state = env.cur_state()

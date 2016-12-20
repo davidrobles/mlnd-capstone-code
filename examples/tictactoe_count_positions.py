@@ -2,7 +2,6 @@
 
 Total game positions: 5,478
 '''
-from copy import copy
 from capstone.game import TicTacToe
 from capstone.util import ZobristHashing
 
@@ -12,7 +11,7 @@ def count_positions(game, hashed_boards):
     board_hash = zobrist_hash(game.board)
     hashed_boards.add(board_hash)
     for move in game.legal_moves():
-        new_game = copy(game)
+        new_game = game.copy()
         new_game.make_move(move)
         count_positions(new_game, hashed_boards)
 

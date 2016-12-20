@@ -1,6 +1,5 @@
 '''Implements TD(0) to learn a value function for Tic Tac Toe
 '''
-from copy import copy
 import random
 from capstone.game import TicTacToe
 from capstone.player import RandPlayer
@@ -22,7 +21,7 @@ class TD0(object):
         for episode in self.n_episodes:
             self.game.reset()
             while game.is_over():
-                prev = copy(game)
+                prev = game.copy()
                 game.make_move()
                 cur = self.eval_func(prev, 0)
                 nxt = self.eval_func(game, 0)

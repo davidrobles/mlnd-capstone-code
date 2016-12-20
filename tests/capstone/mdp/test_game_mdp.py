@@ -1,4 +1,3 @@
-from copy import copy
 import unittest
 from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
@@ -31,14 +30,14 @@ class TestGameMDP(unittest.TestCase):
     def test_reward_when_game_is_not_over_is_zero(self):
         cur_state = TicTacToe()
         action = 1
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = self.mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 0)
 
     def test_reward_when_game_is_over_and_is_draw(self):
         cur_state = TicTacToe().make_moves(1, 3, 2, 4, 6, 5, 7, 8)
         action = 9
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = self.mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 0.0)
 
@@ -47,7 +46,7 @@ class TestGameMDP(unittest.TestCase):
         mdp = GameMDP(self.game, ab, 1)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
         action = 3
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 1.0)
 
@@ -56,7 +55,7 @@ class TestGameMDP(unittest.TestCase):
         mdp = GameMDP(self.game, ab, 1)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
         action = 6
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, -1.0)
 
@@ -65,7 +64,7 @@ class TestGameMDP(unittest.TestCase):
         mdp = GameMDP(self.game, ab, 0)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
         action = 6
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 1.0)
 
@@ -74,7 +73,7 @@ class TestGameMDP(unittest.TestCase):
         mdp = GameMDP(self.game, ab, 0)
         cur_state = TicTacToe().make_moves(1, 4, 2, 5)
         action = 3
-        next_state = copy(cur_state).make_move(action)
+        next_state = cur_state.copy().make_move(action)
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, -1.0)
 
