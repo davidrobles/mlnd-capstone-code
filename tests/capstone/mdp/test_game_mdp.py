@@ -119,6 +119,9 @@ class TestGameMDP(unittest.TestCase):
         reward = mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, -1.0)
 
+    def test_start_state(self):
+        self.assertEqual(self.mdp.start_state(), self.game)
+
     def test_terminal_state(self):
         play_match(self.game, self.players, verbose=False)
         self.assertTrue(self.mdp.is_terminal(self.game))
