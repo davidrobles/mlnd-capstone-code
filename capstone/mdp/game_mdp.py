@@ -31,13 +31,13 @@ class GameMDP(MDP):
     def actions(self, game):
         return game.legal_moves()
 
-    def is_terminal(self, state):
-        return state.is_over()
+    def is_terminal(self, game):
+        return game.is_over()
 
-    def reward(self, state, action, next_state):
-        if not next_state.is_over():
+    def reward(self, game, action, next_game):
+        if not next_game.is_over():
             return 0
-        return default_util_func(next_state, (self._opp_player_idx + 1) % 2)
+        return default_util_func(next_game, (self._opp_player_idx + 1) % 2)
 
     def start_state(self):
         return self._game.copy()
