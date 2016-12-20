@@ -9,15 +9,15 @@ class GameMDP(MDP):
     using a deterministic player as an opponent.
     '''
 
-    def __init__(self, game, opp_player, opp_player_idx):
+    def __init__(self, game, opp_player, opp_idx):
         '''
         opp_player: the opponent player
-        opp_player_idx: the player idx position of the opponent player in
-                        the game
+        opp_idx: the idx of the opponent player in the game
         '''
         self._game = game
         self._opp_player = opp_player
-        self._opp_player_idx = opp_player_idx
+        self._opp_idx = opp_idx
+        self._agent_idx = (self._opp_idx + 1) % 2
         self._hashed_states = {}
         self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
 
@@ -37,7 +37,7 @@ class GameMDP(MDP):
     def reward(self, game, action, next_game):
         if not next_game.is_over():
             return 0
-        return default_util_func(next_game, (self._opp_player_idx + 1) % 2)
+        return default_util_func(next_game, self._agent_idx)
 
     def start_state(self):
         return self._game.copy()
@@ -57,7 +57,7 @@ class GameMDP(MDP):
 
     def transitions(self, game, move):
         new_game = game.copy().make_move(move)
-        if new_game.cur_player() == self._opp_player_idx:
+        if new_game.cur_player() == self._opp_idx:
             chosen_move = self._opp_player.choose_move(new_game)
             new_game.make_move(chosen_move)
         return [(new_game, 1.0)]
