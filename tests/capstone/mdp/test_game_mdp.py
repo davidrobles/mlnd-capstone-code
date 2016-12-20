@@ -149,4 +149,4 @@ class TestGameMDP(unittest.TestCase):
     def test_transitions_empty_when_game_is_over(self):
         play_match(self.game, self.players, verbose=False)
         self.assertEqual(self.mdp.actions(self.game), [])
-        self.assertEqual(self.mdp.transitions(self.game, None), {})
+        self.assertEqual(self.mdp.transitions(self.game, None), [])

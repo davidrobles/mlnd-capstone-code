@@ -55,7 +55,7 @@ class GameMDP(MDP):
 
     def transitions(self, game, move):
         if game.is_over():
-            return {}
+            return []
         new_game = game.copy().make_move(move)
         if new_game.cur_player() == self._opp_idx:
             chosen_move = self._opp_player.choose_move(new_game)
