@@ -35,8 +35,16 @@ class TestGameMDP(unittest.TestCase):
 
     def test_reward_when_game_is_over_and_is_draw(self):
         cur_state = TicTacToe().make_moves(1, 3, 2, 4, 6, 5, 7, 8)
+        # cur_state:
+        # X X O
+        # O O X
+        # X O -
         action = 9
         next_state = cur_state.copy().make_move(action)
+        # next_state:
+        # X X O
+        # O O X
+        # X O X
         reward = self.mdp.reward(cur_state, action, next_state)
         self.assertEqual(reward, 0.0)
 
