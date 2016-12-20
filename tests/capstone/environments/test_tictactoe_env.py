@@ -4,9 +4,6 @@ from capstone.environment import TicTacToeEnv
 
 class TestTicTacToeEnv(unittest.TestCase):
 
-    def setUp(self):
-        self.env = TicTacToeEnv()
-
     def test_states(self):
         self.env.cur_state()
 

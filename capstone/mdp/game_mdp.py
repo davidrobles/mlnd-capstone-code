@@ -28,6 +28,9 @@ class GameMDP(MDP):
     # MDP #
     #######
 
+    def start_state(self):
+        return game.copy()
+
     @property
     def states(self):
         if not self._hashed_states:

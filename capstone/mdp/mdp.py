@@ -21,6 +21,11 @@ class MDP(object):
         pass
 
     @abc.abstractmethod
+    def start_state(self):
+        '''Returns the initial state.'''
+        pass
+
+    @abc.abstractmethod
     def actions(self, state):
         '''Returns a list of possible actions in the given state.'''
         pass
