@@ -1,19 +1,19 @@
 import random
 from . import Player
-from ..util import default_util_func
+from ..util import utility
 
 
 class AlphaBeta(Player):
 
     name = 'Alpha-Beta Pruning'
 
-    def __init__(self, eval_func=default_util_func, max_depth=1000):
-        self.eval_func = eval_func
-        self.max_depth = max_depth
+    def __init__(self, eval_func=utility, max_depth=1000):
+        self._eval = eval_func
+        self._max_depth = max_depth
 
     def _ab(self, game, cur_depth, alpha, beta):
-        if game.is_over() or cur_depth == self.max_depth:
-            return None, self.eval_func(game, game.cur_player())
+        if game.is_over() or cur_depth == self._max_depth:
+            return None, self._eval(game, game.cur_player())
         best_move = None
         best_score = -100000000
         for move in game.legal_moves():
