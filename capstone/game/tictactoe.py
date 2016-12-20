@@ -19,8 +19,16 @@ class TicTacToe(Game):
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
 
-    def __init__(self):
+    def __init__(self, board=None):
         self.reset()
+        if board:
+            for ix, c in enumerate(board):
+                if c == 'X':
+                    self._boards[0] |= 1 << ix
+                    self._cur_player ^= 1
+                elif c == 'O':
+                    self._boards[1] |= 1 << ix
+                    self._cur_player ^= 1
 
     def copy(self):
         tic = TicTacToe()

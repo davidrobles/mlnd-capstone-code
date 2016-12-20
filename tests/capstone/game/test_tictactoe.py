@@ -11,6 +11,15 @@ class TestTicTacToe(unittest.TestCase):
     def test_name(self):
         self.assertEqual(TicTacToe.name, 'Tic-Tac-Toe')
 
+    def test_with_board(self):
+        game = TicTacToe(
+            'X-X'
+            'O-X'
+            '-O-'
+        )
+        self.assertEqual(game.legal_moves(), [2, 5, 7 , 9])
+        self.assertEqual(game.cur_player(), 1)
+
     def test_copy(self):
         self.game.make_moves(1, 2)
         game_copy = self.game.copy()
