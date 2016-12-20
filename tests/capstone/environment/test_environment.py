@@ -11,3 +11,4 @@ class TestEnvironment(unittest.TestCase):
         mdp = GameMDP(game, None, 0)
         env = Environment(mdp)
         self.assertEqual(env.cur_state(), mdp.start_state())
+        self.assertEqual(env.cur_state(), game)
