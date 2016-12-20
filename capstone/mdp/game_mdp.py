@@ -16,9 +16,9 @@ class GameMDP(MDP):
         opp_player_idx: the player idx position of the opponent player in
                         the game
         '''
-        self.game = game
-        self.opp_player = opp_player
-        self.opp_player_idx = opp_player_idx
+        self._game = game
+        self._opp_player = opp_player
+        self._opp_player_idx = opp_player_idx
         self._hashed_states = {}
         self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
 
@@ -30,7 +30,7 @@ class GameMDP(MDP):
     #######
 
     def start_state(self):
-        return copy(game)
+        return copy(self._game)
 
     def states(self):
         if not self._hashed_states:
@@ -42,11 +42,11 @@ class GameMDP(MDP):
                 for move in game.legal_moves():
                     new_game = copy(game).make_move(move)
                     generate_states(new_game)
-            generate_states(self.game)
+            generate_states(self._game)
         return self._hashed_states.values()
 
     def transitions(self, game, move):
-        chosen_move = self.opp_player.choose_move(game)
+        chosen_move = self._opp_player.choose_move(game)
         if chosen_move != move:
             return {}
         new_game = copy(game)
@@ -61,7 +61,7 @@ class GameMDP(MDP):
         from ..util import default_util_func
         if not next_state.is_over():
             return 0
-        return default_util_func(next_state, (self.opp_player_idx + 1) % 2)
+        return default_util_func(next_state, (self._opp_player_idx + 1) % 2)
 
     def is_terminal(self, state):
         return state.is_over()
