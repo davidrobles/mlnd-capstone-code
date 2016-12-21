@@ -28,7 +28,6 @@ class TabularQLearning(object):
         return best_value
 
     def learn(self):
-        import random
         for episode in range(self.n_episodes):
             print('Episode {}'.format(episode))
             self.env.reset()
