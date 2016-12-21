@@ -1,6 +1,5 @@
 from . import MDP
-from ..game import TicTacToe
-from ..util import utility, ZobristHashing
+from ..util import utility
 
 
 class GameMDP(MDP):
@@ -18,8 +17,7 @@ class GameMDP(MDP):
         self._opp_player = opp_player
         self._opp_idx = opp_idx
         self._agent_idx = opp_idx ^ 1
-        self._hashed_states = {}
-        self._zobrist_hash = ZobristHashing(game.n_positions, game.n_pieces)
+        self._states = {}
 
     def __str__(self):
         return '<MDP states={}>'.format(len(self.states))
@@ -45,17 +43,16 @@ class GameMDP(MDP):
         return new_game
 
     def states(self):
-        if not self._hashed_states:
+        if not self._states:
             def generate_states(game):
                 '''Generates all the states for the game'''
-                board_hash = self._zobrist_hash(game.board)
-                if board_hash not in self._hashed_states:
-                    self._hashed_states[board_hash] = game
+                if game not in self._states:
+                    self._states[game] = game
                 for move in game.legal_moves():
                     new_game = game.copy().make_move(move)
                     generate_states(new_game)
             generate_states(self._game)
-        return self._hashed_states.values()
+        return self._states
 
     def transitions(self, game, move):
         if game.is_over():
