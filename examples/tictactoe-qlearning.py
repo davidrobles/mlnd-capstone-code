@@ -1,3 +1,4 @@
+import random
 from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
@@ -15,6 +16,16 @@ class TabularQLearning(object):
         self.n_episodes = n_episodes
         self._table = {}
 
+    def max_q_value(self, state, actions):
+        if not actions:
+            return 0
+        best_value = -100000
+        for next_action in actions:
+            temp_value = self._table.get((state, next_action), random.random() - 0.5)
+            if temp_value > best_value:
+                best_value = temp_value
+        return best_value
+
     def learn(self):
         import random
         for episode in range(self.n_episodes):
@@ -27,16 +38,9 @@ class TabularQLearning(object):
                 action = random.choice(self.env.actions())
                 reward = self.env.do_action(action)
                 next_state = self.env.cur_state()
-                best_value = -100000
-                if not env.actions():
-                    best_value = 0
-                else:
-                    for next_action in self.env.actions():
-                        temp_value = self._table.get((next_state, next_action), 0.1)
-                        if temp_value > best_value:
-                            best_value = temp_value
+                max_q_value = self.max_q_value(next_state, self.env.actions())
                 q_value = self._table.get((state, action), 0.1)
-                update_value = reward + (self.gamma * best_value) - q_value
+                update_value = reward + (self.gamma * max_q_value) - q_value
                 self._table[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
         print('Results:')
