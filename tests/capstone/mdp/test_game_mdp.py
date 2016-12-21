@@ -15,6 +15,21 @@ class TestGameMDP(unittest.TestCase):
     # def test_states(self):
     #     self.assertEqual(len(self.mdp.states()), 5478)
 
+    def test_start_state_when_opponent_should_move_to_start(self):
+        game = TicTacToe(
+            'XOO'
+            'XO-'
+            '-XX'
+        )
+        ab = AlphaBeta()
+        mdp = GameMDP(game, ab, 1)
+        expected = TicTacToe(
+            'XOO'
+            'XO-'
+            'OXX'
+        )
+        self.assertEqual(mdp.start_state(), expected)
+
     def test_actions(self):
         self.assertEqual(self.mdp.actions(self.game), list(range(1, 10)))
 
