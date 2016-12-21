@@ -38,7 +38,11 @@ class GameMDP(MDP):
         return utility(next_game, self._agent_idx) if next_game.is_over() else 0
 
     def start_state(self):
-        return self._game.copy()
+        new_game = self._game.copy()
+        if not new_game.is_over() and new_game.cur_player() == self._opp_idx:
+            chosen_move = self._opp_player.choose_move(new_game)
+            new_game.make_move(chosen_move)
+        return new_game
 
     def states(self):
         if not self._hashed_states:

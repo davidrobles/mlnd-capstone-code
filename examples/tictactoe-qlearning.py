@@ -43,15 +43,16 @@ class TabularQLearning(object):
                 self.table[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
         print('Results:')
-        for key, value in self.table.iteritems():
-            print(key)
-            print(value)
+        for (state, action), value in self.table.iteritems():
+            print('State:\n\n{}'.format(state))
+            print('Action:\n\n{}\n'.format(action))
+            print('Value:\n\n{}'.format(value))
             print('*' * 60)
 
 game = TicTacToe(
     'X-O'
     'XO-'
-    '-XO'
+    '-X-'
 )
 ab = AlphaBeta()
 mdp = GameMDP(game, ab, 1)

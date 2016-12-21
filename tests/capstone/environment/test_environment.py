@@ -9,10 +9,26 @@ class TestEnvironment(unittest.TestCase):
 
     def test_cur_state(self):
         game = TicTacToe()
-        mdp = GameMDP(game, None, 0)
+        mdp = GameMDP(game, AlphaBeta(), 1)
         env = Environment(mdp)
         self.assertEqual(env.cur_state(), mdp.start_state())
         self.assertEqual(env.cur_state(), game)
+
+    def test_cur_state_when_opponent_should_move_to_start(self):
+        game = TicTacToe(
+            'XOO'
+            'XO-'
+            '-XX'
+        )
+        ab = AlphaBeta()
+        mdp = GameMDP(game, ab, 1)
+        env = Environment(mdp)
+        expected = TicTacToe(
+            'XOO'
+            'XO-'
+            'OXX'
+        )
+        self.assertEqual(env.cur_state(), expected)
 
     def test_do_action(self):
         # X - O

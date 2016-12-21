@@ -9,7 +9,7 @@ class TestGameMDP(unittest.TestCase):
 
     def setUp(self):
         self.game = TicTacToe()
-        self.mdp = GameMDP(self.game, None, 0)
+        self.mdp = GameMDP(self.game, AlphaBeta(), 1)
         self.players = [RandPlayer(), RandPlayer()]
 
     # def test_states(self):
