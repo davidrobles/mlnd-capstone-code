@@ -38,7 +38,7 @@ class TabularQLearning(object):
                 action = random.choice(self.env.actions(state))
                 reward, next_state = self.env.do_action(action)
                 max_q_value = self.max_q_value(next_state)
-                q_value = self.table.get((state, action), 0.1)
+                q_value = self.table.get((state, action), random.random() - 0.5)
                 update_value = reward + (self.gamma * max_q_value) - q_value
                 self.table[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
