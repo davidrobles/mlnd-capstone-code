@@ -57,7 +57,7 @@ class GameMDP(MDP):
         if game.is_over():
             return []
         new_game = game.copy().make_move(move)
-        if new_game.cur_player() == self._opp_idx:
+        if not new_game.is_over() and new_game.cur_player() == self._opp_idx:
             chosen_move = self._opp_player.choose_move(new_game)
             new_game.make_move(chosen_move)
         return [(new_game, 1.0)]

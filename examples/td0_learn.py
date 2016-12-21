@@ -20,10 +20,10 @@ class TD0(object):
     def learn(self):
         for episode in self.n_episodes:
             self.game.reset()
-            while game.is_over():
+            while self.game.is_over():
                 prev = game.copy()
-                game.make_move()
+                self.game.make_move()
                 cur = self.eval_func(prev, 0)
                 nxt = self.eval_func(game, 0)
-                td_error = self.alpha * (gamme * nxt - cur) * (1 - cur * cur)
+                td_error = self.alpha * (self.gamma * nxt - cur) * (1 - cur * cur)
                 self.eval_func

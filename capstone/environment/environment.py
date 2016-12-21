@@ -26,12 +26,10 @@ class Environment(object):
         transitions = self._mdp.transitions(self.cur_state(), action)
         for next_state, prob in transitions:
             self._cur_state = next_state
-        # return self._mdp.reward(prev, action, self.cur_state())
+        return self._mdp.reward(prev, action, self.cur_state())
 
     def is_terminal(self):
-        state = self.cur_state()
-        actions = self.actions(state)
-        return len(actions) == 0
+        return len(self.actions()) == 0
 
     @abc.abstractmethod
     def reset(self):
