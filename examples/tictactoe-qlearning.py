@@ -2,9 +2,10 @@ from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
 from capstone.player import AlphaBeta, RandPlayer
+from capstone.util import ZobristHashing
 
 
-class TabularTD0(object):
+class TabularQLearning(object):
 
     def __init__(self, env, policy=RandPlayer(), alpha=0.01, gamma=0.99, n_episodes=1000):
         self.env = env
@@ -23,14 +24,19 @@ class TabularTD0(object):
             step = 0
             while not self.env.is_terminal():
                 print('Step {}'.format(step))
-                cur_state = self.env.cur_state()
+                state = self.env.cur_state()
                 action = random.choice(self.env.actions())
                 reward = self.env.do_action(action)
                 next_state = self.env.cur_state()
-                cur_state_value = self._table.get(cur_state, 0.1)
-                next_state_value = self._table.get(next_state, 0.3)
-                new_value = (cur_state_value + (self.alpha * (reward + (self.gamma * next_state_value) -  cur_state_value)))
-                self._table[cur_state] = new_value
+                best_value = -100000
+                for next_action in self.env.actions():
+                    temp_value = self._table.get((next_state, next_action), 0.1)
+                    if temp_value > best_value:
+                        best_value = temp_value
+                q_value = self._table.get((state, action), 0.1)
+                update_value = reward + (self.gamma * best_value) - q_value
+                new_value = q_value + (self.alpha * update_value)
+                self._table[(state, action)] = new_value
                 step += 1
                 if self.env.is_terminal():
                     self._table[next_state] = reward;
@@ -48,5 +54,5 @@ game = TicTacToe(
 ab = AlphaBeta()
 mdp = GameMDP(game, ab, 1)
 env = Environment(mdp)
-td0 = TabularTD0(env)
+td0 = TabularQLearning(env)
 td0.learn()
