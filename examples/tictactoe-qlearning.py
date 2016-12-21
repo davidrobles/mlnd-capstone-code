@@ -7,14 +7,13 @@ from capstone.util import ZobristHashing
 
 class TabularQLearning(object):
 
-    def __init__(self, env, policy=RandPlayer(), alpha=0.01, gamma=0.99, n_episodes=1000):
+    def __init__(self, env, policy=RandPlayer(), alpha=0.1, gamma=0.99, n_episodes=1000):
         self.env = env
         self.policy = RandPlayer()
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
         self._table = {}
-        self._boards = {}
 
     def learn(self):
         import random
@@ -29,17 +28,17 @@ class TabularQLearning(object):
                 reward = self.env.do_action(action)
                 next_state = self.env.cur_state()
                 best_value = -100000
-                for next_action in self.env.actions():
-                    temp_value = self._table.get((next_state, next_action), 0.1)
-                    if temp_value > best_value:
-                        best_value = temp_value
+                if not env.actions():
+                    best_value = 0
+                else:
+                    for next_action in self.env.actions():
+                        temp_value = self._table.get((next_state, next_action), 0.1)
+                        if temp_value > best_value:
+                            best_value = temp_value
                 q_value = self._table.get((state, action), 0.1)
                 update_value = reward + (self.gamma * best_value) - q_value
-                new_value = q_value + (self.alpha * update_value)
-                self._table[(state, action)] = new_value
+                self._table[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
-                if self.env.is_terminal():
-                    self._table[next_state] = reward;
         print('Results:')
         for key, value in self._table.iteritems():
             print(key)
