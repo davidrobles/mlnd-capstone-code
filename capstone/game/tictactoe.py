@@ -1,6 +1,6 @@
 from __future__ import print_function, unicode_literals
 from . import Game
-from ..util import print_aec, str_aec
+from ..util import print_aec, str_aec, ZobristHashing
 
 
 class TicTacToe(Game):
@@ -18,6 +18,11 @@ class TicTacToe(Game):
 
     WINS = [0b000000111, 0b000111000, 0b111000000, 0b001001001,
             0b010010010, 0b100100100, 0b100010001, 0b001010100]
+
+    zobrist_hash = ZobristHashing(n_positions, n_pieces)
+
+    def __hash__(self):
+        return TicTacToe.zobrist_hash(self.board)
 
     def __init__(self, board=None):
         self.reset()

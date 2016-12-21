@@ -30,6 +30,20 @@ class TestTicTacToe(unittest.TestCase):
         self.assertEqual(game_copy.legal_moves(), self.game.legal_moves())
         self.assertIsNot(game_copy.legal_moves(), self.game.legal_moves())
 
+    def test_hash(self):
+        game1 = TicTacToe().make_moves(1, 7)
+        table = {game1: 'game1'}
+        self.assertEqual(len(table), 1)
+        self.assertEqual(table[game1], 'game1')
+        game2 = TicTacToe().make_moves(1, 7)
+        table[game2] = 'game2'
+        self.assertEqual(table[game1], 'game2')
+        self.assertEqual(table[game2], 'game2')
+        game3 = TicTacToe().make_moves(1, 7, 9)
+        table[game3] = 'game3'
+        self.assertEqual(len(table), 2)
+        self.assertEqual(table[game3], 'game3')
+
     def test_not_equal(self):
         other = TicTacToe().make_moves(1)
         self.assertNotEqual(self.game, other)
