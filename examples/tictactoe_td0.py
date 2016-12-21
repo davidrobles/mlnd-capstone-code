@@ -2,7 +2,6 @@ from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
 from capstone.player import AlphaBeta, RandPlayer
-from capstone.util import ZobristHashing
 
 
 class TabularTD0(object):
@@ -13,7 +12,6 @@ class TabularTD0(object):
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
-        self.zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
         self._table = {}
         self._boards = {}
 
@@ -28,26 +26,19 @@ class TabularTD0(object):
                 cur_state = self.env.cur_state()
                 action = random.choice(self.env.actions())
                 reward = self.env.do_action(action)
-                # print('Reward {}'.format(reward))
                 next_state = self.env.cur_state()
-                cur_state_hash = self.zobrist_hash(cur_state.board)
-                # print('cur_state_value_hash: {}'.format(cur_state_hash))
-                cur_state_value = self._table.get(cur_state_hash, 0.1)
-                next_state_hash = self.zobrist_hash(next_state.board)
-                # print('next_state_value_hash: {}'.format(next_state_hash))
-                next_state_value = self._table.get(next_state_hash, 0.3)
-                new_value = cur_state_value + (self.alpha * (reward + (self.gamma * next_state_value) -  cur_state_value))
-                # print('new_value {}'.format(new_value))
-                self._table[cur_state_hash] = new_value
-                self._boards[cur_state_hash] = cur_state
-                # print('cur_state_hash' + str(cur_state_hash))
-                # print(env.cur_state())
+                cur_state_value = self._table.get(cur_state, 0.1)
+                next_state_value = self._table.get(next_state, 0.3)
+                new_value = (cur_state_value + (self.alpha * (reward + (self.gamma * next_state_value) -  cur_state_value)))
+                self._table[cur_state] = new_value
                 step += 1
                 if env.is_terminal():
-                    self._table[next_state_hash] = reward;
+                    self._table[next_state] = reward;
         print('Results:')
-        print(self._table)
-        print(self._boards)
+        for key, value in self._table.iteritems():
+            print(key)
+            print(value)
+            print('*' * 60)
 
 game = TicTacToe(
     'X-O'
