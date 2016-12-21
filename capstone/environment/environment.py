@@ -10,9 +10,9 @@ class Environment(object):
         self._cur_state = self._mdp.start_state()
 
     @abc.abstractmethod
-    def actions(self):
-        '''Returns the available actions from the current state.'''
-        return self._mdp.actions(self.cur_state())
+    def actions(self, state):
+        '''Returns the available actions in the given state.'''
+        return self._mdp.actions(state)
 
     @abc.abstractmethod
     def cur_state(self):
@@ -33,7 +33,7 @@ class Environment(object):
         return reward, self.cur_state()
 
     def is_terminal(self):
-        return len(self.actions()) == 0
+        return len(self.actions(self.cur_state())) == 0
 
     @abc.abstractmethod
     def reset(self):

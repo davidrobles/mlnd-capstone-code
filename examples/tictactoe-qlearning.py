@@ -16,7 +16,8 @@ class TabularQLearning(object):
         self.n_episodes = n_episodes
         self.table = {}
 
-    def max_q_value(self, state, actions):
+    def max_q_value(self, state):
+        actions = self.env.actions(state)
         if not actions:
             return 0
         best_value = -100000
@@ -35,9 +36,9 @@ class TabularQLearning(object):
             while not self.env.is_terminal():
                 print('Step {}'.format(step))
                 state = self.env.cur_state()
-                action = random.choice(self.env.actions())
+                action = random.choice(self.env.actions(state))
                 reward, next_state = self.env.do_action(action)
-                max_q_value = self.max_q_value(next_state, self.env.actions())
+                max_q_value = self.max_q_value(next_state)
                 q_value = self.table.get((state, action), 0.1)
                 update_value = reward + (self.gamma * max_q_value) - q_value
                 self.table[(state, action)] = q_value + (self.alpha * update_value)
