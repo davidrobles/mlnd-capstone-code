@@ -14,10 +14,10 @@ class QLearning(object):
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.policy = policy
+        self.qf = qf
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
-        self.qf = qf
 
     def max_q_value(self, state):
         actions = self.env.actions(state)
