@@ -39,16 +39,11 @@ class PolicyPlayer(object):
         return best_move
 
 
-game = TicTacToe(
-    '---'
-    '---'
-    '---'
-)
+game = TicTacToe()
 ab = AlphaBeta()
 mdp = GameMDP(game, ab, 1)
 env = Environment(mdp)
 qf = {}
-ql = QLearning(env, qf=qf, n_episodes=1000)
-ql.learn()
-players = [PolicyPlayer(qf), AlphaBeta()]
+QLearning(env, qf=qf, n_episodes=1000).learn()
+players = [PolicyPlayer(qf), ab]
 play_series(TicTacToe(), players, 100)
