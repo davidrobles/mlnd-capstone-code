@@ -83,8 +83,8 @@ class TicTacToe(Game):
     def legal_moves(self):
         if any([self._check_win(pix) for pix in range(2)]):
             return []
-        legal_board = ~(self._boards[0] | self._boards[1])
-        return [move for move in range(1, 10) if legal_board & (1 << (move - 1))]
+        board = ~(self._boards[0] | self._boards[1])
+        return [move for move in range(1, 10) if board & (1 << (move - 1))]
 
     def make_move(self, move):
         self._boards[self.cur_player()] |= (1 << (move - 1))

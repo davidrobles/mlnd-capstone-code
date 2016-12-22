@@ -7,6 +7,7 @@ from capstone.util import ZobristHashing
 
 zobrist_hash = ZobristHashing(n_positions=9, n_pieces=2)
 
+
 def count_positions(game, hashed_boards):
     board_hash = zobrist_hash(game.board)
     hashed_boards.add(board_hash)
