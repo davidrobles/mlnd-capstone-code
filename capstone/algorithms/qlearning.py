@@ -7,7 +7,7 @@ class QLearning(object):
     def __init__(self, env, policy=RandPlayer(), vf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
-        self.policy = RandPlayer()
+        self.policy = policy
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
