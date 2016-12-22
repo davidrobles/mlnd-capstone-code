@@ -1,3 +1,16 @@
+'''
+A Q-Learning algorithm learns the state-action values for Tic-Tac-Toe board
+positions against a deterministic Alpha-Beta player. Aftere the values are
+learned, we use a Greedy Player to play 100 games against AlphaBeta.
+
+A greedy player that uses the learned state-action values should always
+draw against Alpha-Beta assuming the Q-learning algorithm ran for a high
+number of episodes.
+
+Note that Q-learning runs to only learn the values for board-moves for
+the first player. If we want to learn this to play as the second player,
+we need to run the algorithm against using an MDP where opp_idx = 0.
+'''
 from capstone.algorithms import QLearning
 from capstone.environment import Environment
 from capstone.game import TicTacToe
