@@ -3,6 +3,10 @@ A Q-Learning algorithm learns the state-action values for Tic-Tac-Toe board
 positions against a deterministic Alpha-Beta player. Aftere the values are
 learned, we use a Greedy Player to play 100 games against AlphaBeta.
 
+Since Q-learning is a model-free algorithm, i.e. it does not require a model,
+it takes environment and it does not have access to the transition and
+reward dynamics.
+
 A greedy player that uses the learned state-action values should always
 draw against Alpha-Beta assuming the Q-learning algorithm ran for a high
 number of episodes.
@@ -25,4 +29,4 @@ env = Environment(mdp)
 qf = {}
 QLearning(env, qf=qf, n_episodes=1000).learn()
 players = [GreedyQF(qf), ab]
-play_series(TicTacToe(), players, 100)
+play_series(TicTacToe(), players, n_matches=100)
