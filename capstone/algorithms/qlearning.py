@@ -1,11 +1,5 @@
 import random
-from capstone.player import RandPlayer
-
-
-class RandomPolicy(object):
-
-    def action(self, env, vf=None, qf=None):
-        return random.choice(env.actions(env.cur_state()))
+from capstone.policy import RandomPolicy
 
 
 class QLearning(object):
@@ -45,9 +39,3 @@ class QLearning(object):
                 update_value = reward + (self.gamma * max_q_value) - q_value
                 self.qf[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
-        # print('Results:')
-        # for (state, action), value in self.qf.iteritems():
-        #     print('State:\n\n{}'.format(state))
-        #     print('Action:\n\n{}\n'.format(action))
-        #     print('Value:\n\n{}'.format(value))
-        #     print('*' * 60)
