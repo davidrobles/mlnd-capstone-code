@@ -31,11 +31,14 @@ class QLearning(object):
                 print('Step {}'.format(step))
                 self.init()
                 state = self.env.cur_state()
-                action = self.behaviour_policy.action(self.env, self.qf)
+                action = self.behaviour_policy.action(self.env, qf=self.qf)
                 reward, next_state = self.env.do_action(action)
                 self.init()
-                max_qvalue = self.max_policy.action(self.env, qf=self.qf)
-                # max_q_value = self.max_q_value(next_state)
+                # fix issue with terminal positions
+                if self.env.is_terminal():
+                    max_qvalue = 0
+                else:
+                    max_qvalue = self.max_policy.action(self.env, qf=self.qf)
                 q_value = self.qf[(state, action)]
                 update_value = reward + (self.gamma * max_qvalue) - q_value
                 self.qf[(state, action)] = q_value + (self.alpha * update_value)
