@@ -1,5 +1,5 @@
 import random
-from capstone.policy import RandomPolicy
+from capstone.policy import GreedyPolicy, RandomPolicy
 
 
 class QLearning(object):
@@ -7,22 +7,20 @@ class QLearning(object):
     def __init__(self, env, policy=RandomPolicy(), qf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
-        self.policy = policy
+        self.behaviour_policy = policy
+        self.max_policy = GreedyPolicy()
         self.qf = qf
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
 
-    def max_q_value(self, state):
+    def init(self):
+        '''Initializes the q-value if unvisited'''
+        state = self.env.cur_state()
         actions = self.env.actions(state)
-        if not actions:
-            return 0
-        best_value = -100000
-        for next_action in actions:
-            temp_value = self.qf.get((state, next_action), random.random() - 0.5)
-            if temp_value > best_value:
-                best_value = temp_value
-        return best_value
+        for action in actions:
+            if (state, action) not in self.qf:
+                self.qf[(state, action)] = random.random() - 0.5
 
     def learn(self):
         for episode in range(self.n_episodes):
@@ -31,11 +29,14 @@ class QLearning(object):
             step = 0
             while not self.env.is_terminal():
                 print('Step {}'.format(step))
+                self.init()
                 state = self.env.cur_state()
-                action = self.policy.action(self.env, self.qf)
+                action = self.behaviour_policy.action(self.env, self.qf)
                 reward, next_state = self.env.do_action(action)
-                max_q_value = self.max_q_value(next_state)
-                q_value = self.qf.get((state, action), random.random() - 0.5)
-                update_value = reward + (self.gamma * max_q_value) - q_value
+                self.init()
+                max_qvalue = self.max_policy.action(self.env, qf=self.qf)
+                # max_q_value = self.max_q_value(next_state)
+                q_value = self.qf[(state, action)]
+                update_value = reward + (self.gamma * max_qvalue) - q_value
                 self.qf[(state, action)] = q_value + (self.alpha * update_value)
                 step += 1
