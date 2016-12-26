@@ -7,8 +7,7 @@ class GreedyPolicy(Policy):
         state = env.cur_state()
         actions = env.actions()
         if not actions:
-            print('called with no actions')
-            return 0
+            raise ValueError('Environment must have at least one available action.')
         state_actions = [(state, action) for action in actions]
         _, best_action = max(state_actions, key=lambda sa: qf[sa])
         return best_action
