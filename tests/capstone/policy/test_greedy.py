@@ -11,7 +11,7 @@ class FakeEnv(object):
     def cur_state(self):
         return 'FakeState'
 
-    def actions(self):
+    def actions(self, state):
         return self._actions
 
 
@@ -35,4 +35,4 @@ class TestGreedy(unittest.TestCase):
     def test_raises_value_error_if_no_actions_available(self):
         self.env._actions = []
         with self.assertRaises(ValueError):
-            self.policy.action(self.env)
+            self.policy.action(self.env, qf={})
