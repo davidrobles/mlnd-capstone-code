@@ -1,11 +1,19 @@
+import random
 from . import Policy
+from . import GreedyPolicy
+from . import RandomPolicy
 
 
-class GreedyPolicy(Policy):
+class EGreedyPolicy(Policy):
+
+    def __init__(self, epsilon):
+        self.epsilon = epsilon
+        self.greedy_policy = GreedyPolicy()
+        self.rand_policy = RandomPolicy()
 
     def action(self, env, vf=None, qf=None):
-        if env.is_terminal():
-            return 0
         state = env.cur_state()
-        actions = env.actions(state)
-        return max([qf[(state, action)] for action in actions])
+        actions = env.actions()
+        if random.random() < self.epsilon:
+            return self.rand_policy.action(env)
+        return self.greedy_policy.action(env)
