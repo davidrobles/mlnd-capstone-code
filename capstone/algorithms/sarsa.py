@@ -42,7 +42,7 @@ class Sarsa(object):
                     self.init()
                     next_action = self.policy.action(self.env, qf=self.qf)
                     next_state_next_action_value = self.qf[(next_state, next_action)]
-                update_value = reward + (self.gamma * next_state_next_action_value) - self.qf[(state, action)]
-                self.qf[(state, action)] += self.alpha * update_value
+                td_error = reward + (self.gamma * next_state_next_action_value) - self.qf[(state, action)]
+                self.qf[(state, action)] += self.alpha * td_error
                 action = next_action
                 step += 1
