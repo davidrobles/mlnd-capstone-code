@@ -1,10 +1,11 @@
 import random
+from capstone.policy import EGreedyPolicy
 from capstone.policy import RandomPolicy
 
 
 class Sarsa(object):
 
-    def __init__(self, env, policy=RandomPolicy(), qf={}, alpha=0.1,
+    def __init__(self, env, policy=EGreedyPolicy(), qf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.policy = policy
@@ -33,14 +34,16 @@ class Sarsa(object):
             print('Episode {}'.format(episode))
             self.env.reset()
             step = 0
-            while not self.env.is_terminal():
+            self.init()
+            action = self.policy.action(self.env, qf=self.qf)
+            while True:
                 print('Step {}'.format(step))
-                self.init()
                 state = self.env.cur_state()
-                action = self.policy.action(self.env, qf=self.qf)
                 reward, next_state = self.env.do_action(action)
                 self.init()
-                max_qvalue = self.max_qvalue()
-                update_value = reward + (self.gamma * max_qvalue) - self.qf[(state, action)]
+                next_action = self.policy.action(self.env, qf=self.qf)
+                update_value = reward + (self.gamma * self.qf[(next_state, next_action)]) - self.qf[(state, action)]
                 self.qf[(state, action)] += self.alpha * update_value
                 step += 1
+                if self.env.is_terminal():
+                    break
