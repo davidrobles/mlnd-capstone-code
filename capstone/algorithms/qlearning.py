@@ -29,10 +29,10 @@ class QLearning(object):
         return max([self.qf[(state, action)] for action in actions])
 
     def learn(self):
-        for episode in range(self.n_episodes):
+        for episode in range(1, self.n_episodes + 1):
             print('Episode {}'.format(episode))
             self.env.reset()
-            step = 0
+            step = 1
             while not self.env.is_terminal():
                 print('Step {}'.format(step))
                 self.init()
