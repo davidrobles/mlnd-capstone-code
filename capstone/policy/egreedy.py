@@ -15,5 +15,5 @@ class EGreedyPolicy(Policy):
         state = env.cur_state()
         actions = env.actions(state)
         if random.random() < self.epsilon:
-            return self.rand_policy.action(env)
-        return self.greedy_policy.action(env)
+            return self.rand_policy.action(env, vf=vf, qf=qf)
+        return self.greedy_policy.action(env, vf=vf, qf=qf)
