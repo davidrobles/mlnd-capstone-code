@@ -19,9 +19,7 @@ class Sarsa(object):
         state = self.env.cur_state()
         actions = self.env.actions(state)
         for action in actions:
-            if self.env.is_terminal():
-                self.qf[(state, action)] = 0
-            elif (state, action) not in self.qf:
+            if (state, action) not in self.qf:
                 self.qf[(state, action)] = random.random() - 0.5
 
     def learn(self):
@@ -31,14 +29,20 @@ class Sarsa(object):
             step = 1
             self.init()
             action = self.policy.action(self.env, qf=self.qf)
-            while True:
+            while not self.env.is_terminal():
                 print('Step {}'.format(step))
                 state = self.env.cur_state()
                 reward, next_state = self.env.do_action(action)
-                self.init()
-                next_action = self.policy.action(self.env, qf=self.qf)
-                update_value = reward + (self.gamma * self.qf[(next_state, next_action)]) - self.qf[(state, action)]
+                next_action = None
+                next_state_next_action_value = None
+                actions = self.env.actions(self.env.cur_state())
+                if not actions:
+                    next_state_next_action_value = 0
+                else:
+                    self.init()
+                    next_action = self.policy.action(self.env, qf=self.qf)
+                    next_state_next_action_value = self.qf[(next_state, next_action)]
+                update_value = reward + (self.gamma * next_state_next_action_value) - self.qf[(state, action)]
                 self.qf[(state, action)] += self.alpha * update_value
+                action = next_action
                 step += 1
-                if self.env.is_terminal():
-                    break
