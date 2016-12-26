@@ -1,5 +1,5 @@
 import random
-from capstone.policy import GreedyPolicy, RandomPolicy
+from capstone.policy import RandomPolicy
 
 
 class QLearning(object):
@@ -8,7 +8,6 @@ class QLearning(object):
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.behaviour_policy = policy
-        self.max_policy = GreedyPolicy()
         self.qf = qf
         self.alpha = alpha
         self.gamma = gamma
@@ -22,6 +21,13 @@ class QLearning(object):
             if (state, action) not in self.qf:
                 self.qf[(state, action)] = random.random() - 0.5
 
+    def max_qvalue(self):
+        if self.env.is_terminal():
+            return 0
+        state = self.env.cur_state()
+        actions = self.env.actions(state)
+        return max([self.qf[(state, action)] for action in actions])
+
     def learn(self):
         for episode in range(self.n_episodes):
             print('Episode {}'.format(episode))
@@ -34,11 +40,7 @@ class QLearning(object):
                 action = self.behaviour_policy.action(self.env, qf=self.qf)
                 reward, next_state = self.env.do_action(action)
                 self.init()
-                # fix issue with terminal positions
-                if self.env.is_terminal():
-                    max_qvalue = 0
-                else:
-                    max_qvalue = self.max_policy.action(self.env, qf=self.qf)
+                max_qvalue = self.max_qvalue()
                 q_value = self.qf[(state, action)]
                 update_value = reward + (self.gamma * max_qvalue) - q_value
                 self.qf[(state, action)] = q_value + (self.alpha * update_value)
