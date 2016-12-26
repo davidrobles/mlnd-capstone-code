@@ -40,8 +40,6 @@ class QLearning(object):
                 action = self.behaviour_policy.action(self.env, qf=self.qf)
                 reward, next_state = self.env.do_action(action)
                 self.init()
-                max_qvalue = self.max_qvalue()
-                q_value = self.qf[(state, action)]
-                update_value = reward + (self.gamma * max_qvalue) - q_value
-                self.qf[(state, action)] = q_value + (self.alpha * update_value)
+                td_error = reward + (self.gamma * self.max_qvalue()) - self.qf[(state, action)]
+                self.qf[(state, action)] += self.alpha * td_error
                 step += 1
