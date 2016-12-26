@@ -9,11 +9,6 @@ class GreedyPolicy(Policy):
         if not actions:
             print('called with no actions')
             return 0
-        best_value = -100000
-        best_action = None
-        for next_action in actions:
-            value = qf[(state, next_action)]
-            if value > best_value:
-                best_value = value
-                best_action = next_action
+        state_actions = [(state, action) for action in actions]
+        _, best_action = max(state_actions, key=lambda sa: qf[sa])
         return best_action
