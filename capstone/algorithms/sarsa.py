@@ -5,7 +5,7 @@ from capstone.policy import RandomPolicy
 
 class Sarsa(object):
 
-    def __init__(self, env, policy=EGreedyPolicy(), qf={}, alpha=0.1,
+    def __init__(self, env, policy=EGreedyPolicy(epsilon=0.1), qf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.policy = policy
@@ -19,21 +19,16 @@ class Sarsa(object):
         state = self.env.cur_state()
         actions = self.env.actions(state)
         for action in actions:
-            if (state, action) not in self.qf:
+            if self.env.is_terminal():
+                self.qf[(state, action)] = 0
+            elif (state, action) not in self.qf:
                 self.qf[(state, action)] = random.random() - 0.5
 
-    def max_qvalue(self):
-        if self.env.is_terminal():
-            return 0
-        state = self.env.cur_state()
-        actions = self.env.actions(state)
-        return max([self.qf[(state, action)] for action in actions])
-
     def learn(self):
-        for episode in range(self.n_episodes):
+        for episode in range(1, self.n_episodes + 1):
             print('Episode {}'.format(episode))
             self.env.reset()
-            step = 0
+            step = 1
             self.init()
             action = self.policy.action(self.env, qf=self.qf)
             while True:
