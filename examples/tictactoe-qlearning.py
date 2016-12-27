@@ -22,16 +22,12 @@ from capstone.mdp import GameMDP
 from capstone.player import AlphaBeta, GreedyQF
 from capstone.util import play_series
 
-game = TicTacToe(
-    'XOX'
-    'O-O'
-    '--X'
-)
+board = 'XOXO-O--X'
+game = TicTacToe(board)
 ab = AlphaBeta()
 mdp = GameMDP(game, ab, 1)
 env = Environment(mdp)
 qf = {}
 QLearning(env, qf=qf, n_episodes=1000).learn()
 players = [GreedyQF(qf), ab]
-print(qf)
-play_series(TicTacToe('XOXO-O--X'), players, n_matches=100)
+play_series(TicTacToe(board), players, n_matches=100)
