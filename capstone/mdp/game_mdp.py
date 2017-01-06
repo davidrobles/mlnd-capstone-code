@@ -5,7 +5,7 @@ from ..util import utility
 class GameMDP(MDP):
     '''
     A Markov Decision Process for a Game. Converts a game into an MPD by
-    using a deterministic player as an opponent.
+    making an opponent with fixed behavior part of the environment.
     '''
 
     def __init__(self, game, opp_player, opp_idx):
