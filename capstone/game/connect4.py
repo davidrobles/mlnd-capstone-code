@@ -123,16 +123,16 @@ class Connect4(Game):
 
     def _check_win(self, board):
         y = board & (board >> 6)
-        if (y & (y >> 2 * 6)) != 0:
+        if y & (y >> 2 * 6):
             return True
         y = board & (board >> type(self).H1)
-        if (y & (y >> 2 * type(self).H1)) != 0:
+        if y & (y >> 2 * type(self).H1):
             return True
         y = board & (board >> type(self).H2)
-        if (y & (y >> 2 * type(self).H2)) != 0:
+        if y & (y >> 2 * type(self).H2):
             return True
         y = board & (board >> 1)
-        if (y & (y >> 2)) != 0:
+        if y & (y >> 2):
             return True
         return False
 
