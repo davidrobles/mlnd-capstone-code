@@ -161,7 +161,7 @@ class Connect4View(object):
         return out
 
     def _board(self):
-        out = ''
+        out = '  '
         for col in range(COLS):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
