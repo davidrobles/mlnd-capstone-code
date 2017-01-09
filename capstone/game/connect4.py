@@ -1,4 +1,3 @@
-from __future__ import print_function, unicode_literals
 from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
@@ -12,17 +11,46 @@ class Connect4(Game):
     SIZE = Rows * Cols
     SIZE1 = H1 * Cols
     ALL1 = (1 << SIZE1) - 1
-    COL1 = (1 << H1) - 1;
+    COL1 = (1 << H1) - 1
     BOTTOM = ALL1 / COL1
     TOP = BOTTOM << Rows
 
     def __init__(self):
         self.reset()
 
+    def set_board(self, board):
+        self._boards = [0, 0]
+        for row in range(Connect4.Rows):
+            for col in range(Connect4.Cols):
+                if (board[row][col] == 'X'):
+                    self._boards[0] |= 1 << ((col * Connect4.Cols) + (Connect4.Rows - row - 1))
+                elif (board[row][col] == 'O'):
+                    self._boards[1] |= 1 << ((col * Connect4.Cols) + (Connect4.Rows - row - 1))
+
     def __repr__(self):
         return Connect4View(self).render()
 
+    def print_bitboard(self, board):
+        out = '  '
+        for col in range(Connect4.Cols):
+            out += ' ' + chr(97 + col)
+        out = str_aec(out, 'bold_green') + '\n'
+        for row in range(Connect4.Rows, -1, -1):
+            out += ' ' + str_aec(str(row + 1), 'bold_green')
+            for col in range(Connect4.Cols + 10):
+                hello = (col * 7) + row
+                if (1 << hello) & board:
+                    out += str_aec(' X', 'bold_red')
+                else:
+                    out += ' .'
+            out += '\n'
+        out += '\n'
+        out += '-' * 80
+        out += '\n'
+        print(out)
+
     def __str__(self):
+        # print_bitboard(Connect4.ALL1)
         return Connect4View(self).render()
 
     ########
@@ -88,23 +116,65 @@ class Connect4(Game):
         self._moves = []
         for i in range(Connect4.Cols):
             self._height[i] = Connect4.H1 * i
-            if (1 << self._height[i]) & Connect4.TOP == 0:
+            if ((1 << self._height[i]) & Connect4.TOP) == 0:
                 self._moves.append(i)
 
+    # def _check_win(self, board):
+    #     y = board & (board >> 7)
+    #     if y & (y >> 2 * 7): # check \ diagonal
+    #         print('won \\')
+    #         return True
+    #     y = board & (board >> 8)
+    #     if y & (y >> 2 * 8): # check horizontal -
+    #         print('won -')
+    #         return True
+    #     y = board & (board >> 9)
+    #     if y & (y >> 2 * 9): # check / diagonal
+    #         # self.print_bitboard(y)
+    #         # self.print_bitboard((y >> 2 * 9))
+    #         print('won /')
+    #         return True
+    #     y = board & (board >> 1)
+    #     if y & (y >> 2):     # check vertical |
+    #         print('won |')
+    #         return True
+    #     return False
+
     def _check_win(self, board):
-        y = board & (board >> 7)
-        if (y & (y >> 2 * 7)): # check \ diagonal
+        # self.print_bitboard(board)
+        # self.print_bitboard(board >> 6)
+        # print('board')
+        # self.print_bitboard(board)
+        # print('board >> 6')
+        # self.print_bitboard(board >> 6)
+        y = board & (board >> 6)
+        # self.print_bitboard(y)
+        if (y & (y >> 2 * 6)) != 0:
+            # print('y')
+            self.print_bitboard(y)
+            # print('y >> 2 * 6')
+            self.print_bitboard(y >> 2 * 6)
             return True
-        y = board & (board >> 8)
-        if (y & (y >> 2 * 8)): # check horizontal -
+        y = board & (board >> Connect4.H1)
+        if (y & (y >> 2 * Connect4.H1)) != 0:
+            # print('here2')
             return True
-        y = board & (board >> 9)
-        if (y & (y >> 2 * 9)): # check / diagonal
+        y = board & (board >> Connect4.H2)
+        if (y & (y >> 2 * Connect4.H2)) != 0:
+            # print('here')
             return True
         y = board & (board >> 1)
-        if (y & (y >> 2)):     # check vertical |
+        if (y & (y >> 2)) != 0:
+            # print('here2')
             return True
         return False
+
+    # def _check_win(self, newboard):
+        # diag1 = newboard & (newboard>>6);
+        # hori = newboard & (newboard>>Connect4.H1);
+        # diag2 = newboard & (newboard>>Connect4.H2);
+        # vert = newboard & (newboard>>1);
+        # return ((diag1 & (diag1 >> 2*6)) | (hori & (hori >> 2*Connect4.H1)) | (diag2 & (diag2 >> 2*Connect4.H2)) | (vert & (vert >> 2))) > 0
 
 
 class Connect4View(object):
@@ -133,9 +203,9 @@ class Connect4View(object):
 
     def _board(self):
         out = ''
-        for a in range(Connect4.Cols):
-            out += str(self.game._height[a]) + '\n'
-        out += '\n\n  '
+        # for a in range(Connect4.Cols):
+        #     out += str(self.game._height[a]) + '\n'
+        # out += '\n\n  '
         for col in range(Connect4.Cols):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
