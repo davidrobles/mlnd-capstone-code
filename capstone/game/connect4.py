@@ -1,6 +1,8 @@
 '''
 This implementation is based in John Tromp's Java implementation
 of Connect 4.
+
+https://github.com/qu1j0t3/fhourstones/blob/master/Connect4.java
 '''
 
 from . import Game
