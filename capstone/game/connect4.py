@@ -1,3 +1,8 @@
+'''
+This implementation is based in John Tromp's Java implementation
+of Connect 4.
+'''
+
 from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
@@ -79,7 +84,6 @@ class Connect4(Game):
         if move not in self._moves:
             print(type(move))
             raise Exception('Invalid move: {}'.format(move))
-        self._move_made = move
         new_board = self._boards[self.cur_player()] | (1 << self._height[move])
         self._height[move] += 1
         self._boards[self.cur_player()] = new_board
@@ -105,7 +109,6 @@ class Connect4(Game):
         self._boards = [0, 0]
         self._height = [0] * Connect4.Cols
         self._init_moves()
-        self._move_made = None
 
     #############
     # Connect 4 #
@@ -154,8 +157,6 @@ class Connect4View(object):
         s = '[{}]'.format(', '.join([str(s) for s in self.game.legal_moves()]))
         out = ''
         out += str_aec('Moves: ', 'bold_green') + s + '\n'
-        if self.game._move_made:
-            out += str_aec('Move made: ', 'bold_green') + str(self.game._move_made) + '\n'
         return out
 
     def _board(self):
