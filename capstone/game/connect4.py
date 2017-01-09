@@ -117,19 +117,19 @@ class Connect4(Game):
     def _init_moves(self):
         self._moves = []
         for i in range(type(self).Cols):
-            self._height[i] = Connect4.H1 * i
-            if ((1 << self._height[i]) & Connect4.TOP) == 0:
+            self._height[i] = type(self).H1 * i
+            if ((1 << self._height[i]) & type(self).TOP) == 0:
                 self._moves.append(i)
 
     def _check_win(self, board):
         y = board & (board >> 6)
         if (y & (y >> 2 * 6)) != 0:
             return True
-        y = board & (board >> Connect4.H1)
-        if (y & (y >> 2 * Connect4.H1)) != 0:
+        y = board & (board >> type(self).H1)
+        if (y & (y >> 2 * type(self).H1)) != 0:
             return True
-        y = board & (board >> Connect4.H2)
-        if (y & (y >> 2 * Connect4.H2)) != 0:
+        y = board & (board >> type(self).H2)
+        if (y & (y >> 2 * type(self).H2)) != 0:
             return True
         y = board & (board >> 1)
         if (y & (y >> 2)) != 0:
