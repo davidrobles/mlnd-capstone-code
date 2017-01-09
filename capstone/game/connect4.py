@@ -7,42 +7,43 @@ from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
 
-class Connect4(Game):
+ROWS = 6
+COLS = 7
+H1 = ROWS + 1
+H2 = ROWS + 2
+SIZE = ROWS * COLS
+SIZE1 = H1 * COLS
+ALL1 = (1 << SIZE1) - 1
+COL1 = (1 << H1) - 1
+BOTTOM = ALL1 / COL1
+TOP = BOTTOM << ROWS
 
-    ROWS = 6
-    COLS = 7
-    H1 = ROWS + 1
-    H2 = ROWS + 2
-    SIZE = ROWS * COLS
-    SIZE1 = H1 * COLS
-    ALL1 = (1 << SIZE1) - 1
-    COL1 = (1 << H1) - 1
-    BOTTOM = ALL1 / COL1
-    TOP = BOTTOM << ROWS
+
+class Connect4(Game):
 
     def __init__(self):
         self.reset()
 
     def set_board(self, board):
         self._boards = [0, 0]
-        for row in range(type(self).ROWS):
-            for col in range(type(self).COLS):
+        for row in range(ROWS):
+            for col in range(COLS):
                 if (board[row][col] == 'X'):
-                    self._boards[0] |= 1 << ((col * type(self).COLS) + (type(self).ROWS - row - 1))
+                    self._boards[0] |= 1 << ((col * COLS) + (ROWS - row - 1))
                 elif (board[row][col] == 'O'):
-                    self._boards[1] |= 1 << ((col * type(self).COLS) + (type(self).ROWS - row - 1))
+                    self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
 
     def __repr__(self):
         return Connect4View(self).render()
 
     def print_bitboard(self, board):
         out = '  '
-        for col in range(type(self).COLS):
+        for col in range(COLS):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
-        for row in range(type(self).ROWS, -1, -1):
+        for row in range(ROWS, -1, -1):
             out += ' ' + str_aec(str(row + 1), 'bold_green')
-            for col in range(type(self).COLS + 10):
+            for col in range(COLS + 10):
                 hello = (col * 7) + row
                 if (1 << hello) & board:
                     out += str_aec(' X', 'bold_red')
@@ -70,7 +71,7 @@ class Connect4(Game):
         c4._moves = []
         for m in self._moves:
             c4._moves.append(m)
-        for c in range(type(self).COLS):
+        for c in range(COLS):
             c4._height[c] = self._height[c]
         return c4
 
@@ -92,8 +93,8 @@ class Connect4(Game):
             self._moves = []
         else:
             self._moves = []
-            for i in range(type(self).COLS):
-                if ((1 << self._height[i]) & Connect4.TOP) == 0:
+            for i in range(COLS):
+                if ((1 << self._height[i]) & TOP) == 0:
                     self._moves.append(i)
         return self
 
@@ -107,7 +108,7 @@ class Connect4(Game):
     def reset(self):
         self._cur_player = 0
         self._boards = [0, 0]
-        self._height = [0] * type(self).COLS
+        self._height = [0] * COLS
         self._init_moves()
 
     #############
@@ -116,20 +117,20 @@ class Connect4(Game):
 
     def _init_moves(self):
         self._moves = []
-        for i in range(type(self).COLS):
-            self._height[i] = type(self).H1 * i
-            if ((1 << self._height[i]) & type(self).TOP) == 0:
+        for i in range(COLS):
+            self._height[i] = H1 * i
+            if ((1 << self._height[i]) & TOP) == 0:
                 self._moves.append(i)
 
     def _check_win(self, board):
         y = board & (board >> 6)
         if y & (y >> 2 * 6):
             return True
-        y = board & (board >> type(self).H1)
-        if y & (y >> 2 * type(self).H1):
+        y = board & (board >> H1)
+        if y & (y >> 2 * H1):
             return True
-        y = board & (board >> type(self).H2)
-        if y & (y >> 2 * type(self).H2):
+        y = board & (board >> H2)
+        if y & (y >> 2 * H2):
             return True
         y = board & (board >> 1)
         if y & (y >> 2):
@@ -161,12 +162,12 @@ class Connect4View(object):
 
     def _board(self):
         out = ''
-        for col in range(Connect4.COLS):
+        for col in range(COLS):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
-        for row in range(Connect4.ROWS - 1, -1, -1):
+        for row in range(ROWS - 1, -1, -1):
             out += ' ' + str_aec(str(row + 1), 'bold_green')
-            for col in range(Connect4.COLS):
+            for col in range(COLS):
                 hello = (col * 7) + row
                 if (1 << hello) & self.game._boards[0]:
                     out += str_aec(' X', 'bold_red')
