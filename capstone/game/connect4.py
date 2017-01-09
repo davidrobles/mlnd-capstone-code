@@ -50,7 +50,6 @@ class Connect4(Game):
         print(out)
 
     def __str__(self):
-        # print_bitboard(Connect4.ALL1)
         return Connect4View(self).render()
 
     ########
@@ -119,62 +118,20 @@ class Connect4(Game):
             if ((1 << self._height[i]) & Connect4.TOP) == 0:
                 self._moves.append(i)
 
-    # def _check_win(self, board):
-    #     y = board & (board >> 7)
-    #     if y & (y >> 2 * 7): # check \ diagonal
-    #         print('won \\')
-    #         return True
-    #     y = board & (board >> 8)
-    #     if y & (y >> 2 * 8): # check horizontal -
-    #         print('won -')
-    #         return True
-    #     y = board & (board >> 9)
-    #     if y & (y >> 2 * 9): # check / diagonal
-    #         # self.print_bitboard(y)
-    #         # self.print_bitboard((y >> 2 * 9))
-    #         print('won /')
-    #         return True
-    #     y = board & (board >> 1)
-    #     if y & (y >> 2):     # check vertical |
-    #         print('won |')
-    #         return True
-    #     return False
-
     def _check_win(self, board):
-        # self.print_bitboard(board)
-        # self.print_bitboard(board >> 6)
-        # print('board')
-        # self.print_bitboard(board)
-        # print('board >> 6')
-        # self.print_bitboard(board >> 6)
         y = board & (board >> 6)
-        # self.print_bitboard(y)
         if (y & (y >> 2 * 6)) != 0:
-            # print('y')
-            self.print_bitboard(y)
-            # print('y >> 2 * 6')
-            self.print_bitboard(y >> 2 * 6)
             return True
         y = board & (board >> Connect4.H1)
         if (y & (y >> 2 * Connect4.H1)) != 0:
-            # print('here2')
             return True
         y = board & (board >> Connect4.H2)
         if (y & (y >> 2 * Connect4.H2)) != 0:
-            # print('here')
             return True
         y = board & (board >> 1)
         if (y & (y >> 2)) != 0:
-            # print('here2')
             return True
         return False
-
-    # def _check_win(self, newboard):
-        # diag1 = newboard & (newboard>>6);
-        # hori = newboard & (newboard>>Connect4.H1);
-        # diag2 = newboard & (newboard>>Connect4.H2);
-        # vert = newboard & (newboard>>1);
-        # return ((diag1 & (diag1 >> 2*6)) | (hori & (hori >> 2*Connect4.H1)) | (diag2 & (diag2 >> 2*Connect4.H2)) | (vert & (vert >> 2))) > 0
 
 
 class Connect4View(object):
