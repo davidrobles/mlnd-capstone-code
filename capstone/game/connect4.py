@@ -79,9 +79,10 @@ class Connect4(Game):
         return self._cur_player
 
     def legal_moves(self):
-        return self._moves
+        return [chr(ord('a') + move) for move in self._moves]
 
     def make_move(self, move):
+        move = ord(move) - ord('a')
         if move not in self._moves:
             print(type(move))
             raise Exception('Invalid move: {}'.format(move))
