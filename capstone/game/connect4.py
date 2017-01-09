@@ -111,7 +111,7 @@ class Connect4(Game):
     def reset(self):
         self._cur_player = 0
         self._boards = [0, 0]
-        self._height = [0] * COLS
+        self._height = [H1 * i for i in range(COLS)]
         self._init_moves()
 
     #############
@@ -119,11 +119,7 @@ class Connect4(Game):
     #############
 
     def _init_moves(self):
-        self._moves = []
-        for i in range(COLS):
-            self._height[i] = H1 * i
-            if ((1 << self._height[i]) & TOP) == 0:
-                self._moves.append(i)
+        self._moves = [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
 
     def _check_win(self, board):
         y = board & (board >> ROWS)
