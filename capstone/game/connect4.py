@@ -123,8 +123,8 @@ class Connect4(Game):
                 self._moves.append(i)
 
     def _check_win(self, board):
-        y = board & (board >> 6)
-        if y & (y >> 2 * 6):
+        y = board & (board >> ROWS)
+        if y & (y >> 2 * ROWS):
             return True
         y = board & (board >> H1)
         if y & (y >> 2 * H1):
