@@ -161,9 +161,6 @@ class Connect4View(object):
 
     def _board(self):
         out = ''
-        # for a in range(Connect4.Cols):
-        #     out += str(self.game._height[a]) + '\n'
-        # out += '\n\n  '
         for col in range(Connect4.Cols):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
@@ -182,14 +179,6 @@ class Connect4View(object):
         out += '-' * 80
         out += '\n'
         return out
-
-    # def _piece(self, ix):
-    #     if self.game._boards[0] & (1 << ix):
-    #         return str_aec('X', 'bold_red')
-    #     elif self.game._boards[1] & (1 << ix):
-    #         return str_aec('O', 'bold_blue')
-    #     else:
-    #         return '-'
 
     def _outcomes(self):
         return '\n' + str(self.game.outcomes()) if self.game.is_over() else ''
