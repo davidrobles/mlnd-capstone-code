@@ -25,24 +25,24 @@ class Connect4(Game):
 
     def set_board(self, board):
         self._boards = [0, 0]
-        for row in range(Connect4.Rows):
-            for col in range(Connect4.Cols):
+        for row in range(type(self).Rows):
+            for col in range(type(self).Cols):
                 if (board[row][col] == 'X'):
-                    self._boards[0] |= 1 << ((col * Connect4.Cols) + (Connect4.Rows - row - 1))
+                    self._boards[0] |= 1 << ((col * type(self).Cols) + (type(self).Rows - row - 1))
                 elif (board[row][col] == 'O'):
-                    self._boards[1] |= 1 << ((col * Connect4.Cols) + (Connect4.Rows - row - 1))
+                    self._boards[1] |= 1 << ((col * type(self).Cols) + (type(self).Rows - row - 1))
 
     def __repr__(self):
         return Connect4View(self).render()
 
     def print_bitboard(self, board):
         out = '  '
-        for col in range(Connect4.Cols):
+        for col in range(type(self).Cols):
             out += ' ' + chr(97 + col)
         out = str_aec(out, 'bold_green') + '\n'
-        for row in range(Connect4.Rows, -1, -1):
+        for row in range(type(self).Rows, -1, -1):
             out += ' ' + str_aec(str(row + 1), 'bold_green')
-            for col in range(Connect4.Cols + 10):
+            for col in range(type(self).Cols + 10):
                 hello = (col * 7) + row
                 if (1 << hello) & board:
                     out += str_aec(' X', 'bold_red')
@@ -70,7 +70,7 @@ class Connect4(Game):
         c4._moves = []
         for m in self._moves:
             c4._moves.append(m)
-        for c in range(Connect4.Cols):
+        for c in range(type(self).Cols):
             c4._height[c] = self._height[c]
         return c4
 
@@ -92,7 +92,7 @@ class Connect4(Game):
             self._moves = []
         else:
             self._moves = []
-            for i in range(Connect4.Cols):
+            for i in range(type(self).Cols):
                 if ((1 << self._height[i]) & Connect4.TOP) == 0:
                     self._moves.append(i)
         return self
@@ -107,7 +107,7 @@ class Connect4(Game):
     def reset(self):
         self._cur_player = 0
         self._boards = [0, 0]
-        self._height = [0] * Connect4.Cols
+        self._height = [0] * type(self).Cols
         self._init_moves()
 
     #############
@@ -116,7 +116,7 @@ class Connect4(Game):
 
     def _init_moves(self):
         self._moves = []
-        for i in range(Connect4.Cols):
+        for i in range(type(self).Cols):
             self._height[i] = Connect4.H1 * i
             if ((1 << self._height[i]) & Connect4.TOP) == 0:
                 self._moves.append(i)
