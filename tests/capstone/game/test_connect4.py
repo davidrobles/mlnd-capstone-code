@@ -100,11 +100,11 @@ class TestConnect4(unittest.TestCase):
     def test_make_move_returns_self(self):
         self.assertIs(self.game.make_move('a'), self.game)
 
-#     def test_make_moves(self):
-#         self.game.make_moves(1, 2, 3)
-#         actual = self.game.legal_moves()
-#         expected = [4, 5, 6, 7, 8, 9]
-#         self.assertEqual(actual, expected)
+    def test_make_moves(self):
+        self.game.make_moves(*((['a'] * 6) + (['b'] * 6)))
+        actual = self.game.legal_moves()
+        expected = ['c', 'd', 'e', 'f', 'g']
+        self.assertEqual(actual, expected)
 
 #     def test_make_moves_returns_self(self):
 #         self.assertIs(self.game.make_moves(1, 2, 3), self.game)
