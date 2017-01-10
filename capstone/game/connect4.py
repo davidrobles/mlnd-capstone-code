@@ -48,9 +48,18 @@ class Connect4(Game):
         return self._cur_player
 
     def legal_moves(self):
+        '''
+        Returns the legal moves for the player in turn.
+        Each move is the letter of the column where the piece
+        will be placed.
+        Example: ['a', 'b', 'c', 'f']
+        '''
         return [chr(ord('a') + move) for move in self._moves]
 
     def make_move(self, move):
+        '''
+        A move is the letter of the column where the piece will be placed.
+        '''
         move = ord(move) - ord('a')
         if move not in self._moves:
             print(type(move))
