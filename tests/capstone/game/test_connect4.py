@@ -48,8 +48,8 @@ class TestConnect4(unittest.TestCase):
 #         other = TicTacToe().make_moves(1)
 #         self.assertNotEqual(self.game, other)
 
-#     def test_cur_player_start(self):
-#         self.assertEqual(self.game.cur_player(), 0)
+    def test_cur_player_start(self):
+        self.assertEqual(self.game.cur_player(), 0)
 
 #     def test_cur_player_after_one_move(self):
 #         self.game.make_move(1)
