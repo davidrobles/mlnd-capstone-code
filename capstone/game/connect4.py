@@ -38,25 +38,6 @@ class Connect4(Game):
     def __repr__(self):
         return Connect4View(self).render()
 
-    def print_bitboard(self, board):
-        out = '  '
-        for col in range(COLS):
-            out += ' ' + chr(97 + col)
-        out = str_aec(out, 'bold_green') + '\n'
-        for row in range(ROWS, -1, -1):
-            out += ' ' + str_aec(str(row + 1), 'bold_green')
-            for col in range(COLS + 10):
-                hello = (col * 7) + row
-                if (1 << hello) & board:
-                    out += str_aec(' X', 'bold_red')
-                else:
-                    out += ' .'
-            out += '\n'
-        out += '\n'
-        out += '-' * 80
-        out += '\n'
-        print(out)
-
     def __str__(self):
         return Connect4View(self).render()
 
@@ -129,6 +110,29 @@ class Connect4(Game):
 
     def _generate_moves(self):
         return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
+
+    #############
+    # Debugging #
+    #############
+
+    def print_bitboard(self, board):
+        out = '  '
+        for col in range(COLS):
+            out += ' ' + chr(97 + col)
+        out = str_aec(out, 'bold_green') + '\n'
+        for row in range(ROWS, -1, -1):
+            out += ' ' + str_aec(str(row + 1), 'bold_green')
+            for col in range(COLS + 10):
+                hello = (col * 7) + row
+                if (1 << hello) & board:
+                    out += str_aec(' X', 'bold_red')
+                else:
+                    out += ' .'
+            out += '\n'
+        out += '\n'
+        out += '-' * 80
+        out += '\n'
+        print(out)
 
 
 class Connect4View(object):
