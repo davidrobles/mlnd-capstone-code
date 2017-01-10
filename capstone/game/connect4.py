@@ -23,8 +23,19 @@ TOP = BOTTOM << ROWS
 
 class Connect4(Game):
 
+    name = 'Connect4'
+
     def __init__(self):
         self.reset()
+
+    def __eq__(self, other):
+        if self.cur_player() != other.cur_player():
+            return False
+        if self._boards[0] != other._boards[0]:
+            return False
+        if self._boards[1] != other._boards[1]:
+            return False
+        return True
 
     def __repr__(self):
         return Connect4View(self).render()
