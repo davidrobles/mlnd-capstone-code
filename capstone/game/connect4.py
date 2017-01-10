@@ -29,17 +29,12 @@ class Connect4(Game):
         self.reset()
 
     def __eq__(self, other):
-        if self._cur_player != other._cur_player:
-            return False
-        if self._boards[0] != other._boards[0]:
-            return False
-        if self._boards[1] != other._boards[1]:
-            return False
-        if self._moves != other._moves:
-            return False
-        if self._height != other._height:
-            return False
-        return True
+        return all([
+            self._cur_player == other._cur_player,
+            self._boards == other._boards,
+            self._moves == other._moves,
+            self._height == other._height
+        ])
 
     def __repr__(self):
         return Connect4View(self).render()
