@@ -58,7 +58,7 @@ class Connect4(Game):
         new_board = self._boards[self.cur_player()] | (1 << self._height[move])
         self._height[move] += 1
         self._boards[self.cur_player()] = new_board
-        self._cur_player = (self.cur_player() + 1) % 2
+        self._cur_player ^= 1
         self._moves = [] if self._is_win(new_board) else self._generate_moves()
         return self
 
