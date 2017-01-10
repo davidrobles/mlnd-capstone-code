@@ -26,15 +26,6 @@ class Connect4(Game):
     def __init__(self):
         self.reset()
 
-    def set_board(self, board):
-        self._boards = [0, 0]
-        for row in range(ROWS):
-            for col in range(COLS):
-                if (board[row][col] == 'X'):
-                    self._boards[0] |= 1 << ((col * COLS) + (ROWS - row - 1))
-                elif (board[row][col] == 'O'):
-                    self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
-
     def __repr__(self):
         return Connect4View(self).render()
 
@@ -92,6 +83,15 @@ class Connect4(Game):
     #############
     # Connect 4 #
     #############
+
+    def set_board(self, board):
+        self._boards = [0, 0]
+        for row in range(ROWS):
+            for col in range(COLS):
+                if (board[row][col] == 'X'):
+                    self._boards[0] |= 1 << ((col * COLS) + (ROWS - row - 1))
+                elif (board[row][col] == 'O'):
+                    self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
 
     def _check_win(self, board):
         y = board & (board >> ROWS)
