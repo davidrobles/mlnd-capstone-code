@@ -40,7 +40,7 @@ class Connect4(Game):
         c4 = Connect4()
         c4._cur_player = self._cur_player
         c4._boards = self._boards[:]
-        if self._check_win(self._boards[0]) or self._check_win(self._boards[1]):
+        if self._is_win(self._boards[0]) or self._is_win(self._boards[1]):
             return c4
         c4._moves = []
         for m in self._moves:
@@ -64,13 +64,13 @@ class Connect4(Game):
         self._height[move] += 1
         self._boards[self.cur_player()] = new_board
         self._cur_player = (self.cur_player() + 1) % 2
-        self._moves = [] if self._check_win(new_board) else self._generate_moves()
+        self._moves = [] if self._is_win(new_board) else self._generate_moves()
         return self
 
     def outcomes(self):
-        if self._check_win(self._boards[0]):
+        if self._is_win(self._boards[0]):
             return ['W', 'L']
-        elif self._check_win(self._boards[1]):
+        elif self._is_win(self._boards[1]):
             return ['L', 'W']
         return ['D', 'D']
 
@@ -93,7 +93,8 @@ class Connect4(Game):
                 elif (board[row][col] == 'O'):
                     self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
 
-    def _check_win(self, board):
+    def _is_win(self, board):
+        '''Returns true if the given bitboard has a winning pattern'''
         y = board & (board >> ROWS)
         if y & (y >> 2 * ROWS):
             return True
