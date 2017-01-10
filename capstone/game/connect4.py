@@ -97,8 +97,11 @@ class Connect4(Game):
                 elif (board[row][col] == 'O'):
                     self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
 
+    def _generate_moves(self):
+        return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
+
     def _is_win(self, board):
-        '''Returns true if the given bitboard has a winning pattern'''
+        '''Returns Ttrue if the given bitboard has a winning pattern.'''
         y = board & (board >> ROWS)
         if y & (y >> 2 * ROWS):
             return True
@@ -112,9 +115,6 @@ class Connect4(Game):
         if y & (y >> 2):
             return True
         return False
-
-    def _generate_moves(self):
-        return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
 
     #############
     # Debugging #
