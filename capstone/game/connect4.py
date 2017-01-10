@@ -92,13 +92,9 @@ class Connect4(Game):
         self._height[move] += 1
         self._boards[self.cur_player()] = new_board
         self._cur_player = (self.cur_player() + 1) % 2
-        if self._check_win(new_board):
-            self._moves = []
-        else:
-            self._moves = []
-            for i in range(COLS):
-                if ((1 << self._height[i]) & TOP) == 0:
-                    self._moves.append(i)
+        self._moves = []
+        if not self._check_win(new_board):
+            self._init_moves()
         return self
 
     def outcomes(self):
