@@ -112,9 +112,6 @@ class Connect4(Game):
     # Connect 4 #
     #############
 
-    def _generate_moves(self):
-        return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
-
     def _check_win(self, board):
         y = board & (board >> ROWS)
         if y & (y >> 2 * ROWS):
@@ -129,6 +126,9 @@ class Connect4(Game):
         if y & (y >> 2):
             return True
         return False
+
+    def _generate_moves(self):
+        return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
 
 
 class Connect4View(object):
