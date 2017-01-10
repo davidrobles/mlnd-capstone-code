@@ -40,13 +40,8 @@ class Connect4(Game):
         c4 = Connect4()
         c4._cur_player = self._cur_player
         c4._boards = self._boards[:]
-        if self._is_win(self._boards[0]) or self._is_win(self._boards[1]):
-            return c4
-        c4._moves = []
-        for m in self._moves:
-            c4._moves.append(m)
-        for c in range(COLS):
-            c4._height[c] = self._height[c]
+        c4._moves = self._moves[:]
+        c4._height = self._height[:]
         return c4
 
     def cur_player(self):
