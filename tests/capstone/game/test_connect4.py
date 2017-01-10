@@ -51,43 +51,43 @@ class TestConnect4(unittest.TestCase):
     def test_cur_player_start(self):
         self.assertEqual(self.game.cur_player(), 0)
 
-#     def test_cur_player_after_one_move(self):
-#         self.game.make_move(1)
-#         self.assertEqual(self.game.cur_player(), 1)
+    def test_cur_player_after_one_move(self):
+        self.game.make_move('a')
+        self.assertEqual(self.game.cur_player(), 1)
 
-#     def test_cur_player_after_two_moves(self):
-#         self.game.make_moves(1, 2)
-#         self.assertEqual(self.game.cur_player(), 0)
+    def test_cur_player_after_two_moves(self):
+        self.game.make_moves('a', 'b')
+        self.assertEqual(self.game.cur_player(), 0)
 
-#     def test_equal(self):
-#         moves = [1, 2]
-#         self.game.make_moves(*moves)
-#         other = TicTacToe().make_moves(*moves)
-#         self.assertEqual(self.game, other)
+    def test_equal(self):
+        moves = ['a', 'b']
+        self.game.make_moves(*moves)
+        other = Connect4().make_moves(*moves)
+        self.assertEqual(self.game, other)
 
-#     def test_is_not_over_at_start(self):
-#         self.assertFalse(self.game.is_over())
+    def test_is_not_over_at_start(self):
+        self.assertFalse(self.game.is_over())
 
-#     def test_is_over_at_end_of_game(self):
-#         self.game.make_moves(1, 4, 2, 5, 3)
-#         self.assertTrue(self.game.is_over())
+    def test_is_over_at_end_of_game(self):
+        self.game.make_moves('a', 'b', 'a', 'b', 'a', 'b', 'a')
+        self.assertTrue(self.game.is_over())
 
-#     def test_legal_moves_start(self):
-#         actual = self.game.legal_moves()
-#         expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-#         self.assertEqual(actual, expected)
+    def test_legal_moves_start(self):
+        actual = self.game.legal_moves()
+        expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+        self.assertEqual(actual, expected)
 
-#     def test_legal_moves_after_one_move(self):
-#         self.game.make_move(1)
-#         actual = self.game.legal_moves()
-#         expected = [2, 3, 4, 5, 6, 7, 8, 9]
-#         self.assertEqual(actual, expected)
+    def test_legal_moves_after_one_move(self):
+        self.game.make_move('a')
+        actual = self.game.legal_moves()
+        expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+        self.assertEqual(actual, expected)
 
-#     def test_legal_moves_after_two_moves(self):
-#         self.game.make_moves(3, 7)
-#         actual = self.game.legal_moves()
-#         expected = [1, 2, 4, 5, 6, 8, 9]
-#         self.assertEqual(actual, expected)
+    def test_legal_moves_after_two_moves(self):
+        self.game.make_moves('a', 'a', 'a', 'a', 'a', 'a')
+        actual = self.game.legal_moves()
+        expected = ['b', 'c', 'd', 'e', 'f', 'g']
+        self.assertEqual(actual, expected)
 
 #     def test_legal_moves_are_empty_when_is_over(self):
 #         game = TicTacToe(
@@ -97,8 +97,8 @@ class TestConnect4(unittest.TestCase):
 #         )
 #         self.assertTrue(len(game.legal_moves()) == 0)
 
-#     def test_make_move_returns_self(self):
-#         self.assertIs(self.game.make_move(1), self.game)
+    def test_make_move_returns_self(self):
+        self.assertIs(self.game.make_move('a'), self.game)
 
 #     def test_make_moves(self):
 #         self.game.make_moves(1, 2, 3)
