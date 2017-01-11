@@ -11,14 +11,18 @@ class TestConnect4(unittest.TestCase):
     def test_name(self):
         self.assertEqual(Connect4.name, 'Connect4')
 
-#     def test_with_board(self):
-#         game = TicTacToe(
-#             'X-X'
-#             'O-X'
-#             '-O-'
-#         )
-#         self.assertEqual(game.legal_moves(), [2, 5, 7, 9])
-#         self.assertEqual(game.cur_player(), 1)
+    def test_with_board(self):
+        game = Connect4(
+            '-------'
+            '-------'
+            '--X----'
+            '--X----'
+            '--XO---'
+            'XOXOO--'
+        )
+        self.assertTrue(game._is_win(game._boards[0]))
+        self.assertFalse(game._is_win(game._boards[1]))
+        # TODO missing tests
 
     def test_copy(self):
         self.game.make_moves('a', 'b')

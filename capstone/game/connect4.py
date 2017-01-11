@@ -28,8 +28,19 @@ class Connect4(Game):
     n_pieces = 2
     zobrist_hash = ZobristHashing(n_positions, n_pieces)
 
-    def __init__(self):
+    def __init__(self, board=None):
         self.reset()
+        if board:
+            b = [list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)]
+            self.set_board(b)
+            # TODO set _cur_player, _moves and _height
+            # for ix, c in enumerate(board):
+            #     if c == 'X':
+            #         self._boards[0] |= 1 << ix
+            #         self._cur_player ^= 1
+            #     elif c == 'O':
+            #         self._boards[1] |= 1 << ix
+            #         self._cur_player ^= 1
 
     def __hash__(self):
         return Connect4.zobrist_hash(self.board)
