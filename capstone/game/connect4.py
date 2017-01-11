@@ -24,9 +24,15 @@ TOP = BOTTOM << ROWS
 class Connect4(Game):
 
     name = 'Connect4'
+    n_positions = ROWS * COLS
+    n_pieces = 2
+    zobrist_hash = ZobristHashing(n_positions, n_pieces)
 
     def __init__(self):
         self.reset()
+
+    def __hash__(self):
+        return Connect4.zobrist_hash(self.board)
 
     def __eq__(self, other):
         attrs = ['_cur_player', '_boards', '_moves', '_height']
@@ -37,6 +43,20 @@ class Connect4(Game):
 
     def __str__(self):
         return Connect4View(self).render()
+
+    @property
+    def board(self):
+        b = []
+        for row in range(ROWS - 1, -1, -1):
+            for col in range(COLS):
+                hello = (col * 7) + row
+                if (1 << hello) & self._boards[0]:
+                    b.append(0)
+                elif (1 << hello) & self._boards[1]:
+                    b.append(1)
+                else:
+                    b.append(' ')
+        return b
 
     ########
     # Game #
