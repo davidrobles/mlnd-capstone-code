@@ -6,6 +6,8 @@ https://github.com/qu1j0t3/fhourstones/blob/master/Connect4.java
 '''
 
 from __future__ import division, unicode_literals
+
+import six
 from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
@@ -22,6 +24,10 @@ BOTTOM = ALL1 // COL1
 TOP = BOTTOM << ROWS
 
 
+def board_str_to_board_mdarray(board):
+    return [list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)]
+
+
 class Connect4(Game):
 
     name = 'Connect4'
@@ -31,7 +37,8 @@ class Connect4(Game):
 
     def __init__(self, board=None):
         if board:
-            self.board = [list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)]
+            if isinstance(board, six.string_types):
+                self.board = board_str_to_board_mdarray(board)
         else:
             self.reset()
 
