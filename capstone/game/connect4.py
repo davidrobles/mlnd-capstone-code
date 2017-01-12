@@ -31,7 +31,7 @@ class Connect4(Game):
 
     def __init__(self, board=None):
         if board:
-            self.set_board([list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)])
+            self.board = [list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)]
         else:
             self.reset()
 
@@ -47,20 +47,6 @@ class Connect4(Game):
 
     def __str__(self):
         return Connect4View(self).render()
-
-    @property
-    def board(self):
-        b = []
-        for row in range(ROWS - 1, -1, -1):
-            for col in range(COLS):
-                hello = (col * 7) + row
-                if (1 << hello) & self._boards[0]:
-                    b.append(0)
-                elif (1 << hello) & self._boards[1]:
-                    b.append(1)
-                else:
-                    b.append(' ')
-        return b
 
     ########
     # Game #
@@ -123,7 +109,22 @@ class Connect4(Game):
     # Connect 4 #
     #############
 
-    def set_board(self, board):
+    @property
+    def board(self):
+        b = []
+        for row in range(ROWS - 1, -1, -1):
+            for col in range(COLS):
+                hello = (col * 7) + row
+                if (1 << hello) & self._boards[0]:
+                    b.append(0)
+                elif (1 << hello) & self._boards[1]:
+                    b.append(1)
+                else:
+                    b.append(' ')
+        return b
+
+    @board.setter
+    def board(self, board):
         self._boards = [0, 0]
         counters = [0, 0]
         self._height = [H1 * i for i in range(COLS)]
