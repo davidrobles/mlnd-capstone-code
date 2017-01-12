@@ -29,9 +29,10 @@ class Connect4(Game):
     zobrist_hash = ZobristHashing(n_positions, n_pieces)
 
     def __init__(self, board=None):
-        self.reset()
         if board:
             self.set_board([list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)])
+        else:
+            self.reset()
 
     def __hash__(self):
         return Connect4.zobrist_hash(self.board)
