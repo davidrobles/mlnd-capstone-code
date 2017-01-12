@@ -22,6 +22,7 @@ class TestConnect4(unittest.TestCase):
         )
         self.assertTrue(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
+        self.assertIsNone(game.cur_player())
         # TODO missing tests
 
     def test_copy(self):

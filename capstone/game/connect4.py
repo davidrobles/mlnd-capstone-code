@@ -106,6 +106,11 @@ class Connect4(Game):
         self._boards[self.cur_player()] = new_board
         self._cur_player ^= 1
         self._moves = [] if self._is_win(new_board) else self._generate_moves()
+        if self._is_win(new_board):
+            self._moves = []
+            self._cur_player = None
+        else:
+            self._moves = self._generate_moves()
         return self
 
     def outcomes(self):
@@ -127,12 +132,23 @@ class Connect4(Game):
 
     def set_board(self, board):
         self._boards = [0, 0]
+        counters = [0, 0]
         for row in range(ROWS):
             for col in range(COLS):
                 if (board[row][col] == 'X'):
                     self._boards[0] |= 1 << ((col * COLS) + (ROWS - row - 1))
+                    counters[0] += 1
                 elif (board[row][col] == 'O'):
                     self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
+                    counters[1] += 1
+        if self._is_win(self._boards[0]) or self._is_win(self._boards[1]):
+            self._cur_player = None
+            return
+        diff = counters[0] - counters[1]
+        if diff == 0:
+            self._cur_player = 1
+        elif diff == 1:
+            self._cur_player = 0
 
     def _generate_moves(self):
         return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
