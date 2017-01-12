@@ -125,6 +125,20 @@ class Connect4(Game):
 
     @board.setter
     def board(self, board):
+        '''
+        board: a string
+
+        Example:
+
+        game.board = (
+            'O------'
+            'X------'
+            'O------'
+            'X------'
+            'O------'
+            'X------'
+        )
+        '''
         self._boards = [0, 0]
         counters = [0, 0]
         self._height = [H1 * col for col in range(COLS)]
