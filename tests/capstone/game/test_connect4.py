@@ -23,7 +23,23 @@ class TestConnect4(unittest.TestCase):
         self.assertTrue(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
         self.assertIsNone(game.cur_player())
-        # TODO missing tests
+        self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
+        self.assertEqual(game.legal_moves(), [])
+
+    def test_with_board_not_ending(self):
+        game = Connect4(
+            'O------'
+            'X------'
+            'O------'
+            'X------'
+            'O------'
+            'X------'
+        )
+        self.assertFalse(game.is_over())
+        self.assertFalse(game._is_win(game._boards[0]))
+        self.assertFalse(game._is_win(game._boards[1]))
+        self.assertEqual(game.cur_player(), 0)
+        self.assertEqual(game.legal_moves(), ['b', 'c', 'd', 'e', 'f', 'g'])
 
     def test_copy(self):
         self.game.make_moves('a', 'b')

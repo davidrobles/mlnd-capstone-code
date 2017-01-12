@@ -5,6 +5,7 @@ of Connect 4.
 https://github.com/qu1j0t3/fhourstones/blob/master/Connect4.java
 '''
 
+from __future__ import division, unicode_literals
 from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
@@ -17,7 +18,7 @@ SIZE = ROWS * COLS
 SIZE1 = H1 * COLS
 ALL1 = (1 << SIZE1) - 1
 COL1 = (1 << H1) - 1
-BOTTOM = ALL1 / COL1
+BOTTOM = ALL1 // COL1
 TOP = BOTTOM << ROWS
 
 
@@ -125,22 +126,32 @@ class Connect4(Game):
     def set_board(self, board):
         self._boards = [0, 0]
         counters = [0, 0]
+        self._height = [H1 * i for i in range(COLS)]
+        max_cols =  [0] * COLS
         for row in range(ROWS):
             for col in range(COLS):
                 if (board[row][col] == 'X'):
                     self._boards[0] |= 1 << ((col * COLS) + (ROWS - row - 1))
                     counters[0] += 1
+                    max_cols[col] = max(max_cols[col], 6 - row)
                 elif (board[row][col] == 'O'):
                     self._boards[1] |= 1 << ((col * COLS) + (ROWS - row - 1))
                     counters[1] += 1
+                    max_cols[col] = max(max_cols[col], 6 - row)
+        for col in range(COLS):
+            self._height[col] = (col * 7) + max_cols[col]
         if self._is_win(self._boards[0]) or self._is_win(self._boards[1]):
             self._cur_player = None
+            self._moves = []
             return
         diff = counters[0] - counters[1]
         if diff == 0:
-            self._cur_player = 1
-        elif diff == 1:
             self._cur_player = 0
+        elif diff == 1:
+            self._cur_player = 1
+        else:
+            raise Exception('Illegal board!')
+        self._moves = self._generate_moves()
 
     def _generate_moves(self):
         return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
