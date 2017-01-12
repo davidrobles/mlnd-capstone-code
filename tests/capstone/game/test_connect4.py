@@ -11,7 +11,7 @@ class TestConnect4(unittest.TestCase):
     def test_name(self):
         self.assertEqual(Connect4.name, 'Connect4')
 
-    def test_with_board(self):
+    def test_init_with_board_that_is_over(self):
         game = Connect4(
             '-------'
             '-------'
@@ -26,7 +26,7 @@ class TestConnect4(unittest.TestCase):
         self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
         self.assertEqual(game.legal_moves(), [])
 
-    def test_with_board_not_ending(self):
+    def test_init_with_board_that_is_not_over_1(self):
         game = Connect4(
             'O------'
             'X------'
@@ -40,6 +40,21 @@ class TestConnect4(unittest.TestCase):
         self.assertFalse(game._is_win(game._boards[1]))
         self.assertEqual(game.cur_player(), 0)
         self.assertEqual(game.legal_moves(), ['b', 'c', 'd', 'e', 'f', 'g'])
+
+    def test_init_with_board_that_is_not_over_2(self):
+        game = Connect4(
+            'O--X---'
+            'X--O---'
+            'O--X---'
+            'X--O---'
+            'O--X---'
+            'XX-O---'
+        )
+        self.assertFalse(game.is_over())
+        self.assertFalse(game._is_win(game._boards[0]))
+        self.assertFalse(game._is_win(game._boards[1]))
+        self.assertEqual(game.cur_player(), 1)
+        self.assertEqual(game.legal_moves(), ['b', 'c', 'e', 'f', 'g'])
 
     def test_copy(self):
         self.game.make_moves('a', 'b')
