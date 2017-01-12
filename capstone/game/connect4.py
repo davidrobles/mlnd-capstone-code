@@ -31,16 +31,7 @@ class Connect4(Game):
     def __init__(self, board=None):
         self.reset()
         if board:
-            b = [list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)]
-            self.set_board(b)
-            # TODO set _cur_player, _moves and _height
-            # for ix, c in enumerate(board):
-            #     if c == 'X':
-            #         self._boards[0] |= 1 << ix
-            #         self._cur_player ^= 1
-            #     elif c == 'O':
-            #         self._boards[1] |= 1 << ix
-            #         self._cur_player ^= 1
+            self.set_board([list(board[row*COLS:(row*COLS)+COLS]) for row in range(ROWS)])
 
     def __hash__(self):
         return Connect4.zobrist_hash(self.board)
