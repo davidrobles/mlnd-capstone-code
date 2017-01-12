@@ -39,6 +39,8 @@ class Connect4(Game):
         if board:
             if isinstance(board, six.string_types):
                 self.board = board_str_to_board_mdarray(board)
+            elif isinstance(board, list):
+                self.board = board
         else:
             self.reset()
 

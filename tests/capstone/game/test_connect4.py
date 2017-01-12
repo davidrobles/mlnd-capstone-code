@@ -11,6 +11,22 @@ class TestConnect4(unittest.TestCase):
     def test_name(self):
         self.assertEqual(Connect4.name, 'Connect4')
 
+    def test_init_with_mdlist_board_that_is_over(self):
+        game = Connect4(
+            [['-', '-', '-', '-', '-', '-', '-'],
+             ['-', '-', '-', '-', '-', '-', '-'],
+             ['-', '-', 'X', '-', '-', '-', '-'],
+             ['-', '-', 'X', '-', '-', '-', '-'],
+             ['-', '-', 'X', 'O', '-', '-', '-'],
+             ['X', 'O', 'X', 'O', 'O', '-', '-']]
+        )
+        self.assertTrue(game.is_over())
+        self.assertTrue(game._is_win(game._boards[0]))
+        self.assertFalse(game._is_win(game._boards[1]))
+        self.assertIsNone(game.cur_player())
+        self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
+        self.assertEqual(game.legal_moves(), [])
+
     def test_init_with_board_that_is_over(self):
         game = Connect4(
             '-------'
