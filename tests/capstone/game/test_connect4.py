@@ -20,6 +20,7 @@ class TestConnect4(unittest.TestCase):
             '--XO---'
             'XOXOO--'
         )
+        self.assertTrue(game.is_over())
         self.assertTrue(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
         self.assertIsNone(game.cur_player())
@@ -39,6 +40,7 @@ class TestConnect4(unittest.TestCase):
         self.assertFalse(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
         self.assertEqual(game.cur_player(), 0)
+        self.assertEqual(game._height, [6, 7, 14, 21, 28, 35, 42])
         self.assertEqual(game.legal_moves(), ['b', 'c', 'd', 'e', 'f', 'g'])
 
     def test_init_with_board_that_is_not_over_2(self):
