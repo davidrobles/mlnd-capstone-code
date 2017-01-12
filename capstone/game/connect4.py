@@ -102,7 +102,7 @@ class Connect4(Game):
     def reset(self):
         self._cur_player = 0
         self._boards = [0, 0]
-        self._height = [H1 * i for i in range(COLS)]
+        self._height = [H1 * col for col in range(COLS)]
         self._moves = self._generate_moves()
 
     #############
@@ -127,7 +127,7 @@ class Connect4(Game):
     def board(self, board):
         self._boards = [0, 0]
         counters = [0, 0]
-        self._height = [H1 * i for i in range(COLS)]
+        self._height = [H1 * col for col in range(COLS)]
         max_cols =  [0] * COLS
         for row in range(ROWS):
             for col in range(COLS):
@@ -155,7 +155,7 @@ class Connect4(Game):
         self._moves = self._generate_moves()
 
     def _generate_moves(self):
-        return [i for i in range(COLS) if ((1 << self._height[i]) & TOP) == 0]
+        return [col for col in range(COLS) if ((1 << self._height[col]) & TOP) == 0]
 
     def _is_win(self, board):
         '''Returns Ttrue if the given bitboard has a winning pattern.'''
