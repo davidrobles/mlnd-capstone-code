@@ -96,7 +96,7 @@ class Connect4(Game):
         self._moves = [] if self._is_win(new_board) else self._generate_moves()
         if self._is_win(new_board):
             self._moves = []
-            self._cur_player = None
+            # self._cur_player = None
         else:
             self._moves = self._generate_moves()
         return self
@@ -165,7 +165,7 @@ class Connect4(Game):
         for col in range(COLS):
             self._height[col] = (col * 7) + max_cols[col]
         if self._is_win(self._boards[0]) or self._is_win(self._boards[1]):
-            self._cur_player = None
+            # self._cur_player = None
             self._moves = []
             return
         diff = counters[0] - counters[1]
