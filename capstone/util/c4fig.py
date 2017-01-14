@@ -3,15 +3,6 @@ import subprocess
 letters = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
 letters = [x.upper() for x in letters]
 
-# board = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-#          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-#          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-#          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-#          [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-#          [' ', ' ', ' ', ' ', ' ', ' ', ' ']]
-
-# win by blue
-
 board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
          [' ', ' ', '2', ' ', '1', ' ', ' '],
          [' ', ' ', '2', '2', '1', '1', '1'],
@@ -19,24 +10,11 @@ board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
          [' ', '1', '2', '2', '1', '2', '2'],
          [' ', '2', '1', '2', '1', '2', '1']]
 
-# win by red
-
-# board = [[' ', ' ', ' ', '2', '1', ' ', ' '],
-#          [' ', ' ', '2', '1', '1', ' ', ' '],
-#          [' ', ' ', '1', '2', '2', ' ', ' '],
-#          [' ', '1', '2', '2', '1', ' ', ' '],
-#          ['2', '1', '1', '1', '2', ' ', ' '],
-#          ['2', '1', '1', '2', '2', ' ', ' ']]
-
-# draw
-
-# board = [['1', '1', '2', '1', '1', '2', '2'],
-#          ['2', '1', '1', '2', '2', '1', '1'],
-#          ['1', '2', '1', '1', '1', '2', '2'],
-#          ['2', '1', '2', '2', '2', '1', '1'],
-#          ['1', '2', '2', '1', '1', '2', '2'],
-#          ['2', '1', '2', '2', '1', '1', '2']]
-
+colors = {
+	'1': '0.72 0.14 0.19',
+	'2': '0.16 0.42 0.72',
+	' ': '1.00 1.00 1.00'
+}
 X_OFFSET = 17.0
 ROWS = len(board)
 COLS = len(board[0])
@@ -45,50 +23,53 @@ OFFSET = 10
 LETTERS = False
 PATH = '/Users/drobles/Desktop/'
 FILENAME = 'c4'
-file = open(PATH + FILENAME + '.ps', 'w')
 
-# BACKGROUND
 
-file.write('newpath\n')
-file.write('10 10 moveto\n')
-file.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-file.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-file.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-file.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-file.write('closepath\n')
-file.write('0.9 setgray\n')
-file.write('fill\n')
+class C4Fig(object):
 
-file.write('newpath\n')
-file.write('10 10 moveto\n')
-file.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-file.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-file.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-file.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-file.write('closepath\n')
-file.write('0 setgray\n')
-file.write('stroke\n')
+    def __init__(self):
+        self.f = open(PATH + FILENAME + '.ps', 'w')
+        self.draw_background()
+        self.draw_stones()
+        self.end()
 
-colors = {
-	'1': '0.72 0.14 0.19',
-	'2': '0.16 0.42 0.72',
-	' ': '1.00 1.00 1.00'
-}
+    def draw_background(self):
+        self.f.write('newpath\n')
+        self.f.write('10 10 moveto\n')
+        self.f.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+        self.f.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.f.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+        self.f.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.f.write('closepath\n')
+        self.f.write('0.9 setgray\n')
+        self.f.write('fill\n')
 
-# STONES
+        self.f.write('newpath\n')
+        self.f.write('10 10 moveto\n')
+        self.f.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+        self.f.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.f.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+        self.f.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.f.write('closepath\n')
+        self.f.write('0 setgray\n')
+        self.f.write('stroke\n')
 
-for ri, row in enumerate(reversed(board)):
-    for ci, col in enumerate(row):
-		file.write('%s setrgbcolor\n' % colors[col])
-		file.write('%d %d %d 0 360 arc fill\n' % (ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, CELL_SIZE * 0.35))
-		file.write('0 setgray\n')
-		file.write('%d %d %d 0 360 arc stroke\n' % (ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, CELL_SIZE * 0.35))
+    def draw_stones(self):
+        for ri, row in enumerate(reversed(board)):
+            for ci, col in enumerate(row):
+                self.f.write('%s setrgbcolor\n' % colors[col])
+                arc = (ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET, CELL_SIZE * 0.35)
+                self.f.write('%d %d %d 0 360 arc fill\n' % arc)
+                self.f.write('0 setgray\n')
+                self.f.write('%d %d %d 0 360 arc stroke\n' % arc)
 
-file.write('showpage')
-file.flush()
-file.close()
+    def end(self):
+        self.f.write('showpage')
+        self.f.flush()
+        self.f.close()
+        subprocess.call(["ps2pdf", PATH + FILENAME + ".ps", PATH + FILENAME + ".pdf"])
+        subprocess.call(["pdfcrop", PATH + FILENAME + ".pdf", PATH + FILENAME + "-crop.pdf"])
+        subprocess.call(["rm", PATH + FILENAME + ".ps"])
+        subprocess.call(["rm", PATH + FILENAME + ".pdf"])
 
-subprocess.call(["ps2pdf", PATH + FILENAME + ".ps", PATH + FILENAME + ".pdf"])
-subprocess.call(["pdfcrop", PATH + FILENAME + ".pdf", PATH + FILENAME + "-crop.pdf"])
-subprocess.call(["rm", PATH + FILENAME + ".ps"])
-subprocess.call(["rm", PATH + FILENAME + ".pdf"])
+C4Fig()
