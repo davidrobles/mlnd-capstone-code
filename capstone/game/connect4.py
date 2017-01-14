@@ -30,6 +30,9 @@ def board_str_to_board_mdarray(board):
 
 class Connect4(Game):
 
+    ROWS = 6
+    COLS = 7
+
     name = 'Connect4'
     n_positions = ROWS * COLS
     n_pieces = 2
