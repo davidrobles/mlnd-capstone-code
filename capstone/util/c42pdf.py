@@ -38,23 +38,20 @@ class C42PDF(object):
         self._create_pdf()
 
     def _draw_background(self):
-        self.tf_ps.write('newpath\n')
-        self.tf_ps.write('10 10 moveto\n')
-        self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf_ps.write('closepath\n')
+        def helper():
+            self.tf_ps.write('newpath\n')
+            self.tf_ps.write('10 10 moveto\n')
+            self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+            self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+            self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+            self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+            self.tf_ps.write('closepath\n')
+
+        helper()
         self.tf_ps.write('%s setrgbcolor\n' % BG_COLOR)
         self.tf_ps.write('fill\n')
 
-        self.tf_ps.write('newpath\n')
-        self.tf_ps.write('10 10 moveto\n')
-        self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf_ps.write('closepath\n')
+        helper()
         self.tf_ps.write('0 setgray\n')
         self.tf_ps.write('stroke\n')
 
