@@ -32,13 +32,13 @@ class C42PDF(object):
         self.filename = filename
 
     def create(self):
-        self.tf_ps = tempfile.NamedTemporaryFile()
+        self._tf_ps = tempfile.NamedTemporaryFile()
         self._draw_background()
         self._draw_stones()
         self._create_pdf()
 
     def _draw_background(self):
-        f = self.tf_ps
+        f = self._tf_ps
         def _bg_helper():
             f.write('newpath\n')
             f.write('10 10 moveto\n')
@@ -57,7 +57,7 @@ class C42PDF(object):
         f.write('stroke\n')
 
     def _draw_stones(self):
-        f = self.tf_ps
+        f = self._tf_ps
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
                 f.write('%s setrgbcolor\n' % COLORS[col])
@@ -71,11 +71,11 @@ class C42PDF(object):
                 f.write('%d %d %d 0 360 arc stroke\n' % arc)
 
     def _create_pdf(self):
-        self.tf_ps.write('showpage')
-        self.tf_ps.flush()
+        self._tf_ps.write('showpage')
+        self._tf_ps.flush()
         self.tf_updf = tempfile.NamedTemporaryFile()
-        subprocess.call(['ps2pdf', self.tf_ps.name, self.tf_updf.name])
-        self.tf_ps.close()
+        subprocess.call(['ps2pdf', self._tf_ps.name, self.tf_updf.name])
+        self._tf_ps.close()
         subprocess.call(["pdfcrop", self.tf_updf.name, self.filename])
         self.tf_updf.close()
 
