@@ -38,35 +38,37 @@ class C42PDF(object):
         self._create_pdf()
 
     def _draw_background(self):
+        f = self.tf_ps
         def _bg_helper():
-            self.tf_ps.write('newpath\n')
-            self.tf_ps.write('10 10 moveto\n')
-            self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-            self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-            self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-            self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-            self.tf_ps.write('closepath\n')
+            f.write('newpath\n')
+            f.write('10 10 moveto\n')
+            f.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+            f.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+            f.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+            f.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+            f.write('closepath\n')
         # fill
         _bg_helper()
-        self.tf_ps.write('%s setrgbcolor\n' % BG_COLOR)
-        self.tf_ps.write('fill\n')
+        f.write('%s setrgbcolor\n' % BG_COLOR)
+        f.write('fill\n')
         # stroke
         _bg_helper()
-        self.tf_ps.write('0 setgray\n')
-        self.tf_ps.write('stroke\n')
+        f.write('0 setgray\n')
+        f.write('stroke\n')
 
     def _draw_stones(self):
+        f = self.tf_ps
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
-                self.tf_ps.write('%s setrgbcolor\n' % COLORS[col])
+                f.write('%s setrgbcolor\n' % COLORS[col])
                 arc = (
                     ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
                     ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
                     CELL_SIZE * 0.4
                 )
-                self.tf_ps.write('%d %d %d 0 360 arc fill\n' % arc)
-                self.tf_ps.write('0 setgray\n')
-                self.tf_ps.write('%d %d %d 0 360 arc stroke\n' % arc)
+                f.write('%d %d %d 0 360 arc fill\n' % arc)
+                f.write('0 setgray\n')
+                f.write('%d %d %d 0 360 arc stroke\n' % arc)
 
     def _create_pdf(self):
         self.tf_ps.write('showpage')
