@@ -23,9 +23,8 @@ class C42PDF(object):
                  [' ', ' ', '1', '1', '2', '2', '2'],
                  [' ', '1', '2', '2', '1', '2', '2'],
                  [' ', '2', '1', '2', '1', '2', '1']]
-        full_path = '/Users/drobles/Desktop/'
-        filename = 'c4'
-        C42PDF(board, full_path, filename).create()
+        filename = '/Users/drobles/Desktop/c4.pdf'
+        C42PDF(board, filename).create()
     '''
 
     def __init__(self, board, filename):
