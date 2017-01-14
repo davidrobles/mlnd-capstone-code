@@ -80,3 +80,7 @@ class C42PDF(object):
         self.tf_ps.close()
         subprocess.call(["pdfcrop", self.tf_updf.name, self.filename])
         self.tf_updf.close()
+
+
+def c42pdf(board, filename):
+    return C42PDF(board, filename).create()

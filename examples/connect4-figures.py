@@ -1,4 +1,4 @@
-from capstone.util.c42pdf import C42PDF
+from capstone.util import c42pdf
 
 
 board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
@@ -8,4 +8,4 @@ board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
          [' ', '1', '2', '2', '1', '2', '2'],
          [' ', '2', '1', '2', '1', '2', '1']]
 filename = '/Users/drobles/Desktop/c4.pdf'
-C42PDF(board, filename).create()
+c42pdf(board, filename)
