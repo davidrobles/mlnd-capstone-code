@@ -1,4 +1,4 @@
-from capstone.util.c4fig import C42PDF
+from capstone.util.c42pdf import C42PDF
 
 
 board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],

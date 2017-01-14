@@ -12,7 +12,9 @@ OFFSET = 10
 class C42PDF(object):
     '''
     Generates a PDF of the given Connect4 board.
+
     Example:
+
         board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
                  [' ', ' ', '2', ' ', '1', ' ', ' '],
                  [' ', ' ', '2', '2', '1', '1', '1'],
@@ -58,13 +60,13 @@ class C42PDF(object):
         self.f.write('stroke\n')
 
     def _draw_stones(self):
-        for ri, row in enumerate(reversed(board)):
+        for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
                 self.f.write('%s setrgbcolor\n' % COLORS[col])
                 arc = (
                     ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
                     ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
-                    CELL_SIZE * 0.35
+                    CELL_SIZE * 0.4
                 )
                 self.f.write('%d %d %d 0 360 arc fill\n' % arc)
                 self.f.write('0 setgray\n')
@@ -79,13 +81,3 @@ class C42PDF(object):
         subprocess.call(["pdfcrop", "%s_.pdf" % fn, "%s.pdf" % fn])
         subprocess.call(["rm", "%s.ps" % fn])
         subprocess.call(["rm", "%s_.pdf" % fn])
-
-board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
-         [' ', ' ', '2', ' ', '1', ' ', ' '],
-         [' ', ' ', '2', '2', '1', '1', '1'],
-         [' ', ' ', '1', '1', '2', '2', '2'],
-         [' ', '1', '2', '2', '1', '2', '2'],
-         [' ', '2', '1', '2', '1', '2', '1']]
-full_path = '/Users/drobles/Desktop/'
-filename = 'c4'
-C42PDF(board, full_path, filename).create()
