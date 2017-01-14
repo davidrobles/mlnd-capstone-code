@@ -33,49 +33,50 @@ class C42PDF(object):
         self.filename = filename
 
     def create(self):
-        self.tf = tempfile.NamedTemporaryFile()
+        self.tf_ps = tempfile.NamedTemporaryFile()
         self._draw_background()
         self._draw_stones()
         self._create_pdf()
 
     def _draw_background(self):
-        self.tf.write('newpath\n')
-        self.tf.write('10 10 moveto\n')
-        self.tf.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf.write('closepath\n')
-        self.tf.write('%s setrgbcolor\n' % BG_COLOR)
-        self.tf.write('fill\n')
+        self.tf_ps.write('newpath\n')
+        self.tf_ps.write('10 10 moveto\n')
+        self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+        self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+        self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.tf_ps.write('closepath\n')
+        self.tf_ps.write('%s setrgbcolor\n' % BG_COLOR)
+        self.tf_ps.write('fill\n')
 
-        self.tf.write('newpath\n')
-        self.tf.write('10 10 moveto\n')
-        self.tf.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
-        self.tf.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
-        self.tf.write('closepath\n')
-        self.tf.write('0 setgray\n')
-        self.tf.write('stroke\n')
+        self.tf_ps.write('newpath\n')
+        self.tf_ps.write('10 10 moveto\n')
+        self.tf_ps.write('0 %f rlineto\n' % (ROWS * CELL_SIZE))
+        self.tf_ps.write('%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.tf_ps.write('0 -%f rlineto\n' % (ROWS * CELL_SIZE))
+        self.tf_ps.write('-%f 0 rlineto\n' % (COLS * CELL_SIZE))
+        self.tf_ps.write('closepath\n')
+        self.tf_ps.write('0 setgray\n')
+        self.tf_ps.write('stroke\n')
 
     def _draw_stones(self):
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
-                self.tf.write('%s setrgbcolor\n' % COLORS[col])
+                self.tf_ps.write('%s setrgbcolor\n' % COLORS[col])
                 arc = (
                     ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
                     ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
                     CELL_SIZE * 0.4
                 )
-                self.tf.write('%d %d %d 0 360 arc fill\n' % arc)
-                self.tf.write('0 setgray\n')
-                self.tf.write('%d %d %d 0 360 arc stroke\n' % arc)
+                self.tf_ps.write('%d %d %d 0 360 arc fill\n' % arc)
+                self.tf_ps.write('0 setgray\n')
+                self.tf_ps.write('%d %d %d 0 360 arc stroke\n' % arc)
 
     def _create_pdf(self):
-        self.tf.write('showpage')
-        self.tf.flush()
-        # self.f.close()
-        self.tf_uncropped = tempfile.NamedTemporaryFile()
-        subprocess.call(['ps2pdf', self.tf.name, self.tf_uncropped.name])
-        subprocess.call(["pdfcrop", self.tf_uncropped.name, self.filename])
+        self.tf_ps.write('showpage')
+        self.tf_ps.flush()
+        self.tf_updf = tempfile.NamedTemporaryFile()
+        subprocess.call(['ps2pdf', self.tf_ps.name, self.tf_updf.name])
+        self.tf_ps.close()
+        subprocess.call(["pdfcrop", self.tf_updf.name, self.filename])
+        self.tf_updf.close()
