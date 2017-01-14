@@ -11,15 +11,15 @@ def load_instance(instance):
     Returns a tuple with an instance of a Connect4 game with that position, and the
     outcome for the first player under perfect play.
     '''
-    values = instance.split(',')
-    cells = values[:-1]
-    outcome = values[-1]
-    m = {'x': 'X', 'o': 'O', 'b': '-'}
+    tokens = instance.split(',')
+    cells = tokens[:-1]
+    outcome = tokens[-1]
+    cell_map = {'x': 'X', 'o': 'O', 'b': '-'}
     board = [[' '] * C4.COLS for row in range(C4.ROWS)]
     for ix, cell in enumerate(cells):
         row = C4.ROWS - (ix % C4.ROWS) - 1
         col = ix // C4.ROWS
-        board[row][col] = m[cell]
+        board[row][col] = cell_map[cell]
     return C4(board), outcome
 
 instance = 'b,b,b,b,b,b,b,b,b,b,b,b,x,o,b,b,b,b,x,o,x,o,x,o,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,win'
