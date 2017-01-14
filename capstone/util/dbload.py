@@ -3,6 +3,14 @@ from capstone.game import Connect4 as C4
 
 
 def load_instance(instance):
+    '''
+    Loads a position from the Connect 4 database:
+
+    https://archive.ics.uci.edu/ml/machine-learning-databases/connect-4/connect-4.names
+
+    Returns a tuple with an instance of a Connect4 game with that position, and the
+    outcome for the first player under perfect play.
+    '''
     values = instance.split(',')
     cells = values[:-1]
     outcome = values[-1]
