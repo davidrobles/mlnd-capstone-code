@@ -5,18 +5,13 @@ line = 'b,b,b,b,b,b,b,b,b,b,b,b,x,o,b,b,b,b,x,o,x,o,x,o,b,b,b,b,b,b,b,b,b,b,b,b,
 values = line.split(',')
 cells = values[:-1]
 outcome = values[-1]
-
+m = {'x': 'X', 'o': 'O', 'b': '-'}
 board = [[' '] * C4.COLS for row in range(C4.ROWS)]
 
-for ix, c in enumerate(cells):
+for ix, cell in enumerate(cells):
     row = C4.ROWS - 1 - (ix % C4.ROWS)
     col = ix / C4.ROWS
-    if c == 'x':
-        board[row][col] = 'X'
-    elif c == 'o':
-        board[row][col] = 'O'
-    else:
-        board[row][col] = '-'
+    board[row][col] = m[cell]
 
 
 b = C4(board)
