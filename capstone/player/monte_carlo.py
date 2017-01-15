@@ -17,7 +17,11 @@ class MonteCarlo(Player):
     def __str__(self):
         return type(self).name
 
-    def move(self, game):
+    ##########
+    # Player #
+    ##########
+
+    def choose_move(self, game):
         counter = defaultdict(int)
         for i in range(self.n_sims):
             for move in game.legal_moves():
@@ -27,12 +31,5 @@ class MonteCarlo(Player):
                     rand_move = random.choice(new_game.legal_moves())
                     new_game.make_move(rand_move)
                 counter[move] += utility(new_game, game.cur_player())
-        m = Counter(counter).most_common(1)
-        return m[0][0]
-
-    ##########
-    # Player #
-    ##########
-
-    def choose_move(self, game):
-        return self.move(game)
+        best_move, count = Counter(counter).most_common(1)[0]
+        return best_move
