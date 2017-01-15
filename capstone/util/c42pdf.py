@@ -1,3 +1,4 @@
+from __future__ import division
 import subprocess
 import tempfile
 
@@ -62,8 +63,8 @@ class C42PDF(object):
             for ci, col in enumerate(row):
                 f.write('%s setrgbcolor\n' % COLORS[col])
                 arc = (
-                    ci * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
-                    ri * CELL_SIZE + (CELL_SIZE / 2) + OFFSET,
+                    ci * CELL_SIZE + (CELL_SIZE // 2) + OFFSET,
+                    ri * CELL_SIZE + (CELL_SIZE // 2) + OFFSET,
                     CELL_SIZE * 0.4
                 )
                 f.write('%d %d %d 0 360 arc fill\n' % arc)
