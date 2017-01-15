@@ -11,6 +11,7 @@ def load_instance(instance):
     Returns a tuple with an instance of a Connect4 game with that position, and the
     outcome for the first player under perfect play.
     '''
+    instance = instance.rstrip()
     tokens = instance.split(',')
     cells = tokens[:-1]
     outcome = tokens[-1]
