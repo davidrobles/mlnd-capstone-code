@@ -22,6 +22,7 @@ def play_series(game, players, n_matches=100):
     print('--------')
     print(' Series ')
     print('--------\n')
+    print('No. Matches: {}'.format(n_matches))
     print('Game: {}'.format(game.name))
     print('Players: {}\n'.format(players))
     for n_match in range(1, n_matches + 1):
