@@ -7,6 +7,9 @@ from ..util import utility
 class MonteCarlo(Player):
 
     name = 'MonteCarlo'
+
+    def __init__(self, n_sims=100):
+        self.n_sims = n_sims
     
     def __repr__(self):
         return type(self).name
@@ -16,7 +19,7 @@ class MonteCarlo(Player):
 
     def move(self, game):
         counter = defaultdict(int)
-        for i in range(1000):
+        for i in range(self.n_sims):
             for move in game.legal_moves():
                 new_game = game.copy()
                 new_game.make_move(move)
