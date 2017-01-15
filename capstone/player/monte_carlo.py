@@ -8,7 +8,7 @@ class MonteCarlo(Player):
 
     name = 'MonteCarlo'
 
-    def __init__(self, n_sims=100):
+    def __init__(self, n_sims=1000):
         self.n_sims = n_sims
     
     def __repr__(self):
