@@ -14,9 +14,17 @@ def play_match(game, players, verbose=True):
             print(game)
 
 
-def play_series(game, players, n_matches=100, verbose=True):
-    """Plays a series of 'n_matches' matches between the given players"""
-    for n_match in range(n_matches):
+def play_series(game, players, n_matches=100):
+    """
+    Plays a series of 'n_matches' matches of a 'game' between
+    the given 'players'.
+    """
+    print('--------')
+    print(' Series ')
+    print('--------\n')
+    print('Game: {}'.format(game.name))
+    print('Players: {}\n'.format(players))
+    for n_match in range(1, n_matches + 1):
         print('Match {}:'.format(n_match), end=' ')
         new_game = game.copy()
         play_match(new_game, players, verbose=False)
