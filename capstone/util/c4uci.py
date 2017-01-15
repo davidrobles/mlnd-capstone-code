@@ -21,8 +21,3 @@ def load_instance(instance):
         col = ix // C4.ROWS
         board[row][col] = cell_map[cell]
     return C4(board), outcome
-
-# instance = 'b,b,b,b,b,b,b,b,b,b,b,b,x,o,b,b,b,b,x,o,x,o,x,o,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,win'
-# game, outcome = load_instance(instance)
-# print(game)
-# print(outcome)
