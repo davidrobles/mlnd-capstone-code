@@ -59,14 +59,11 @@ class C42PDF(object):
 
     def _draw_stones(self):
         f = self._tf_ps
+        offset = (CELL_SIZE // 2) + OFFSET
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
                 f.write('%s setrgbcolor\n' % COLORS[col])
-                arc = (
-                    ci * CELL_SIZE + (CELL_SIZE // 2) + OFFSET,
-                    ri * CELL_SIZE + (CELL_SIZE // 2) + OFFSET,
-                    CELL_SIZE * 0.4
-                )
+                arc = (ci * CELL_SIZE + offset, ri * CELL_SIZE + offset, CELL_SIZE * 0.4)
                 f.write('%d %d %d 0 360 arc fill\n' % arc)
                 f.write('0 setgray\n')
                 f.write('%d %d %d 0 360 arc stroke\n' % arc)
