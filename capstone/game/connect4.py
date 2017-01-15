@@ -261,9 +261,6 @@ class Connect4View(object):
                 else:
                     out += ' .'
             out += '\n'
-        out += '\n'
-        out += '-' * 80
-        out += '\n'
         return out
 
     def _outcomes(self):
