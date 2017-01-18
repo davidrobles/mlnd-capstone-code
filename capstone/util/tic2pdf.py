@@ -1,0 +1,98 @@
+from __future__ import division
+import subprocess
+import tempfile
+
+
+BG_COLOR = '1.0 1.0 1.0'
+COLORS = {
+    '1': '0.85 0.12 0.15',
+    '2': '0.00 0.00 1.00',
+    ' ': '0.90 0.90 0.90'
+}
+X_OFFSET = 17.0
+ROWS = 3
+COLS = 3
+CELL_SIZE = 20
+OFFSET = 10
+
+
+class Tic2PDF(object):
+    '''
+    Generates a PDF of the given Tic-Tac-Toe board.
+
+    Example:
+
+        board = [[' ', ' ', '1'],
+                 [' ', ' ', '2'],
+                 [' ', ' ', '2']]
+        filename = '/Users/drobles/Desktop/c4.pdf'
+        Tic2PDF(board, filename).create()
+    '''
+
+    def __init__(self, board, filename):
+        self.board = board
+        self.filename = filename
+
+    def create(self):
+        self._tf_ps = tempfile.NamedTemporaryFile()
+        self._draw_lines()
+        self._draw_pieces()
+        self._create_pdf()
+
+    def _draw_lines(self):
+        f = self._tf_ps
+        f.write('newpath\n')
+        # horizontal
+        f.write('10 %f moveto\n' % (CELL_SIZE + 10))
+        f.write('60 0 rlineto\n')
+        f.write('10 50 moveto\n')
+        f.write('60 0 rlineto\n')
+        # vertical
+        f.write('30 10 moveto\n')
+        f.write('0 60 rlineto\n')
+        f.write('50 10 moveto\n')
+        f.write('0 60 rlineto\n')
+        f.write('closepath\n')
+        # stroke
+        f.write('0 setgray\n')
+        f.write('1 setlinewidth\n')
+        f.write('stroke\n')
+
+    def _draw_pieces(self):
+        f = self._tf_ps
+        offset = (CELL_SIZE // 2) + OFFSET
+        for ri, row in enumerate(reversed(self.board)):
+            for ci, col in enumerate(row):
+                f.write('2 setlinewidth\n')
+                if col == '1':
+                    # /
+                    f.write('newpath\n')
+                    f.write('%f %f moveto\n' % ((ci * CELL_SIZE) + 10 + 4, (ri * CELL_SIZE) + 10 + 4))
+                    f.write('12 12 rlineto\n')
+                    f.write('closepath\n')
+                    f.write('%s setrgbcolor\n' % COLORS[col])
+                    f.write('stroke\n')
+                    # \
+                    f.write('newpath\n')
+                    f.write('%f %f moveto\n' % ((ci * CELL_SIZE) + 10 + 16, (ri * CELL_SIZE) + 10 + 4))
+                    f.write('-12 12 rlineto\n')
+                    f.write('closepath\n')
+                    f.write('%s setrgbcolor\n' % COLORS[col])
+                    f.write('stroke\n')
+                elif col == '2':
+                    f.write('%s setrgbcolor\n' % COLORS[col])
+                    arc = (ci * CELL_SIZE + offset, ri * CELL_SIZE + offset, CELL_SIZE * 0.38)
+                    f.write('%d %d %d 0 360 arc stroke\n' % arc)
+
+    def _create_pdf(self):
+        self._tf_ps.write('showpage')
+        self._tf_ps.flush()
+        self.tf_updf = tempfile.NamedTemporaryFile()
+        subprocess.call(['ps2pdf', self._tf_ps.name, self.tf_updf.name])
+        self._tf_ps.close()
+        subprocess.call(["pdfcrop", self.tf_updf.name, self.filename])
+        self.tf_updf.close()
+
+
+def tic2pdf(board, filename):
+    return Tic2PDF(board, filename).create()
