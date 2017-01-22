@@ -16,9 +16,7 @@ board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
          ['X', 'O', 'X', 'O', 'X', 'O', 'X']]
 game = Connect4(board)
-ab = AlphaBeta()
-mdp = GameMDP(game, ab, 1)
-env = Environment(mdp)
+env = Environment(GameMDP(game, AlphaBeta(), 1))
 qf = {}
 QLearning(env, qf=qf, n_episodes=1000).learn()
 c42pdf(game.board, 'figures/c4_ql_current.pdf')
