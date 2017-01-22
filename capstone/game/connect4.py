@@ -48,7 +48,17 @@ class Connect4(Game):
             self.reset()
 
     def __hash__(self):
-        return Connect4.zobrist_hash(self.board)
+        b = []
+        for row in range(ROWS - 1, -1, -1):
+            for col in range(COLS):
+                hello = (col * 7) + row
+                if (1 << hello) & self._boards[0]:
+                    b.append(0)
+                elif (1 << hello) & self._boards[1]:
+                    b.append(1)
+                else:
+                    b.append(' ')
+        return Connect4.zobrist_hash(b)
 
     def __eq__(self, other):
         attrs = ['_cur_player', '_boards', '_moves', '_height']
@@ -123,34 +133,18 @@ class Connect4(Game):
 
     @property
     def board(self):
-        b = []
-        for row in range(ROWS - 1, -1, -1):
+        board = [[' '] * COLS for _ in range(ROWS)]
+        for row in range(ROWS):
             for col in range(COLS):
-                hello = (col * 7) + row
-                if (1 << hello) & self._boards[0]:
-                    b.append(0)
-                elif (1 << hello) & self._boards[1]:
-                    b.append(1)
-                else:
-                    b.append(' ')
-        return b
+                ix = (col * 7) + (ROWS - row - 1)
+                if (1 << ix) & self._boards[0]:
+                    board[row][col] = 'X'
+                elif (1 << ix) & self._boards[1]:
+                    board[row][col] = 'O'
+        return board
 
     @board.setter
     def board(self, board):
-        '''
-        board: a string
-
-        Example:
-
-        game.board = (
-            'O------'
-            'X------'
-            'O------'
-            'X------'
-            'O------'
-            'X------'
-        )
-        '''
         self._boards = [0, 0]
         counters = [0, 0]
         self._height = [H1 * col for col in range(COLS)]

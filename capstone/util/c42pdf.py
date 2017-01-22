@@ -4,7 +4,7 @@ import tempfile
 
 
 BG_COLOR = '0.00 0.50 0.77'
-COLORS = { '1': '0.85 0.12 0.15', '2': '1.00 0.80 0.01', ' ': '0.90 0.90 0.90' }
+COLORS = { 'X': '0.85 0.12 0.15', 'O': '1.00 0.80 0.01', ' ': '0.90 0.90 0.90' }
 X_OFFSET = 17.0
 ROWS = 6
 COLS = 7
@@ -62,11 +62,11 @@ class C42PDF(object):
         offset = (CELL_SIZE // 2) + OFFSET
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
-                f.write('%s setrgbcolor\n' % COLORS[col])
-                arc = (ci * CELL_SIZE + offset, ri * CELL_SIZE + offset, CELL_SIZE * 0.4)
-                f.write('%d %d %d 0 360 arc fill\n' % arc)
-                f.write('0 setgray\n')
-                f.write('%d %d %d 0 360 arc stroke\n' % arc)
+                    f.write('%s setrgbcolor\n' % COLORS[col])
+                    arc = (ci * CELL_SIZE + offset, ri * CELL_SIZE + offset, CELL_SIZE * 0.4)
+                    f.write('%d %d %d 0 360 arc fill\n' % arc)
+                    f.write('0 setgray\n')
+                    f.write('%d %d %d 0 360 arc stroke\n' % arc)
 
     def _create_pdf(self):
         self._tf_ps.write('showpage')

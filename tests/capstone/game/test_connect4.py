@@ -11,46 +11,67 @@ class TestConnect4(unittest.TestCase):
     def test_name(self):
         self.assertEqual(Connect4.name, 'Connect4')
 
+    def test_init_with_board(self):
+        game = Connect4(
+            [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', 'O', ' ', ' ', ' '],
+             ['X', 'O', 'X', 'O', 'O', ' ', ' ']]
+        )
+        b = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', 'O', ' ', ' ', ' '],
+             ['X', 'O', 'X', 'O', 'O', ' ', ' ']]
+        self.assertEqual(game.board, b)
+        # self.assertTrue(game.is_over())
+        # self.assertTrue(game._is_win(game._boards[0]))
+        # self.assertFalse(game._is_win(game._boards[1]))
+        # self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
+        # self.assertEqual(game.legal_moves(), [])
+
+
     def test_init_with_mdlist_board_that_is_over(self):
         game = Connect4(
-            [['-', '-', '-', '-', '-', '-', '-'],
-             ['-', '-', '-', '-', '-', '-', '-'],
-             ['-', '-', 'X', '-', '-', '-', '-'],
-             ['-', '-', 'X', '-', '-', '-', '-'],
-             ['-', '-', 'X', 'O', '-', '-', '-'],
-             ['X', 'O', 'X', 'O', 'O', '-', '-']]
+            [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', 'O', ' ', ' ', ' '],
+             ['X', 'O', 'X', 'O', 'O', ' ', ' ']]
         )
         self.assertTrue(game.is_over())
         self.assertTrue(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
-        self.assertIsNone(game.cur_player())
         self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
         self.assertEqual(game.legal_moves(), [])
 
     def test_init_with_board_that_is_over(self):
         game = Connect4(
-            '-------'
-            '-------'
-            '--X----'
-            '--X----'
-            '--XO---'
-            'XOXOO--'
+            [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', ' ', ' ', ' ', ' '],
+             [' ', ' ', 'X', 'O', ' ', ' ', ' '],
+             ['X', 'O', 'X', 'O', 'O', ' ', ' ']]
         )
         self.assertTrue(game.is_over())
         self.assertTrue(game._is_win(game._boards[0]))
         self.assertFalse(game._is_win(game._boards[1]))
-        self.assertIsNone(game.cur_player())
         self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
         self.assertEqual(game.legal_moves(), [])
 
     def test_init_with_board_that_is_not_over_1(self):
         game = Connect4(
-            'O------'
-            'X------'
-            'O------'
-            'X------'
-            'O------'
-            'X------'
+            [['O', ' ', ' ', ' ', ' ', ' ', ' '],
+             ['X', ' ', ' ', ' ', ' ', ' ', ' '],
+             ['O', ' ', ' ', ' ', ' ', ' ', ' '],
+             ['X', ' ', ' ', ' ', ' ', ' ', ' '],
+             ['O', ' ', ' ', ' ', ' ', ' ', ' '],
+             ['X', ' ', ' ', ' ', ' ', ' ', ' ']]
         )
         self.assertFalse(game.is_over())
         self.assertFalse(game._is_win(game._boards[0]))
@@ -61,12 +82,12 @@ class TestConnect4(unittest.TestCase):
 
     def test_init_with_board_that_is_not_over_2(self):
         game = Connect4(
-            'O--X---'
-            'X--O---'
-            'O--X---'
-            'X--O---'
-            'O--X---'
-            'XX-O---'
+            [['O', ' ', ' ', 'X', ' ', ' ', ' '],
+             ['X', ' ', ' ', 'O', ' ', ' ', ' '],
+             ['O', ' ', ' ', 'X', ' ', ' ', ' '],
+             ['X', ' ', ' ', 'O', ' ', ' ', ' '],
+             ['O', ' ', ' ', 'X', ' ', ' ', ' '],
+             ['X', 'X', ' ', 'O', ' ', ' ', ' ']]
         )
         self.assertFalse(game.is_over())
         self.assertFalse(game._is_win(game._boards[0]))
