@@ -13,9 +13,9 @@ class TestTicTacToe(unittest.TestCase):
 
     def test_with_board(self):
         game = TicTacToe(
-            'X-X'
-            'O-X'
-            '-O-'
+            [['X', ' ', 'X'],
+             ['O', ' ', 'X'],
+             [' ', 'O', ' ']]
         )
         self.assertEqual(game.legal_moves(), [2, 5, 7, 9])
         self.assertEqual(game.cur_player(), 1)
@@ -91,9 +91,9 @@ class TestTicTacToe(unittest.TestCase):
 
     def test_legal_moves_are_empty_when_is_over(self):
         game = TicTacToe(
-            'XXX'
-            'OO-'
-            '---'
+            [['X', 'X', 'X'],
+             ['O', 'O', ' '],
+             [' ', ' ', ' ']]
         )
         self.assertTrue(len(game.legal_moves()) == 0)
 
@@ -116,24 +116,24 @@ class TestTicTacToe(unittest.TestCase):
 
     def test_outcomes_win_first_player(self):
         game = TicTacToe(
-            'XXX'
-            'OO-'
-            '---'
+            [['X', 'X', 'X'],
+             ['O', 'O', ' '],
+             [' ', ' ', ' ']]
         )
         self.assertEqual(game.outcomes(), ['W', 'L'])
 
     def test_outcomes_win_second_player(self):
         game = TicTacToe(
-            'XX-'
-            'OOO'
-            '--X'
+            [['X', 'X', ' '],
+             ['O', 'O', 'O'],
+             [' ', ' ', 'X']]
         )
         self.assertEqual(game.outcomes(), ['L', 'W'])
 
     def test_outcomes_draw(self):
         game = TicTacToe(
-            'XXO'
-            'OOX'
-            'XOX'
+            [['X', 'X', 'O'],
+             ['O', 'O', 'X'],
+             ['X', 'O', 'X']]
         )
         self.assertEqual(game.outcomes(), ['D', 'D'])

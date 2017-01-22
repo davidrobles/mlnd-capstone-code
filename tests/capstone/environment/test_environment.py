@@ -16,17 +16,17 @@ class TestEnvironment(unittest.TestCase):
 
     def test_cur_state_when_opponent_should_move_to_start(self):
         game = TicTacToe(
-            'XOO'
-            'XO-'
-            '-XX'
+            [['X', 'O', 'O'],
+             ['X', 'O', ' '],
+             [' ', 'X', 'X']]
         )
         ab = AlphaBeta()
         mdp = GameMDP(game, ab, 1)
         env = Environment(mdp)
         expected = TicTacToe(
-            'XOO'
-            'XO-'
-            'OXX'
+            [['X', 'O', 'O'],
+             ['X', 'O', ' '],
+             ['O', 'X', 'X']]
         )
         self.assertEqual(env.cur_state(), expected)
 

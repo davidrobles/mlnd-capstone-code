@@ -17,16 +17,16 @@ class TestGameMDP(unittest.TestCase):
 
     def test_start_state_when_opponent_is_next_to_move(self):
         game = TicTacToe(
-            'XOO'
-            'XO-'
-            '-XX'
+            [['X', 'O', 'O'],
+             ['X', 'O', ' '],
+             [' ', 'X', 'X']]
         )
         ab = AlphaBeta()
         mdp = GameMDP(game, ab, 1)
         expected = TicTacToe(
-            'XOO'
-            'XO-'
-            'OXX'
+            [['X', 'O', 'O'],
+             ['X', 'O', ' '],
+             ['O', 'X', 'X']]
         )
         self.assertEqual(mdp.start_state(), expected)
 

@@ -2,6 +2,7 @@ from __future__ import print_function, unicode_literals
 from . import Game
 from ..util import print_aec, str_aec, ZobristHashing
 
+SIZE = 3
 
 class TicTacToe(Game):
 
@@ -21,28 +22,12 @@ class TicTacToe(Game):
 
     zobrist_hash = ZobristHashing(n_positions, n_pieces)
 
-    def __hash__(self):
-        return TicTacToe.zobrist_hash(self.board)
-
     def __init__(self, board=None):
         self.reset()
         if board:
-            for ix, c in enumerate(board):
-                if c == 'X':
-                    self._boards[0] |= 1 << ix
-                    self._cur_player ^= 1
-                elif c == 'O':
-                    self._boards[1] |= 1 << ix
-                    self._cur_player ^= 1
+            self.board = board
 
-    def copy(self):
-        tic = TicTacToe()
-        tic._cur_player = self._cur_player
-        tic._boards = self._boards[:]
-        return tic
-
-    @property
-    def board(self):
+    def __hash__(self):
         b = []
         for i in range(9):
             if self._boards[0] & (1 << i):
@@ -51,7 +36,46 @@ class TicTacToe(Game):
                 b.append(1)
             else:
                 b.append(' ')
-        return b
+        return TicTacToe.zobrist_hash(b)
+
+    @property
+    def board(self):
+        board = [[' ', ' ', ' '],
+                 [' ', ' ', ' '],
+                 [' ', ' ', ' ']]
+        for row in range(3):
+            for col in range(3):
+                if self._boards[0] & (1 << (row * 3 + col)):
+                    board[row][col] = 'X'
+                elif self._boards[1] & (1 << (row * 3 + col)):
+                    board[row][col] = 'O'
+                else:
+                    board[row][col] = ' '
+        return board
+
+    @board.setter
+    def board(self, board):
+        self._boards = [0, 0]
+        counters = [0, 0]
+        for row in range(SIZE):
+            for col in range(SIZE):
+                ix = (row * SIZE) + col
+                if (board[row][col] == 'X'):
+                    self._boards[0] |= (1 << ix)
+                    counters[0] += 1
+                elif (board[row][col] == 'O'):
+                    self._boards[1] |= (1 << ix)
+                    counters[1] += 1
+        if self._check_win(0) or self._check_win(1):
+            self._moves = []
+            return
+        diff = counters[0] - counters[1]
+        if diff == 0:
+            self._cur_player = 0
+        elif diff == 1:
+            self._cur_player = 1
+        else:
+            raise Exception('Illegal board!')
 
     def _check_win(self, player_idx):
         '''Returns true if there is a winning board for the given player'''
@@ -76,6 +100,12 @@ class TicTacToe(Game):
     ########
     # Game #
     ########
+
+    def copy(self):
+        tic = TicTacToe()
+        tic._cur_player = self._cur_player
+        tic._boards = self._boards[:]
+        return tic
 
     def cur_player(self):
         return self._cur_player
