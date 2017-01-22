@@ -13,9 +13,7 @@ board = [['X', ' ', ' '],
          ['O', 'X', ' '],
          [' ', 'O', ' ']]
 game = TicTacToe(board)
-ab = AlphaBeta()
-mdp = GameMDP(game, ab, 1)
-env = Environment(mdp)
+env = Environment(GameMDP(game, AlphaBeta(), 1))
 qf = {}
 QLearning(env, qf=qf, n_episodes=1000).learn()
 tic2pdf(game.board, 'figures/tic_ql_current.pdf')
