@@ -30,11 +30,11 @@ class QLearning(object):
 
     def learn(self):
         for episode in range(1, self.n_episodes + 1):
-            print('Episode {}'.format(episode))
+            print('Episode %d / %d)' % (episode, self.n_episodes))
             self.env.reset()
             step = 1
             while not self.env.is_terminal():
-                print('Step {}'.format(step))
+                print('  Step %d' % step)
                 self.init()
                 state = self.env.cur_state()
                 action = self.behaviour_policy.action(self.env, qf=self.qf)
