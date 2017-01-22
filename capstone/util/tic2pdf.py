@@ -1,13 +1,13 @@
-from __future__ import division
+from __future__ import division, unicode_literals
 import subprocess
 import tempfile
 
 
 BG_COLOR = '1.0 1.0 1.0'
 COLORS = {
-    '1': '0.85 0.12 0.15',
-    '2': '0.00 0.00 1.00',
-    ' ': '0.90 0.90 0.90'
+    'X': '0.85 0.12 0.15',
+    'O': '0.21 0.60 0.83',
+    ' ': '0.83 0.60 0.32'
 }
 X_OFFSET = 17.0
 ROWS = 3
@@ -22,9 +22,9 @@ class Tic2PDF(object):
 
     Example:
 
-        board = [[' ', ' ', '1'],
-                 [' ', ' ', '2'],
-                 [' ', ' ', '2']]
+        board = [[' ', ' ', 'X'],
+                 [' ', ' ', 'O'],
+                 [' ', ' ', 'X']]
         filename = '/Users/drobles/Desktop/c4.pdf'
         Tic2PDF(board, filename).create()
     '''
@@ -64,7 +64,7 @@ class Tic2PDF(object):
         for ri, row in enumerate(reversed(self.board)):
             for ci, col in enumerate(row):
                 f.write('2 setlinewidth\n')
-                if col == '1':
+                if col == 'X':
                     # /
                     f.write('newpath\n')
                     f.write('%f %f moveto\n' % ((ci * CELL_SIZE) + 10 + 4, (ri * CELL_SIZE) + 10 + 4))
@@ -79,7 +79,7 @@ class Tic2PDF(object):
                     f.write('closepath\n')
                     f.write('%s setrgbcolor\n' % COLORS[col])
                     f.write('stroke\n')
-                elif col == '2':
+                elif col == 'O':
                     f.write('%s setrgbcolor\n' % COLORS[col])
                     arc = (ci * CELL_SIZE + offset, ri * CELL_SIZE + offset, CELL_SIZE * 0.38)
                     f.write('%d %d %d 0 360 arc stroke\n' % arc)
