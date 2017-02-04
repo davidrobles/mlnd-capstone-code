@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+from __future__ import print_function
 from .aec import print_aec, str_aec
 from .c42pdf import c42pdf
 from .tic2pdf import tic2pdf

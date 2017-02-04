@@ -1,3 +1,4 @@
+from __future__ import division, unicode_literals
 import pandas as pd
 from capstone.game import Connect4 as C4
 

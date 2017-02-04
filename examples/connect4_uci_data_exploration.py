@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+from __future__ import print_function
 from capstone.datasets import load_uci_c4
 from capstone.util import print_header
 
