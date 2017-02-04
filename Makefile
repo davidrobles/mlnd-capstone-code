@@ -1,3 +1,9 @@
+shell:
+	PYTHONPATH=. ~/anaconda2/bin/ipython
+
+run:
+	PYTHONPATH=. ~/anaconda2/bin/python ${ARGS}
+
 test:
 	PYTHONPATH=. python -m unittest discover . -v
 
