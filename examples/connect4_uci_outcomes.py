@@ -1,26 +1,30 @@
 from __future__ import division, print_function
-from collections import Counter
-from capstone.util.c4uci import load_instance
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from capstone.game import Connect4 as C4
+from capstone.util import print_header
 
 FILENAME = 'datasets/connect-4.data'
 
-outcomes = []
+def column_name(i):
+    if i == 42:
+        return 'outcome'
+    row = chr(ord('a') + (i // C4.ROWS))
+    col = (i % C4.ROWS) + 1
+    return '{row}{col}'.format(row=row, col=col)
 
-with open(FILENAME) as f:
-    for i, line in enumerate(f, 1):
-        _, outcome = load_instance(line)
-        outcomes.append(outcome)
-        if i % 1000 == 0:
-            print(i)
+column_names = [column_name(i) for i in range(43)]
+df = pd.read_csv(FILENAME, header=None, names=column_names)
+outcomes = df.loc[:, 'outcome']
 
-counter = Counter(outcomes)
-print('\n---------')
-print(' Results')
-print('---------\n')
-print('total: {}'.format(len(outcomes)))
-for outcome in ['win', 'loss', 'draw']:
-    print('{outcome}: {count} ({pct:.2f}%)'.format(
-        outcome=outcome,
-        count=counter[outcome],
-        pct=((counter[outcome] / len(outcomes)) * 100)
-    ))
+print_header('Dataset')
+print(df, end='\n\n')
+
+print_header('Number of instances')
+print(df.shape[0], end='\n\n')
+
+print_header('Outcomes')
+print(outcomes.value_counts(), end='\n\n')
+
+print_header('Normalized Outcomes')
+print(outcomes.value_counts(normalize=True))
