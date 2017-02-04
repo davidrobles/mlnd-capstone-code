@@ -1,6 +1,4 @@
 from __future__ import division, print_function
-import pandas as pd
-from sklearn.linear_model import LinearRegression
 from capstone.datasets import load_uci_c4
 from capstone.util import print_header
 
