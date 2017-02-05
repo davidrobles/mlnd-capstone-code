@@ -19,11 +19,12 @@ def series_to_game(series):
 # Load UCI Connect 4 dataset
 df = load_uci_c4()
 
-# Select some instances of the dataset
-df = df.iloc[:10]
+# Select the instances of the dataset
+ixs = [1, 5, 10, 20, 567]
 
 # Generate pdfs of the boards
-for i, row in df.iterrows():
+for i in ixs:
+    row = df.iloc[i]
     c4, outcome = series_to_game(row)
     filename = 'figures/c4_exploration_{i}_{outcome}.pdf'.format(i=i, outcome=outcome)
     c42pdf(c4.board, filename)
