@@ -18,4 +18,4 @@ def load_uci_c4():
         return '{row}{col}'.format(row=row, col=col)
 
     column_names = [column_name(i) for i in range(43)]
-    return pd.read_csv('datasets/connect-4.data', header=None, names=column_names)
+    return pd.read_csv('datasets/uci_c4.csv', header=None, names=column_names)
