@@ -1,16 +1,13 @@
 from capstone.util import tic2pdf
 
-win = [['X', 'O', 'X'],
-       ['O', 'X', ' '],
-       ['X', ' ', 'O']]
-tic2pdf(win, 'figures/tic_env_win.pdf')
+tic2pdf('figures/tic_env_win.pdf', [['X', 'O', 'X'],
+                                    ['O', 'X', ' '],
+                                    ['X', ' ', 'O']])
 
-loss = [['X', 'X', 'O'],
-        [' ', 'O', ' '],
-        ['O', ' ', 'X']]
-tic2pdf(loss, 'figures/tic_env_loss.pdf')
+tic2pdf('figures/tic_env_loss.pdf', [['X', 'X', 'O'],
+                                     [' ', 'O', ' '],
+                                     ['O', ' ', 'X']])
 
-draw = [['X', 'X', 'O'],
-        ['O', 'O', 'X'],
-        ['X', 'O', 'X']]
-tic2pdf(draw, 'figures/tic_env_draw.pdf')
+tic2pdf('figures/tic_env_draw.pdf', [['X', 'X', 'O'],
+                                     ['O', 'O', 'X'],
+                                     ['X', 'O', 'X']])

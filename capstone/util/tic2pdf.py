@@ -18,20 +18,20 @@ OFFSET = 10
 
 class Tic2PDF(object):
     '''
-    Generates a PDF of the given Tic-Tac-Toe board.
+    Generates a PDF of a Tic-Tac-Toe board.
 
     Example:
 
+        filename = 'c4.pdf'
         board = [[' ', ' ', 'X'],
                  [' ', ' ', 'O'],
                  [' ', ' ', 'X']]
-        filename = '/Users/drobles/Desktop/c4.pdf'
-        Tic2PDF(board, filename).create()
+        Tic2PDF(filename, board).create()
     '''
 
-    def __init__(self, board, filename):
-        self.board = board
+    def __init__(self, filename, board):
         self.filename = filename
+        self.board = board
 
     def create(self):
         self._tf_ps = tempfile.NamedTemporaryFile()
@@ -94,5 +94,5 @@ class Tic2PDF(object):
         self.tf_updf.close()
 
 
-def tic2pdf(board, filename):
-    return Tic2PDF(board, filename).create()
+def tic2pdf(filename, board):
+    return Tic2PDF(filename, board).create()
