@@ -1,5 +1,6 @@
 from __future__ import print_function
 import random
+from capstone.util import print_header
 
 
 def play_match(game, players, verbose=True):
@@ -19,7 +20,7 @@ def play_series(game, players, n_matches=100):
     Plays a series of 'n_matches' of a 'game' between
     the given 'players'.
     """
-    print('** Series **\n')
+    print_header('Series')
     print('Game:', game.name)
     print('Players:', players)
     print('No. Matches: %d\n' % n_matches)
