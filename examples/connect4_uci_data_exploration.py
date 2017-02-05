@@ -1,3 +1,10 @@
+'''
+Exploration of the UCI C4 dataset:
+
+- Number of instances.
+- Outcomes counts.
+- Normalized outcomes counts.
+'''
 from __future__ import print_function
 from capstone.datasets import load_uci_c4
 from capstone.util import print_header
