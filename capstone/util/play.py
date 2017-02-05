@@ -1,6 +1,6 @@
 from __future__ import print_function
 import random
-from capstone.util import print_header
+from . import print_header
 
 
 def play_match(game, players, verbose=True):
