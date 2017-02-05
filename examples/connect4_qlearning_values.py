@@ -19,7 +19,7 @@ game = Connect4(board)
 env = Environment(GameMDP(game, AlphaBeta(), 1))
 qf = {}
 QLearning(env, qf=qf, n_episodes=1000).learn()
-c42pdf(game.board, 'figures/c4_ql_current.pdf')
+c42pdf('figures/c4_ql_current.pdf', game.board)
 
 for move in game.legal_moves():
     value = qf[(game, move)]
@@ -27,4 +27,5 @@ for move in game.legal_moves():
     print('Value: %f' % value)
     new_game = game.copy().make_move(move)
     print(new_game)
-    c42pdf(new_game.board, 'figures/c4_ql_move_%s_value_%.4f.pdf' % (move, value))
+    filename = 'figures/c4_ql_move_%s_value_%.4f.pdf' % (move, value)
+    c42pdf(filename, new_game.board)

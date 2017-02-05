@@ -14,23 +14,23 @@ OFFSET = 10
 
 class C42PDF(object):
     '''
-    Generates a PDF of the given Connect4 board.
+    Generates a PDF of a Connect4 board.
 
     Example:
 
+        filename = 'c4.pdf'
         board = [[' ', ' ', '1', ' ', ' ', ' ', ' '],
                  [' ', ' ', '2', ' ', '1', ' ', ' '],
                  [' ', ' ', '2', '2', '1', '1', '1'],
                  [' ', ' ', '1', '1', '2', '2', '2'],
                  [' ', '1', '2', '2', '1', '2', '2'],
                  [' ', '2', '1', '2', '1', '2', '1']]
-        filename = '/Users/drobles/Desktop/c4.pdf'
-        C42PDF(board, filename).create()
+        C42PDF(filename, board).create()
     '''
 
-    def __init__(self, board, filename):
-        self.board = board
+    def __init__(self, filename, board):
         self.filename = filename
+        self.board = board
 
     def create(self):
         self._tf_ps = tempfile.NamedTemporaryFile()
@@ -78,5 +78,5 @@ class C42PDF(object):
         self.tf_updf.close()
 
 
-def c42pdf(board, filename):
-    return C42PDF(board, filename).create()
+def c42pdf(filename, board):
+    return C42PDF(filename, board).create()

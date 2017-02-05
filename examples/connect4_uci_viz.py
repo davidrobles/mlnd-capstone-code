@@ -27,4 +27,4 @@ for i in ixs:
     row = df.iloc[i]
     c4, outcome = series_to_game(row)
     filename = 'figures/c4_exploration_{i}_{outcome}.pdf'.format(i=i, outcome=outcome)
-    c42pdf(c4.board, filename)
+    c42pdf(filename, c4.board)
