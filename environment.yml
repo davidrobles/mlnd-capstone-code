@@ -1,0 +1,5 @@
+name: capstone
+dependencies:
+  - keras
+  - numpy
+  - pandas

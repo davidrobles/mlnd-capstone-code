@@ -13,3 +13,9 @@ make test
 ```bash
 PYTHONPATH=. python examples/tictactoe_count_positions.py
 ```
+
+
+## Create Conda Environment
+```bash
+conda env create -f environment.yml
+```
