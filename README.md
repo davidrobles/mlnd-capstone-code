@@ -14,8 +14,17 @@ make test
 PYTHONPATH=. python examples/tictactoe_count_positions.py
 ```
 
-
-## Create Conda Environment
+## Create Virtual Environment
 ```bash
 conda env create -f environment.yml
+```
+
+## Activate Virtual Environment
+```bash
+source activate capstone
+```
+
+## Deactivate Virtual Environment
+```bash
+source deactivate capstone
 ```
