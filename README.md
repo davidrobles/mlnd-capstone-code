@@ -11,7 +11,7 @@ make test
 ## Run an example
 
 ```bash
-PYTHONPATH=. python examples/tictactoe_count_positions.py
+make file=examples/tictactoe_count_positions.py run
 ```
 
 ## List all environments
