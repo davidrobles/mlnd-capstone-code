@@ -2,7 +2,7 @@ shell:
 	PYTHONPATH=. ipython
 
 run:
-	PYTHONPATH=. python ${ARGS}
+	PYTHONPATH=. python ${file}
 
 test:
 	PYTHONPATH=. python -m unittest discover . -v
