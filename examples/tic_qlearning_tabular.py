@@ -1,6 +1,6 @@
 '''
-Q-Learning is used to learn the state-action values for a Tic-Tac-Toe board position against a
-deterministic Alpha-Beta player.
+Q-Learning is used to learn the state-action values for a Tic-Tac-Toe board
+position against a deterministic Alpha-Beta player.
 '''
 from capstone.algorithms import QLearning
 from capstone.environment import Environment
