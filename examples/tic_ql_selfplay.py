@@ -1,33 +1,29 @@
 '''
-Q-Learning is used to learn the state-action values for a Tic-Tac-Toe board
-position against a deterministic Alpha-Beta player.
+In this example we use Q-learning via self-play to learn
+the value function of a Tic-Tac-Toe position.
 '''
-from capstone.algorithms import QLearning
+from capstone.algorithms import QLearningSelfPlay
 from capstone.environment import Environment
 from capstone.game import TicTacToe
-from capstone.mdp import GameMDP
-from capstone.player import AlphaBeta
+from capstone.mdp import RealGameMDP
 from capstone.util import tic2pdf
 
-board = [['X', ' ', ' '],
-         ['O', 'X', ' '],
-         [' ', 'O', ' ']]
+# board = [['X', ' ', ' '],
+#          ['O', 'X', ' '],
+#          [' ', 'O', ' ']]
 
-tic = TicTacToe(board)
-dd = {'X': 1.0, ' ': 0.0, 'O': -1.0}
+# generate a board from this position for the report
+board = [['X', 'X', ' '],
+         ['O', 'O', ' '],
+         [' ', ' ', ' ']]
+game = TicTacToe(board)
+env = Environment(RealGameMDP(game))
+qf = {}
+QLearningSelfPlay(env, qf=qf, n_episodes=1000).learn()
 
-class Hello(object):
-
-    def __getitem__(self, key):
-        return
-
-    def __setitem__(self, key, value):
-        state, value = key
-        print(state)
-        pp = state.copy()
-        pp.make_move(value)
-        hey = [dd[col] for row in pp.board for col in row]
-        return
-
-hello = Hello()
-hello[(tic, 2)] = 12
+for move in game.legal_moves():
+    print('-' * 80)
+    value = qf[(game, move)]
+    new_game = game.copy().make_move(move)
+    print(value)
+    print(new_game)
