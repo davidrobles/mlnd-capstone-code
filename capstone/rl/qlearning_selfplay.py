@@ -11,6 +11,6 @@ class QLearningSelfPlay(QLearning):
     for the second player.
     '''
 
-    def max_qvalue(self):
+    def best_action_value(self, qf, state, actions):
         self._best = max if self.env.cur_state().cur_player() == 0 else min
-        return super(QLearningSelfPlay, self).max_qvalue()
+        return super(QLearningSelfPlay, self).best_action_value(qf, state, actions)

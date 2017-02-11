@@ -1,5 +1,6 @@
 import random
 from capstone.policy import RandomPolicy
+from .util import max_action_value
 
 
 class QLearning(object):
@@ -40,12 +41,11 @@ class QLearning(object):
             if (state, action) not in self.qf:
                 self.qf[(state, action)] = random.random() - 0.5
 
-    def max_qvalue(self, hello=True):
+    def best_action_value(self, qf, state, actions):
+        # TODO: this belong somewhere else, not sure where
         if self.env.is_terminal():
             return 0
-        state = self.env.cur_state()
-        actions = self.env.actions(state)
-        return self._best([self.qf[(state, action)] for action in actions])
+        return self._best([qf[(state, action)] for action in actions])
 
     def learn(self):
         self.n_episode = 1
@@ -63,7 +63,9 @@ class QLearning(object):
             action = self.behavior_policy.action(self.env, qf=self.qf)
             reward, next_state = self.env.do_action(action)
             self.init()
-            td_error = reward + (self.gamma * self.max_qvalue()) - self.qf[(state, action)]
+            next_actions = self.env.actions(next_state)
+            best_action_value = self.best_action_value(self.qf, next_state, next_actions)
+            td_error = reward + (self.gamma * best_action_value) - self.qf[(state, action)]
             self.qf[(state, action)] += self.alpha * td_error
             step += 1
         self.n_episode += 1
