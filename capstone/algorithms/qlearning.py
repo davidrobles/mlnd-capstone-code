@@ -48,12 +48,12 @@ class QLearning(object):
         return self._best([self.qf[(state, action)] for action in actions])
 
     def learn(self):
-        self.n_episode_ = 1
+        self.n_episode = 1
         for _ in range(self.n_episodes):
             self.episode()
 
     def episode(self):
-        print('Episode %d / %d)' % (self.n_episode_, self.n_episodes))
+        print('Episode {self.n_episode} / {self.n_episodes}'.format(self=self))
         self.env.reset()
         step = 1
         while not self.env.is_terminal():
@@ -66,4 +66,4 @@ class QLearning(object):
             td_error = reward + (self.gamma * self.max_qvalue()) - self.qf[(state, action)]
             self.qf[(state, action)] += self.alpha * td_error
             step += 1
-        self.n_episode_ += 1
+        self.n_episode += 1
