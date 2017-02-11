@@ -4,10 +4,28 @@ from capstone.policy import RandomPolicy
 
 class QLearning(object):
 
+    """
+    Parameters
+    ----------
+    env : Environment
+
+    behavior_policy : the policy generating the trajectory data
+
+    qf : the action-value function
+
+    alpha : learning rate
+
+    gamma : discount factor
+
+    n_episodes : number of episodes
+
+    best : the function used to select the best action-value (e.g. max)
+    """
+
     def __init__(self, env, policy=RandomPolicy(), qf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
-        self.behaviour_policy = policy
+        self.behavior_policy = policy
         self.qf = qf
         self.alpha = alpha
         self.gamma = gamma
@@ -38,7 +56,7 @@ class QLearning(object):
                 print('  Step %d' % step)
                 self.init()
                 state = self.env.cur_state()
-                action = self.behaviour_policy.action(self.env, qf=self.qf)
+                action = self.behavior_policy.action(self.env, qf=self.qf)
                 reward, next_state = self.env.do_action(action)
                 self.init()
                 td_error = reward + (self.gamma * self.max_qvalue()) - self.qf[(state, action)]

@@ -8,10 +8,6 @@ from capstone.game import TicTacToe
 from capstone.mdp import RealGameMDP
 from capstone.util import tic2pdf
 
-# board = [['X', ' ', ' '],
-#          ['O', 'X', ' '],
-#          [' ', 'O', ' ']]
-
 # generate a board from this position for the report
 board = [['X', 'X', ' '],
          ['O', 'O', ' '],
