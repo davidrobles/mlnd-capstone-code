@@ -6,7 +6,7 @@ from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import RealGameMDP
 from capstone.rl import QLearningSelfPlay
-from capstone.rl.tabular_qf import TabularQF
+from capstone.rl.tabularf import TabularF
 from capstone.util import tic2pdf
 
 # generate a board from this position for the report
@@ -15,7 +15,7 @@ board = [['X', 'X', ' '],
          [' ', ' ', ' ']]
 game = TicTacToe(board)
 env = Environment(RealGameMDP(game))
-qf = TabularQF()
+qf = TabularF()
 QLearningSelfPlay(env, qf=qf, n_episodes=1000).learn()
 
 for move in game.legal_moves():
