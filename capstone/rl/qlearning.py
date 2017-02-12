@@ -36,8 +36,8 @@ class QLearning(object):
         self.n_episodes = n_episodes
         self.cur_episode = 1
 
-    def best_action_value(self, qf, state, actions):
-        return max_action_value(qf, state, actions)
+    def best_action_value(self, state, actions):
+        return max_action_value(self.qf, state, actions)
 
     def learn(self):
         for _ in range(self.n_episodes):
@@ -54,7 +54,7 @@ class QLearning(object):
             action = self.behavior_policy.action(self.qf, state, actions)
             reward, next_state = self.env.do_action(action)
             next_actions = self.env.actions(next_state)
-            best_action_value = self.best_action_value(self.qf, next_state, next_actions)
+            best_action_value = self.best_action_value(next_state, next_actions)
             td_error = reward + (self.gamma * best_action_value) - self.qf[(state, action)]
             self.qf[(state, action)] += self.alpha * td_error
             step += 1
