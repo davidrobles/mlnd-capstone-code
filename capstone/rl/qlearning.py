@@ -31,7 +31,6 @@ class QLearning(object):
         self.alpha = alpha
         self.gamma = gamma
         self.n_episodes = n_episodes
-        self._best = max
 
     def init(self):
         '''Initializes the q-value if unvisited'''
@@ -42,10 +41,7 @@ class QLearning(object):
                 self.qf[(state, action)] = random.random() - 0.5
 
     def best_action_value(self, qf, state, actions):
-        # TODO: this belong somewhere else, not sure where
-        if self.env.is_terminal():
-            return 0
-        return self._best([qf[(state, action)] for action in actions])
+        return max_action_value(qf, state, actions)
 
     def learn(self):
         self.n_episode = 1
