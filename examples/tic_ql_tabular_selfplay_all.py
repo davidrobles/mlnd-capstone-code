@@ -1,6 +1,6 @@
 '''
-In this example we use Q-learning via self-play to learn
-the value function of all Tic-Tac-Toe positions.
+In this example the Q-learning algorithm is used via self-play
+to learn the state-action values for all Tic-Tac-Toe positions.
 '''
 from capstone.environment import Environment
 from capstone.game import TicTacToe
