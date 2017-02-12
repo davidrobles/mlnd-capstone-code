@@ -7,7 +7,6 @@ from ..policy import RandomPolicy
 class QLearning(object):
 
     """
-
     Q-learning is a model-free reinforcement learning technique. Can be used
     to find an optimal action-selection policy for any given (finite) MDP by
     interacting with an environment.
