@@ -15,7 +15,7 @@ class QLearning(object):
     ----------
     env : Environment
 
-    behavior_policy : the policy generating the trajectory data
+    behavior_policy : the policy used to generate the trajectory data
 
     qf : the action-value function
 
