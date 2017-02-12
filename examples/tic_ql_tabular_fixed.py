@@ -1,12 +1,12 @@
 '''
-Q-Learning is used to learn the state-action values for a Tic-Tac-Toe board
-position against a deterministic Alpha-Beta player.
+Q-Learning is used to learn the state-action values for a
+Tic-Tac-Toe board position against a fixed Alpha-Beta opponent.
 '''
-from capstone.algorithms import QLearning
 from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
 from capstone.player import AlphaBeta
+from capstone.rl import QLearning
 from capstone.util import tic2pdf
 
 board = [['X', ' ', ' '],
@@ -14,12 +14,11 @@ board = [['X', ' ', ' '],
          [' ', 'O', ' ']]
 game = TicTacToe(board)
 env = Environment(GameMDP(game, AlphaBeta(), 1))
-qf = {}
-QLearning(env, qf=qf, n_episodes=1000).learn()
+qlearning = QLearning(env, n_episodes=1000)
 tic2pdf('figures/tic_ql_current.pdf', game.board)
 
 for move in game.legal_moves():
-    value = qf[(game, move)]
+    value = qlearning.qf[(game, move)]
     print('Move: %d' % move)
     print('Value: %f' % value)
     new_game = game.copy().make_move(move)
