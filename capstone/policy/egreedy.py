@@ -6,11 +6,11 @@ from . import RandomPolicy
 
 class EGreedyPolicy(Policy):
 
-    def __init__(self, epsilon):
-        self.epsilon = epsilon
+    def __init__(self, e):
+        self.e = e
         self.greedy = GreedyPolicy()
         self.rand = RandomPolicy()
 
     def action(self, vf, state, actions=None):
-        policy = self.rand if random.random() < self.epsilon else self.greedy
+        policy = self.rand if random.random() < self.e else self.greedy
         return policy.action(vf, state, actions)

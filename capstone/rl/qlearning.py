@@ -1,7 +1,7 @@
 import random
 from .tabularf import TabularF
 from .util import max_action_value
-from ..policy import RandomPolicy
+from ..policy import EGreedyPolicy, RandomPolicy
 
 
 class QLearning(object):

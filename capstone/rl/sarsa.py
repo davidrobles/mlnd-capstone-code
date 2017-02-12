@@ -5,7 +5,7 @@ from capstone.policy import RandomPolicy
 
 class Sarsa(object):
 
-    def __init__(self, env, policy=EGreedyPolicy(epsilon=0.1), qf={}, alpha=0.1,
+    def __init__(self, env, policy=EGreedyPolicy(e=0.1), qf={}, alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.policy = policy
