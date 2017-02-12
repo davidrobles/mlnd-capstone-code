@@ -15,12 +15,12 @@ board = [['X', 'X', ' '],
          [' ', ' ', ' ']]
 game = TicTacToe(board)
 env = Environment(RealGameMDP(game))
-qf = TabularF()
-QLearningSelfPlay(env, qf=qf, n_episodes=1000).learn()
+qlearning = QLearningSelfPlay(env, n_episodes=1000)
+qlearning.learn()
 
 for move in game.legal_moves():
     print('-' * 80)
-    value = qf[(game, move)]
+    value = qlearning.qf[(game, move)]
     new_game = game.copy().make_move(move)
     print(value)
     print(new_game)

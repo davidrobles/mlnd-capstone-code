@@ -28,7 +28,7 @@ class QLearning(object):
     best : the function used to select the best action-value (e.g. max)
     """
 
-    def __init__(self, env, policy=RandomPolicy(), qf={}, alpha=0.1,
+    def __init__(self, env, policy=RandomPolicy(), qf=TabularF(), alpha=0.1,
                  gamma=0.99, n_episodes=1000):
         self.env = env
         self.behavior_policy = policy
