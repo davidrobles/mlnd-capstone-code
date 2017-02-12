@@ -24,8 +24,6 @@ class QLearning(object):
     gamma : discount factor
 
     n_episodes : number of episodes
-
-    best : the function used to select the best action-value (e.g. max)
     """
 
     def __init__(self, env, policy=RandomPolicy(), qf=TabularF(), alpha=0.1,
