@@ -1,12 +1,12 @@
 '''
-Q-Learning is used to learn the state-action values for a Connect4 board position against a
-deterministic Alpha-Beta player.
+Q-Learning is used to learn the state-action values for a Connect 4 board
+position against a fixed Alpha-Beta opponent.
 '''
-from capstone.algorithms import QLearning
 from capstone.environment import Environment
 from capstone.game import Connect4
 from capstone.mdp import GameMDP
 from capstone.player import AlphaBeta
+from capstone.rl import QLearning
 from capstone.util import c42pdf
 
 board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
@@ -17,12 +17,12 @@ board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
          ['X', 'O', 'X', 'O', 'X', 'O', 'X']]
 game = Connect4(board)
 env = Environment(GameMDP(game, AlphaBeta(), 1))
-qf = {}
-QLearning(env, qf=qf, n_episodes=1000).learn()
+qlearning = QLearning(env, n_episodes=1000)
+qlearning.learn()
 c42pdf('figures/c4_ql_current.pdf', game.board)
 
 for move in game.legal_moves():
-    value = qf[(game, move)]
+    value = qlearning.qf[(game, move)]
     print('Move: %s' % move)
     print('Value: %f' % value)
     new_game = game.copy().make_move(move)
