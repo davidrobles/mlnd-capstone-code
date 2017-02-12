@@ -59,11 +59,9 @@ class QLearning(object):
         step = 1
         while not self.env.is_terminal():
             print('  Step %d' % step)
-            self.init()
             state = self.env.cur_state()
             action = self.behavior_policy.action(self.env, qf=self.qf)
             reward, next_state = self.env.do_action(action)
-            self.init()
             next_actions = self.env.actions(next_state)
             best_action_value = self.best_action_value(self.qf, next_state, next_actions)
             td_error = reward + (self.gamma * best_action_value) - self.qf[(state, action)]

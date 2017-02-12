@@ -14,7 +14,18 @@ board = [['X', 'X', ' '],
          [' ', ' ', ' ']]
 game = TicTacToe(board)
 env = Environment(RealGameMDP(game))
-qf = {}
+
+
+class TabularQF(dict):
+
+    def __getitem__(self, key):
+        if key not in self:
+            import random
+            self[key] = random.random() - 0.5
+        return super(TabularQF, self).__getitem__(key)
+
+
+qf = TabularQF()
 QLearningSelfPlay(env, qf=qf, n_episodes=1000).learn()
 
 for move in game.legal_moves():
