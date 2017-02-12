@@ -1,5 +1,7 @@
 import random
 
+_MEAN = 0.0
+_STD = 0.3
 
 class TabularF(dict):
     '''
@@ -19,5 +21,5 @@ class TabularF(dict):
 
     def __getitem__(self, key):
         if key not in self:
-            self[key] = random.random() - 0.5
+            self[key] = random.gauss(_MEAN, _STD)
         return super(TabularF, self).__getitem__(key)
