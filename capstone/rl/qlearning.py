@@ -1,5 +1,5 @@
 import random
-from .tabular_qf import TabularQF
+from .tabularf import TabularF
 from .util import max_action_value
 from ..policy import RandomPolicy
 
