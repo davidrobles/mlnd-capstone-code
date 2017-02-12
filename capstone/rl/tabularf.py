@@ -3,6 +3,7 @@ import random
 _MEAN = 0.0
 _STD = 0.3
 
+
 class TabularF(dict):
     '''
     Tabular representation for any of the two types of value functions:

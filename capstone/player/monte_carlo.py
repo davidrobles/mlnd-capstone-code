@@ -10,7 +10,7 @@ class MonteCarlo(Player):
 
     def __init__(self, n_sims=1000):
         self.n_sims = n_sims
-    
+
     def __repr__(self):
         return type(self).name
 

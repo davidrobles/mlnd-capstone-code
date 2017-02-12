@@ -34,15 +34,15 @@ class Sarsa(object):
                 state = self.env.cur_state()
                 reward, next_state = self.env.do_action(action)
                 next_action = None
-                next_state_next_action_value = None
+                ns_na_value = None
                 actions = self.env.actions(self.env.cur_state())
                 if not actions:
-                    next_state_next_action_value = 0
+                    ns_na_value = 0
                 else:
                     self.init()
                     next_action = self.policy.action(self.env, qf=self.qf)
-                    next_state_next_action_value = self.qf[(next_state, next_action)]
-                td_error = reward + (self.gamma * next_state_next_action_value) - self.qf[(state, action)]
+                    ns_na_value = self.qf[(next_state, next_action)]
+                td_error = reward + (self.gamma * ns_na_value) - self.qf[(state, action)]
                 self.qf[(state, action)] += self.alpha * td_error
                 action = next_action
                 step += 1

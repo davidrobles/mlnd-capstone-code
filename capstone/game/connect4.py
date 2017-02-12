@@ -148,7 +148,7 @@ class Connect4(Game):
         self._boards = [0, 0]
         counters = [0, 0]
         self._height = [H1 * col for col in range(COLS)]
-        max_cols =  [0] * COLS
+        max_cols = [0] * COLS
         for row in range(ROWS):
             for col in range(COLS):
                 if (board[row][col] == 'X'):

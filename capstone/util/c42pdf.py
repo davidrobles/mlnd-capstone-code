@@ -4,7 +4,7 @@ import tempfile
 
 
 BG_COLOR = '0.00 0.50 0.77'
-COLORS = { 'X': '0.85 0.12 0.15', 'O': '1.00 0.80 0.01', ' ': '0.90 0.90 0.90' }
+COLORS = {'X': '0.85 0.12 0.15', 'O': '1.00 0.80 0.01', ' ': '0.90 0.90 0.90'}
 X_OFFSET = 17.0
 ROWS = 6
 COLS = 7
@@ -40,6 +40,7 @@ class C42PDF(object):
 
     def _draw_background(self):
         f = self._tf_ps
+
         def _bg_helper():
             f.write('newpath\n')
             f.write('10 10 moveto\n')

@@ -67,14 +67,16 @@ class Tic2PDF(object):
                 if col == 'X':
                     # /
                     f.write('newpath\n')
-                    f.write('%f %f moveto\n' % ((ci * CELL_SIZE) + 10 + 4, (ri * CELL_SIZE) + 10 + 4))
+                    f.write('%f %f moveto\n'
+                            % ((ci * CELL_SIZE) + 10 + 4, (ri * CELL_SIZE) + 10 + 4))
                     f.write('12 12 rlineto\n')
                     f.write('closepath\n')
                     f.write('%s setrgbcolor\n' % COLORS[col])
                     f.write('stroke\n')
                     # \
                     f.write('newpath\n')
-                    f.write('%f %f moveto\n' % ((ci * CELL_SIZE) + 10 + 16, (ri * CELL_SIZE) + 10 + 4))
+                    f.write('%f %f moveto\n'
+                            % ((ci * CELL_SIZE) + 10 + 16, (ri * CELL_SIZE) + 10 + 4))
                     f.write('-12 12 rlineto\n')
                     f.write('closepath\n')
                     f.write('%s setrgbcolor\n' % COLORS[col])

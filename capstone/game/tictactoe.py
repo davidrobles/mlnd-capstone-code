@@ -4,6 +4,7 @@ from ..util import print_aec, str_aec, ZobristHashing
 
 SIZE = 3
 
+
 class TicTacToe(Game):
 
     """
