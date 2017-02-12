@@ -1,5 +1,6 @@
 import random
 from capstone.policy import RandomPolicy
+from .tabular_qf import TabularQF
 from .util import max_action_value
 
 
