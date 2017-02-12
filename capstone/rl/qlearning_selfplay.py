@@ -13,6 +13,5 @@ class QLearningSelfPlay(QLearning):
     '''
 
     def best_action_value(self, qf, state, actions):
-        if state.cur_player() == 0:
-            return max_action_value(qf, state, actions)
-        return min_action_value(qf, state, actions)
+        best = max_action_value if state.cur_player() == 0 else min_action_value
+        return best(qf, state, actions)
