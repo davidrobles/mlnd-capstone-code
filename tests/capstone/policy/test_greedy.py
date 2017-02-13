@@ -1,25 +1,11 @@
 import unittest
 from capstone.policy import GreedyPolicy
-from capstone.util import play_match
-
-
-class FakeEnv(object):
-
-    def __init__(self):
-        self._actions = []
-
-    def cur_state(self):
-        return 'FakeState'
-
-    def actions(self, state):
-        return self._actions
 
 
 class TestGreedy(unittest.TestCase):
 
     def setUp(self):
         self.policy = GreedyPolicy()
-        self.env = FakeEnv()
 
     def test_max_action(self):
         state = 1
