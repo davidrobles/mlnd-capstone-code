@@ -1,6 +1,6 @@
 import random
 from . import Player
-from ..util import utility
+from ..utils import utility
 
 
 class AlphaBeta(Player):

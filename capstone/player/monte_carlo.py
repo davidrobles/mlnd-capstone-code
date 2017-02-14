@@ -1,7 +1,7 @@
 import random
 from collections import defaultdict, Counter
 from . import Player
-from ..util import utility
+from ..utils import utility
 
 
 class MonteCarlo(Player):

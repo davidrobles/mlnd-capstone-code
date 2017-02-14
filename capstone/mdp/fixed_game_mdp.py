@@ -1,5 +1,5 @@
 from . import MDP
-from ..util import utility
+from ..utils import utility
 
 
 class FixedGameMDP(MDP):

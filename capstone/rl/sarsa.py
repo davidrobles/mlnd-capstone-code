@@ -1,6 +1,6 @@
 import random
-from capstone.policy import EGreedyPolicy
-from capstone.policy import RandomPolicy
+from ..policy import EGreedyPolicy, RandomPolicy
+from ..utils import check_random_state
 
 
 class Sarsa(object):

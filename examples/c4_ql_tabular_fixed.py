@@ -7,7 +7,7 @@ from capstone.game import Connect4
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta
 from capstone.rl import QLearning
-from capstone.util import c42pdf
+from capstone.utils import c42pdf
 
 board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
          ['X', 'O', 'X', 'O', ' ', ' ', ' '],

@@ -1,4 +1,4 @@
-from ..util import check_random_state
+from ..utils import check_random_state
 
 _MEAN = 0.0
 _STD = 0.3

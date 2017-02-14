@@ -7,7 +7,7 @@ from capstone.game import TicTacToe
 from capstone.mdp import GameMDP
 from capstone.rl import QLearningSelfPlay
 from capstone.rl.tabularf import TabularF
-from capstone.util import tic2pdf
+from capstone.utils import tic2pdf
 
 # generate a board from this position for the report
 board = [['X', 'X', ' '],

@@ -9,7 +9,7 @@ from __future__ import division, unicode_literals
 
 import six
 from . import Game
-from ..util import print_aec, str_aec, ZobristHashing
+from ..utils import print_aec, str_aec, ZobristHashing
 
 
 ROWS = 6

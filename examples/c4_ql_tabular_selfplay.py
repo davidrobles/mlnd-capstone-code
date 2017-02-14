@@ -7,7 +7,7 @@ from capstone.environment import Environment
 from capstone.game import Connect4
 from capstone.mdp import GameMDP
 from capstone.rl import QLearningSelfPlay
-from capstone.util import c42pdf
+from capstone.utils import c42pdf
 
 board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
          ['X', 'O', 'X', 'O', ' ', ' ', ' '],

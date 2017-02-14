@@ -1,10 +1,9 @@
 import random
-from ..util import check_random_state
 
 
 class ZobristHashing(object):
 
-    def __init__(self, n_positions, n_pieces, random_state=None):
+    def __init__(self, n_positions, n_pieces):
         size = n_positions * n_pieces
         self.table = [random.getrandbits(32) for i in range(size)]
         self.n_positions = n_positions
