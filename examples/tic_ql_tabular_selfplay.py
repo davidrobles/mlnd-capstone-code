@@ -15,7 +15,7 @@ board = [['X', 'X', ' '],
          [' ', ' ', ' ']]
 game = TicTacToe(board)
 env = Environment(GameMDP(game))
-qlearning = QLearningSelfPlay(env, n_episodes=1000)
+qlearning = QLearningSelfPlay(env, n_episodes=1000, random_state=0)
 qlearning.learn()
 
 for move in game.legal_moves():

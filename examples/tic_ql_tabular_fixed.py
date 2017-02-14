@@ -14,7 +14,7 @@ board = [['X', ' ', ' '],
          [' ', 'O', ' ']]
 game = TicTacToe(board)
 env = Environment(FixedGameMDP(game, AlphaBeta(), 1))
-qlearning = QLearning(env, n_episodes=1000)
+qlearning = QLearning(env, n_episodes=1000, random_state=0)
 qlearning.learn()
 tic2pdf('figures/tic_ql_current.pdf', game.board)
 

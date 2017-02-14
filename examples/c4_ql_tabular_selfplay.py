@@ -18,7 +18,7 @@ board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
 game = Connect4(board)
 mdp = GameMDP(game)
 env = Environment(mdp)
-qlearning = QLearningSelfPlay(env, n_episodes=1000)
+qlearning = QLearningSelfPlay(env, n_episodes=1000, random_state=0)
 qlearning.learn()
 c42pdf('figures/c4_ql_tabular_selfplay_current.pdf', game.board)
 
