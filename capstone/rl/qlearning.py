@@ -15,7 +15,7 @@ class QLearning(object):
     ----------
     env : Environment
 
-    behavior_policy : the policy used to generate the trajectory data
+    policy : the behavior policy used to generate the trajectory data
 
     qf : Value function (default TabularF)
         the action-value function
@@ -42,7 +42,7 @@ class QLearning(object):
         self.n_episodes = n_episodes
         self.cur_episode = 1
         self.random_state = check_random_state(random_state)
-        self.behavior_policy = policy or RandomPolicy(self.random_state)
+        self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
 
     def best_action_value(self, state, actions):
@@ -60,7 +60,7 @@ class QLearning(object):
             print('  Step %d' % step)
             state = self.env.cur_state()
             actions = self.env.actions(state)
-            action = self.behavior_policy.action(self.qf, state, actions)
+            action = self.policy.action(self.qf, state, actions)
             reward, next_state = self.env.do_action(action)
             next_actions = self.env.actions(next_state)
             best_action_value = self.best_action_value(next_state, next_actions)
