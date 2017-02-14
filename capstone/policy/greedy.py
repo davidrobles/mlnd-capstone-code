@@ -1,7 +1,7 @@
-from . import Policy
+from .policy import Policy
 
 
-class GreedyPolicy(Policy):
+class Greedy(Policy):
 
     def action(self, vf, state, actions=None):
         if not actions:

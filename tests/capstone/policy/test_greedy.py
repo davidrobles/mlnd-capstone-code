@@ -1,11 +1,11 @@
 import unittest
-from capstone.policy import GreedyPolicy
+from capstone.policy import Greedy
 
 
 class TestGreedy(unittest.TestCase):
 
     def setUp(self):
-        self.policy = GreedyPolicy()
+        self.policy = Greedy()
 
     def test_max_action(self):
         state = 1
