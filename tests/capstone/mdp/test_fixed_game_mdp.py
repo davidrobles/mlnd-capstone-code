@@ -2,7 +2,7 @@ import unittest
 from capstone.game import TicTacToe
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta, RandPlayer
-from capstone.util import play_match
+from capstone.utils import play_match
 
 
 class TestGameMDP(unittest.TestCase):
