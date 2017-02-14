@@ -96,7 +96,7 @@ class TestConnect4(unittest.TestCase):
         self.assertEqual(game.legal_moves(), ['b', 'c', 'e', 'f', 'g'])
 
     def test_copy(self):
-        self.game.make_moves('a', 'b')
+        self.game.make_moves(['a', 'b'])
         game_copy = self.game.copy()
         self.assertEqual(game_copy, self.game)
         self.assertIsNot(game_copy, self.game)
@@ -106,21 +106,21 @@ class TestConnect4(unittest.TestCase):
         self.assertIsNot(game_copy.legal_moves(), self.game.legal_moves())
 
     def test_hash(self):
-        game1 = Connect4().make_moves('a', 'f')
+        game1 = Connect4().make_moves(['a', 'f'])
         table = {game1: 'game1'}
         self.assertEqual(len(table), 1)
         self.assertEqual(table[game1], 'game1')
-        game2 = Connect4().make_moves('a', 'f')
+        game2 = Connect4().make_moves(['a', 'f'])
         table[game2] = 'game2'
         self.assertEqual(table[game1], 'game2')
         self.assertEqual(table[game2], 'game2')
-        game3 = Connect4().make_moves('a', 'f', 'a')
+        game3 = Connect4().make_moves(['a', 'f', 'a'])
         table[game3] = 'game3'
         self.assertEqual(len(table), 2)
         self.assertEqual(table[game3], 'game3')
 
     def test_not_equal(self):
-        other = Connect4().make_moves('a')
+        other = Connect4().make_moves(['a'])
         self.assertNotEqual(self.game, other)
 
     def test_cur_player_start(self):
@@ -131,20 +131,20 @@ class TestConnect4(unittest.TestCase):
         self.assertEqual(self.game.cur_player(), 1)
 
     def test_cur_player_after_two_moves(self):
-        self.game.make_moves('a', 'b')
+        self.game.make_moves(['a', 'b'])
         self.assertEqual(self.game.cur_player(), 0)
 
     def test_equal(self):
         moves = ['a', 'b']
-        self.game.make_moves(*moves)
-        other = Connect4().make_moves(*moves)
+        self.game.make_moves(moves)
+        other = Connect4().make_moves(moves)
         self.assertEqual(self.game, other)
 
     def test_is_not_over_at_start(self):
         self.assertFalse(self.game.is_over())
 
     def test_is_over_at_end_of_game(self):
-        self.game.make_moves('a', 'b', 'a', 'b', 'a', 'b', 'a')
+        self.game.make_moves(['a', 'b', 'a', 'b', 'a', 'b', 'a'])
         self.assertTrue(self.game.is_over())
 
     def test_legal_moves_start(self):
@@ -159,7 +159,7 @@ class TestConnect4(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_legal_moves_after_two_moves(self):
-        self.game.make_moves('a', 'a', 'a', 'a', 'a', 'a')
+        self.game.make_moves(['a', 'a', 'a', 'a', 'a', 'a'])
         actual = self.game.legal_moves()
         expected = ['b', 'c', 'd', 'e', 'f', 'g']
         self.assertEqual(actual, expected)
@@ -176,13 +176,14 @@ class TestConnect4(unittest.TestCase):
         self.assertIs(self.game.make_move('a'), self.game)
 
     def test_make_moves(self):
-        self.game.make_moves(*((['a'] * 6) + (['b'] * 6)))
+        moves = ((['a'] * 6) + (['b'] * 6))
+        self.game.make_moves(moves)
         actual = self.game.legal_moves()
         expected = ['c', 'd', 'e', 'f', 'g']
         self.assertEqual(actual, expected)
 
     def test_make_moves_returns_self(self):
-        self.assertIs(self.game.make_moves('a', 'b', 'c'), self.game)
+        self.assertIs(self.game.make_moves(['a', 'b', 'c']), self.game)
 
 #     def test_outcomes_win_first_player(self):
 #         game = TicTacToe(

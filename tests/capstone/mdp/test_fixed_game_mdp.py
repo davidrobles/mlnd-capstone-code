@@ -45,7 +45,7 @@ class TestGameMDP(unittest.TestCase):
         self.assertEqual(reward, 0)
 
     def test_reward_when_game_is_over_and_is_draw(self):
-        cur_state = TicTacToe().make_moves(1, 3, 2, 4, 6, 5, 7, 8)
+        cur_state = TicTacToe().make_moves([1, 3, 2, 4, 6, 5, 7, 8])
         # cur_state:
         # X X O
         # O O X
@@ -64,7 +64,7 @@ class TestGameMDP(unittest.TestCase):
         opp_idx = 1
         mdp = FixedGameMDP(self.game, ab, opp_idx)
         # Agent moves first, Opponent second
-        cur_state = TicTacToe().make_moves(1, 4, 2, 5)
+        cur_state = TicTacToe().make_moves([1, 4, 2, 5])
         # cur_state:
         # X X -
         # O O -
@@ -83,7 +83,7 @@ class TestGameMDP(unittest.TestCase):
         opp_idx = 1
         mdp = FixedGameMDP(self.game, ab, opp_idx)
         # Opponent moves first, Agent second
-        cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
+        cur_state = TicTacToe().make_moves([1, 4, 2, 5, 7])
         # cur_state:
         # X X -
         # O O -
@@ -102,7 +102,7 @@ class TestGameMDP(unittest.TestCase):
         opp_idx = 0
         mdp = FixedGameMDP(self.game, ab, opp_idx)
         # Opponent moves first, Agent second
-        cur_state = TicTacToe().make_moves(1, 4, 2, 5, 7)
+        cur_state = TicTacToe().make_moves([1, 4, 2, 5, 7])
         # cur_state:
         # X X -
         # O O -
@@ -120,7 +120,7 @@ class TestGameMDP(unittest.TestCase):
         ab = AlphaBeta()
         opp_idx = 0
         mdp = FixedGameMDP(self.game, ab, opp_idx)
-        cur_state = TicTacToe().make_moves(1, 4, 2, 5)
+        cur_state = TicTacToe().make_moves([1, 4, 2, 5])
         # cur_state:
         # X X -
         # O O -
@@ -149,7 +149,7 @@ class TestGameMDP(unittest.TestCase):
         # X - O
         # - - X
         # - - O
-        game = TicTacToe().make_moves(1, 3, 6, 9)
+        game = TicTacToe().make_moves([1, 3, 6, 9])
         # Create an mdp where AlphaBeta is the
         # second player to move
         mdp = FixedGameMDP(game, AlphaBeta(), 1)
@@ -158,7 +158,7 @@ class TestGameMDP(unittest.TestCase):
         transitions = mdp.transitions(game, 7)
         self.assertEqual(len(transitions), 1)
         next_game, prob = transitions[0]
-        self.assertEqual(next_game, game.copy().make_moves(7, 4))
+        self.assertEqual(next_game, game.copy().make_moves([7, 4]))
         self.assertEqual(prob, 1.0)
 
     def test_transitions_empty_when_game_is_over(self):

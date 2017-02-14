@@ -36,7 +36,7 @@ class Game(object):
         '''Makes one move for the player in turn. Returns self.'''
         pass
 
-    def make_moves(self, *moves):
+    def make_moves(self, moves):
         '''Makes a series of moves. Returns self.'''
         for move in moves:
             self.make_move(move)
