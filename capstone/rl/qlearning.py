@@ -64,7 +64,7 @@ class QLearning(object):
             reward, next_state = self.env.do_action(action)
             next_actions = self.env.actions(next_state)
             best_action_value = self.best_action_value(next_state, next_actions)
-            td_error = reward + (self.gamma * best_action_value) - self.qf[(state, action)]
-            self.qf[(state, action)] += self.alpha * td_error
+            td_error = reward + (self.gamma * best_action_value) - self.qf[state, action]
+            self.qf[state, action] += self.alpha * td_error
             step += 1
         self.cur_episode += 1
