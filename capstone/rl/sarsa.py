@@ -1,6 +1,6 @@
 import random
 from .tabularf import TabularF
-from ..policy import EGreedyPolicy, RandomPolicy
+from ..policy import RandomPolicy
 from ..utils import check_random_state
 
 

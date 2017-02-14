@@ -1,4 +1,4 @@
 from .policy import Policy
 from .greedy import GreedyPolicy
 from .random_policy import RandomPolicy
-from .egreedy import EGreedyPolicy
+from .egreedy import EGreedy

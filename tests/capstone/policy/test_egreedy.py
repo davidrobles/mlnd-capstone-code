@@ -1,5 +1,5 @@
 import unittest
-from capstone.policy import EGreedyPolicy
+from capstone.policy import EGreedy
 
 
 class FakeEnv(object):
@@ -17,7 +17,7 @@ class FakeEnv(object):
 class TestEGreedy(unittest.TestCase):
 
     def setUp(self):
-        self.policy = EGreedyPolicy(0.1)
+        self.policy = EGreedy(0.1)
         self.env = FakeEnv()
 
     # def test_max_action(self):

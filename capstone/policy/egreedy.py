@@ -5,7 +5,7 @@ from . import RandomPolicy
 from ..utils import check_random_state
 
 
-class EGreedyPolicy(Policy):
+class EGreedy(Policy):
 
     def __init__(self, e, random_state=None):
         self.e = e
