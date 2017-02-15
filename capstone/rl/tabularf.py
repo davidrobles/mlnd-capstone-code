@@ -24,5 +24,9 @@ class TabularF(dict):
 
     def __getitem__(self, key):
         if key not in self:
-            self[key] = self.random_state.normal(_MEAN, _STD)
+            state, action = key
+            if action is None:
+                self[key] = 0
+            else:
+                self[key] = self.random_state.normal(_MEAN, _STD)
         return super(TabularF, self).__getitem__(key)

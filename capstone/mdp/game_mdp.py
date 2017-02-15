@@ -12,22 +12,15 @@ class GameMDP(MDP):
         self._game = game
         self._states = {}
 
-    def __str__(self):
-        return '<MDP states={}>'.format(len(self.states))
+    def actions(self, state):
+        return [None] if state.is_over() else state.legal_moves()
 
-    #######
-    # MDP #
-    #######
+    def is_terminal(self, state):
+        return state.is_over()
 
-    def actions(self, game):
-        return game.legal_moves()
-
-    def is_terminal(self, game):
-        return game.is_over()
-
-    def reward(self, game, move, next_game):
+    def reward(self, state, action, next_state):
         # return the utility from the point of view of the first player
-        return utility(next_game, 0) if next_game.is_over() else 0
+        return utility(next_state, 0) if next_state.is_over() else 0
 
     def start_state(self):
         return self._game.copy()
@@ -44,8 +37,8 @@ class GameMDP(MDP):
             generate_states(self._game)
         return self._states
 
-    def transitions(self, game, move):
-        if game.is_over():
-            return []
-        new_game = game.copy().make_move(move)
+    def transitions(self, state, action):
+        if state.is_over():
+            return [(state, 1.0)]
+        new_game = state.copy().make_move(action)
         return [(new_game, 1.0)]

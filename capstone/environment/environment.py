@@ -33,7 +33,7 @@ class Environment(object):
         return reward, self.cur_state()
 
     def is_terminal(self):
-        return len(self.actions(self.cur_state())) == 0
+        return self._mdp.is_terminal(self.cur_state())
 
     @abc.abstractmethod
     def reset(self):
