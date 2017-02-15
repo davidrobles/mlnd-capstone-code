@@ -23,8 +23,8 @@ class Sarsa(object):
 
     def episode(self):
         print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
-        self.env.reset()
         step = 1
+        self.env.reset()
         state, actions = self.env.cur_state_and_actions()
         action = self.policy.action(self.qf, state, actions)
         while not self.env.is_terminal():
