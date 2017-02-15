@@ -33,9 +33,9 @@ class TestGameMDP(unittest.TestCase):
     def test_actions(self):
         self.assertEqual(self.mdp.actions(self.game), list(range(1, 10)))
 
-    def test_actions_at_end_of_game_are_empty(self):
+    def test_actions_at_end_of_game_are_one_and_none(self):
         play_match(self.game, self.players, verbose=False)
-        self.assertEqual(self.mdp.actions(self.game), [])
+        self.assertEqual(self.mdp.actions(self.game), [None])
 
     def test_reward_when_game_is_not_over_is_zero(self):
         cur_state = self.game
