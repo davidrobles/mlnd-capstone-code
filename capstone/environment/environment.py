@@ -30,7 +30,8 @@ class Environment(object):
         for next_state, prob in transitions:
             self._cur_state = next_state
         reward = self._mdp.reward(prev, action, self.cur_state())
-        return reward, self.cur_state()
+        cur_state = self.cur_state()
+        return reward, cur_state, self.actions(cur_state)
 
     def is_terminal(self):
         return self._mdp.is_terminal(self.cur_state())
