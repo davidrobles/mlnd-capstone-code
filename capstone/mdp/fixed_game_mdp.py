@@ -16,11 +16,6 @@ class FixedGameMDP(GameMDP):
         self._agent_idx = opp_idx ^ 1
         self._states = {}
 
-    #######
-    # MDP #
-    #######
-
-
     def reward(self, game, move, next_game):
         return utility(next_game, self._agent_idx) if next_game.is_over() else 0
 
