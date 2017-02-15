@@ -1,4 +1,3 @@
-import random
 from .tabularf import TabularF
 from ..policy import RandomPolicy
 from ..utils import check_random_state
@@ -16,36 +15,32 @@ class Sarsa(object):
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
-
-    def init(self):
-        '''Initializes the q-value if unvisited'''
-        state = self.env.cur_state()
-        actions = self.env.actions(state)
-        for action in actions:
-            if (state, action) not in self.qf:
-                self.qf[(state, action)] = random.random() - 0.5
+        self.cur_episode = 1
 
     def learn(self):
-        for episode in range(1, self.n_episodes + 1):
-            print('Episode {}'.format(episode))
-            self.env.reset()
-            step = 1
-            self.init()
-            action = self.policy.action(self.env, qf=self.qf)
-            while not self.env.is_terminal():
-                print('Step {}'.format(step))
-                state = self.env.cur_state()
-                reward, next_state = self.env.do_action(action)
-                next_action = None
-                ns_na_value = None
-                actions = self.env.actions(self.env.cur_state())
-                if not actions:
-                    ns_na_value = 0
-                else:
-                    self.init()
-                    next_action = self.policy.action(self.env, qf=self.qf)
-                    ns_na_value = self.qf[(next_state, next_action)]
-                td_error = reward + (self.gamma * ns_na_value) - self.qf[(state, action)]
-                self.qf[(state, action)] += self.alpha * td_error
-                action = next_action
-                step += 1
+        for _ in range(self.n_episodes):
+            self.episode()
+
+    def episode(self):
+        print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
+        self.env.reset()
+        step = 1
+        state = self.env.cur_state()
+        actions = self.env.actions(state)
+        action = self.policy.action(self.qf, state, actions)
+        while not self.env.is_terminal():
+            print('Step {}'.format(step))
+            reward, next_state = self.env.do_action(action)
+            next_action = None
+            ns_na_value = None
+            actions = self.env.actions(self.env.cur_state())
+            if not actions:
+                ns_na_value = 0
+            else:
+                next_action = self.policy.action(self.qf, next_state, actions)
+                ns_na_value = self.qf[next_state, next_action]
+            td_error = reward + (self.gamma * ns_na_value) - self.qf[state, action]
+            self.qf[state, action] += self.alpha * td_error
+            state, action = next_state, next_action
+            step += 1
+        self.cur_episode += 1
