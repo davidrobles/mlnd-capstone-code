@@ -57,8 +57,7 @@ class QLearning(object):
         step = 1
         while not self.env.is_terminal():
             print('  Step %d' % step)
-            state = self.env.cur_state()
-            actions = self.env.actions(state)
+            state, actions = self.env.cur_state_and_actions()
             action = self.policy.action(self.qf, state, actions)
             reward, next_state, next_actions = self.env.do_action(action)
             best_action_value = self.best_action_value(next_state, next_actions)
