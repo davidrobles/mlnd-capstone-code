@@ -26,11 +26,11 @@ class Sarsa(object):
         step = 1
         self.env.reset()
         state, actions = self.env.cur_state_and_actions()
-        action = self.policy.action(self.qf, state, actions)
+        action = self.policy.action(state, actions, self.qf)
         while not self.env.is_terminal():
             print('Step {}'.format(step))
             reward, next_state, next_actions = self.env.do_action(action)
-            next_action = self.policy.action(self.qf, next_state, next_actions)
+            next_action = self.policy.action(next_state, next_actions, self.qf)
             td_error = reward + (self.gamma * self.qf[next_state, next_action]) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error
             state, action = next_state, next_action

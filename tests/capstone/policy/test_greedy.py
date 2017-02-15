@@ -15,11 +15,11 @@ class TestGreedy(unittest.TestCase):
             (state, 5): 33,
             (state, 8): 23,
         }
-        action = self.policy.action(fake_qf, state, actions)
+        action = self.policy.action(state, actions, fake_qf)
         self.assertEqual(action, 5)
 
     def test_raises_value_error_if_no_actions_available(self):
         state = 1
         actions = []
         with self.assertRaises(ValueError):
-            self.policy.action({}, state, actions)
+            self.policy.action(state, actions)

@@ -13,6 +13,6 @@ class EGreedy(Policy):
         self.rand = RandomPolicy()
         self.random_state = check_random_state(random_state)
 
-    def action(self, vf, state, actions=None):
+    def action(self, state, actions=None, vf=None):
         policy = self.rand if self.random_state.rand() < self.e else self.greedy
         return policy.action(vf, state, actions)

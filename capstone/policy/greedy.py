@@ -3,7 +3,7 @@ from .policy import Policy
 
 class Greedy(Policy):
 
-    def action(self, vf, state, actions=None):
+    def action(self, state, actions=None, vf=None):
         if not actions:
             raise ValueError('Environment must have at least one available action.')
         state_actions = [(state, action) for action in actions]
