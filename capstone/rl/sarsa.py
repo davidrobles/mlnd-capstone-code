@@ -25,13 +25,11 @@ class Sarsa(object):
         print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
         self.env.reset()
         step = 1
-        state = self.env.cur_state()
-        actions = self.env.actions(state)
+        state, actions = self.env.cur_state_and_actions()
         action = self.policy.action(self.qf, state, actions)
         while not self.env.is_terminal():
             print('Step {}'.format(step))
-            reward, next_state = self.env.do_action(action)
-            next_actions = self.env.actions(self.env.cur_state())
+            reward, next_state, next_actions = self.env.do_action(action)
             next_action = self.policy.action(self.qf, next_state, next_actions)
             td_error = reward + (self.gamma * self.qf[next_state, next_action]) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error
