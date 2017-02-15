@@ -7,7 +7,7 @@ Exploration of the UCI C4 dataset:
 '''
 from __future__ import print_function
 from capstone.datasets import load_uci_c4
-from capstone.util import print_header
+from capstone.utils import print_header
 
 df = load_uci_c4()
 outcomes = df.loc[:, 'outcome']

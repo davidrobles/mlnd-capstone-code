@@ -7,7 +7,7 @@ from capstone.game import TicTacToe
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta
 from capstone.rl import QLearning
-from capstone.util import tic2pdf
+from capstone.utils import tic2pdf
 
 board = [['X', ' ', ' '],
          ['O', 'X', ' '],
