@@ -9,8 +9,8 @@ from capstone.mdp import GameMDP
 from capstone.rl import QLearningSelfPlay
 from capstone.utils import c42pdf
 
-board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
-         ['X', 'O', 'X', 'O', ' ', ' ', ' '],
+board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
+         ['X', 'O', 'X', ' ', 'X', ' ', ' '],
          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
@@ -21,6 +21,7 @@ env = Environment(mdp)
 qlearning = QLearningSelfPlay(env, n_episodes=1000, random_state=0)
 qlearning.learn()
 c42pdf('figures/c4_ql_tabular_selfplay_current.pdf', game.board)
+print(game)
 
 for move in game.legal_moves():
     print('*' * 80)
