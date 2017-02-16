@@ -10,11 +10,10 @@ class FixedGameMDP(GameMDP):
         opp_player: the opponent player
         opp_idx: the idx of the opponent player in the game
         '''
-        self._game = game
+        super(FixedGameMDP, self).__init__(game)
         self._opp_player = opp_player
         self._opp_idx = opp_idx
         self._agent_idx = opp_idx ^ 1
-        self._states = {}
 
     def reward(self, game, move, next_game):
         return utility(next_game, self._agent_idx) if next_game.is_over() else 0
