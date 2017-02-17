@@ -9,8 +9,8 @@ from capstone.player import AlphaBeta
 from capstone.rl import QLearning
 from capstone.utils import c42pdf
 
-board = [['X', 'O', 'X', 'O', ' ', ' ', ' '],
-         ['X', 'O', 'X', 'O', ' ', ' ', ' '],
+board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
+         ['X', 'O', 'X', ' ', 'X', ' ', ' '],
          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
