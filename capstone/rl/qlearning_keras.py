@@ -36,8 +36,7 @@ class QLearningKeras(object):
         for action in state.legal_moves():
             s = state.copy()
             s = s.make_move(action)
-            value = self.qf.model.predict(normalize_board(s.board), batch_size=1)
-            value = value[0][0]
+            value = self.qf.get_value(s)
             assert value >= -1.0 and value <= 1.0
             if value > best:
                 best = value

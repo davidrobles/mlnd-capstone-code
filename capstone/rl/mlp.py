@@ -17,3 +17,7 @@ class MLP(object):
         x = normalize_board(state.board)
         y = np.array([[value]])
         self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)
+
+    def get_value(self, state):
+        value = self.model.predict(normalize_board(state.board), batch_size=1)
+        return value[0][0]
