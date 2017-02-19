@@ -53,22 +53,23 @@ class QLearningKeras(object):
         if self.verbose:
             print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
         self.env.reset()
-        step = 1
         while not self.env.is_terminal():
-            state, actions = self.env.cur_state_and_actions()
-            # qval = self.qf.model.predict(self.convert(state), batch_size=1)
-            # action = self.policy.action(state, actions, self.qf)
-            import random
-            action = random.choice(actions)
-            if action is None:
-                import pdb; pdb.set_trace()
-            reward, next_state, next_actions = self.env.do_action(action)
-            if next_state.is_over():
-                update = reward
-            else:
-                best_action_value = self.get_max(next_state)
-                update = reward + (self.gamma * best_action_value)
-            assert update >= -1.0 and update <= 1.0
-            self.qf.update(state, update)
-            step += 1
+            self.step()
         self.cur_episode += 1
+
+    def step(self):
+        state, actions = self.env.cur_state_and_actions()
+        # qval = self.qf.model.predict(self.convert(state), batch_size=1)
+        # action = self.policy.action(state, actions, self.qf)
+        import random
+        action = random.choice(actions)
+        if action is None:
+            import pdb; pdb.set_trace()
+        reward, next_state, next_actions = self.env.do_action(action)
+        if next_state.is_over():
+            update = reward
+        else:
+            best_action_value = self.get_max(next_state)
+            update = reward + (self.gamma * best_action_value)
+        assert update >= -1.0 and update <= 1.0
+        self.qf.update(state, update)
