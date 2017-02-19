@@ -1,5 +1,5 @@
-from . import QLearning
-from .util import max_action_value, min_action_value
+from .qlearning import QLearning
+from ..util import max_action_value, min_action_value
 
 
 class QLearningSelfPlay(QLearning):

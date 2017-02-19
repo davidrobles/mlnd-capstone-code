@@ -1,5 +1,5 @@
 import unittest
-from capstone.policy import EGreedy
+from capstone.rl.policies import EGreedy
 
 
 class FakeEnv(object):

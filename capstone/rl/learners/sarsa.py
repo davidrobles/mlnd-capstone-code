@@ -1,6 +1,6 @@
-from .tabularf import TabularF
-from ..policy import RandomPolicy
-from ..utils import check_random_state
+from ..tabularf import TabularF
+from ..policies import RandomPolicy
+from ...utils import check_random_state
 
 
 class Sarsa(object):

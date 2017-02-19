@@ -1,5 +1,5 @@
 import unittest
-from capstone.policy import Greedy
+from capstone.policies import Greedy
 
 
 class TestGreedy(unittest.TestCase):

@@ -2,7 +2,7 @@ import random
 from .greedy import Greedy
 from .policy import Policy
 from .random_policy import RandomPolicy
-from ..utils import check_random_state
+from ...utils import check_random_state
 
 
 class EGreedy(Policy):
