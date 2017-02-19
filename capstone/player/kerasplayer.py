@@ -1,9 +1,9 @@
-from . import Player
-from ..utils import norm_tic_board, utility
 from keras.models import load_model
+from . import Player
+from ..utils import normalize_board, utility
 
 
-class Keras(Player):
+class KerasPlayer(Player):
     '''
     Takes moves based on a Keras neural network model.
     '''
@@ -30,7 +30,7 @@ class Keras(Player):
         for action in state.legal_moves():
             s = state.copy()
             s = s.make_move(action)
-            value = self.model.predict(norm_tic_board(s), batch_size=1)
+            value = self.model.predict(normalize_board(s.board), batch_size=1)
             assert value >= -1.0 and value <= 1.0
             if value > best_value:
                 best_action = action
