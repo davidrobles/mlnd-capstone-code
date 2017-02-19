@@ -13,7 +13,7 @@ game = TicTacToe(board)
 mdp = GameMDP(game)
 env = Environment(FixedGameMDP(game, RandPlayer(), 1))
 mlp = MLP()
-qlearning = QLearningKeras(env, qf=mlp, n_episodes=10000)
+qlearning = QLearningKeras(env, qf=mlp, n_episodes=10000, verbose=False)
 qlearning.learn()
 mlp.model.save('models/qltic.h5')
 

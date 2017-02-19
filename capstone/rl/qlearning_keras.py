@@ -11,7 +11,7 @@ from ..utils import normalize_board
 class QLearningKeras(object):
 
     def __init__(self, env, policy=None, qf=None, alpha=0.1, gamma=0.99,
-                 n_episodes=1000, random_state=None):
+                 n_episodes=1000, random_state=None, verbose=True):
         self.env = env
         self.alpha = alpha
         self.gamma = gamma
@@ -19,6 +19,7 @@ class QLearningKeras(object):
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
+        self.verbose = verbose
         self.cur_episode = 1
 
     def best_action_value(self, state, actions):
@@ -49,12 +50,11 @@ class QLearningKeras(object):
         return best
 
     def episode(self):
-        print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
+        if self.verbose:
+            print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
         self.env.reset()
         step = 1
-
         while not self.env.is_terminal():
-            # print('  Step %d' % step)
             state, actions = self.env.cur_state_and_actions()
             # qval = self.qf.model.predict(self.convert(state), batch_size=1)
             # action = self.policy.action(state, actions, self.qf)
@@ -65,11 +65,10 @@ class QLearningKeras(object):
             reward, next_state, next_actions = self.env.do_action(action)
             if next_state.is_over():
                 update = reward
-                assert update >= -1.0 and update <= 1.0
             else:
                 best_action_value = self.get_max(next_state)
                 update = reward + (self.gamma * best_action_value)
-                assert update >= -1.0 and update <= 1.0
+            assert update >= -1.0 and update <= 1.0
             self.qf.update(state, update)
             step += 1
         self.cur_episode += 1
