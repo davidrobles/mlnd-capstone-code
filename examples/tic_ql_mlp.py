@@ -13,9 +13,9 @@ game = TicTacToe(board)
 mdp = GameMDP(game)
 env = Environment(FixedGameMDP(game, RandPlayer(), 1))
 mlp = MLP()
-qlearning = QLearningKeras(env, qf=mlp, n_episodes=1000)
+qlearning = QLearningKeras(env, qf=mlp, n_episodes=10000)
 qlearning.learn()
-mlp.model.save('models/qltic2.h5')
+mlp.model.save('models/qltic.h5')
 
 for move in game.legal_moves():
     print('-' * 80)

@@ -36,6 +36,7 @@ class QLearningKeras(object):
             s = state.copy()
             s = s.make_move(action)
             value = self.qf.model.predict(normalize_board(s.board), batch_size=1)
+            value = value[0][0]
             assert value >= -1.0 and value <= 1.0
             if value > best:
                 best = value
@@ -62,14 +63,13 @@ class QLearningKeras(object):
             if action is None:
                 import pdb; pdb.set_trace()
             reward, next_state, next_actions = self.env.do_action(action)
-            y = np.zeros((1, 1))
             if next_state.is_over():
-                y[0][0] = reward
+                update = reward
+                assert update >= -1.0 and update <= 1.0
             else:
                 best_action_value = self.get_max(next_state)
-                t = reward + (self.gamma * best_action_value)
-                assert t > -1.0 and t < 1.0
-                y[0][0] = t
-            self.qf.model.fit(normalize_board(state.board), y, batch_size=1, nb_epoch=1, verbose=0)
+                update = reward + (self.gamma * best_action_value)
+                assert update >= -1.0 and update <= 1.0
+            self.qf.update(state, update)
             step += 1
         self.cur_episode += 1
