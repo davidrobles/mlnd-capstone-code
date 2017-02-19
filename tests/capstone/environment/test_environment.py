@@ -1,8 +1,8 @@
 import unittest
-from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta
+from capstone.rl import Environment
 
 
 class TestEnvironment(unittest.TestCase):

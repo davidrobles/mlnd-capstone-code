@@ -2,11 +2,10 @@
 Sarsas is used to learn the state-action values for a
 Tic-Tac-Toe board position against a fixed Alpha-Beta opponent
 '''
-from capstone.environment import Environment
 from capstone.game import TicTacToe
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta
-from capstone.rl import Sarsa
+from capstone.rl import Environment, Sarsa
 from capstone.utils import tic2pdf
 
 board = [['X', ' ', ' '],

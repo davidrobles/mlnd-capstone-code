@@ -2,11 +2,10 @@
 Q-Learning is used to learn the state-action values for a Connect 4 board
 position against a fixed Alpha-Beta opponent.
 '''
-from capstone.environment import Environment
 from capstone.game import Connect4
 from capstone.mdp import FixedGameMDP
 from capstone.player import AlphaBeta
-from capstone.rl import QLearning
+from capstone.rl import Environment, QLearning
 from capstone.utils import c42pdf
 
 board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
