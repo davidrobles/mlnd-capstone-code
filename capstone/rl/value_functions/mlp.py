@@ -2,7 +2,7 @@ import numpy as np
 from keras.layers.core import Dense
 from keras.models import Sequential
 from keras.optimizers import RMSprop
-from ..utils import normalize_board
+from ...utils import normalize_board
 
 
 class MLP(object):

@@ -1,6 +1,6 @@
 from ..policies import RandomPolicy
-from ..tabularf import TabularF
 from ..util import max_action_value
+from ..value_functions import TabularF
 from ...utils import check_random_state
 
 

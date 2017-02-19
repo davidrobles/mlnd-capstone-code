@@ -1,5 +1,5 @@
-from ..tabularf import TabularF
 from ..policies import RandomPolicy
+from ..value_functions import TabularF
 from ...utils import check_random_state
 
 

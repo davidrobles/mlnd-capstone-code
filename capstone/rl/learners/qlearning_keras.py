@@ -1,6 +1,6 @@
 from ..learner import Learner
 from ..policies import RandomPolicy
-from ..tabularf import TabularF
+from ..value_functions import TabularF
 from ..util import max_action_value
 from ...utils import check_random_state
 
