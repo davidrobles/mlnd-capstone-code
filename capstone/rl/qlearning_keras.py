@@ -1,11 +1,7 @@
-
-import numpy as np
-import random
 from .tabularf import TabularF
 from .util import max_action_value
 from ..policy import RandomPolicy
 from ..utils import check_random_state
-from ..utils import normalize_board
 
 
 class QLearningKeras(object):
@@ -58,12 +54,7 @@ class QLearningKeras(object):
 
     def step(self):
         state, actions = self.env.cur_state_and_actions()
-        # qval = self.qf.model.predict(self.convert(state), batch_size=1)
-        # action = self.policy.action(state, actions, self.qf)
-        import random
-        action = random.choice(actions)
-        if action is None:
-            import pdb; pdb.set_trace()
+        action = self.policy.action(state, actions, self.qf)
         reward, next_state, next_actions = self.env.do_action(action)
         if next_state.is_over():
             update = reward
