@@ -23,16 +23,15 @@ class KerasPlayer(Player):
     # Player #
     ##########
 
-    def choose_move(self, state):
-        assert state.cur_player() == 0
-        best_action = None
+    def choose_move(self, game):
+        assert game.cur_player() == 0
+        best_move = None
         best_value = -1000000
-        for action in state.legal_moves():
-            s = state.copy()
-            s = s.make_move(action)
-            value = self.model.predict(normalize_board(s.board), batch_size=1)
+        for move in game.legal_moves():
+            next_game = game.copy().make_move(move)
+            value = self.model.predict(normalize_board(next_game.board), batch_size=1)
             assert value >= -1.0 and value <= 1.0
             if value > best_value:
-                best_action = action
+                best_move = move
                 best_value = value
-        return best_action
+        return best_move
