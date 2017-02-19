@@ -4,8 +4,7 @@ for the legal moves of a Connect 4 position.
 '''
 
 from capstone.game import Connect4
-from capstone.mdp import GameMDP
-from capstone.rl import Environment, Sarsa
+from capstone.rl import Environment, GameMDP, Sarsa
 from capstone.utils import c42pdf
 
 board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],

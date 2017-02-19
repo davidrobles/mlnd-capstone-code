@@ -4,8 +4,7 @@ for the legal moves of a Connect 4 position.
 '''
 
 from capstone.game import Connect4
-from capstone.mdp import GameMDP
-from capstone.rl import Environment, QLearningSelfPlay
+from capstone.rl import GameMDP, Environment, QLearningSelfPlay
 from capstone.utils import c42pdf
 
 board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
