@@ -1,4 +1,4 @@
-from .policy import Policy
+from ..policy import Policy
 from ...utils import check_random_state
 
 

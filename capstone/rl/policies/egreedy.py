@@ -1,7 +1,7 @@
 import random
 from .greedy import Greedy
-from .policy import Policy
 from .random_policy import RandomPolicy
+from ..policy import Policy
 from ...utils import check_random_state
 
 
