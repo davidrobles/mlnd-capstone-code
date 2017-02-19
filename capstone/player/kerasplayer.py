@@ -6,6 +6,8 @@ from ..utils import normalize_board, utility
 class KerasPlayer(Player):
     '''
     Takes moves based on a Keras neural network model.
+    Assumes that the model predicts the values for a
+    board from the point of view of the first player.
     '''
 
     name = 'Keras'
@@ -19,19 +21,21 @@ class KerasPlayer(Player):
     def __repr__(self):
         return self.name
 
+    def _move_values(self, game):
+        move_values = []
+        for move in game.legal_moves():
+            next_game = game.copy().make_move(move)
+            input_values = normalize_board(next_game.board)
+            value = self.model.predict(input_values, batch_size=1)
+            assert value >= -1.0 and value <= 1.0
+            move_values.append({'move': move, 'value': value})
+        return move_values
+
     ##########
     # Player #
     ##########
 
     def choose_move(self, game):
-        assert game.cur_player() == 0
-        best_move = None
-        best_value = -1000000
-        for move in game.legal_moves():
-            next_game = game.copy().make_move(move)
-            value = self.model.predict(normalize_board(next_game.board), batch_size=1)
-            assert value >= -1.0 and value <= 1.0
-            if value > best_value:
-                best_move = move
-                best_value = value
-        return best_move
+        move_values = self._move_values(game)
+        best = max if game.cur_player() == 0 else min
+        return best(move_values, key=lambda mv: mv['value'])['move']
