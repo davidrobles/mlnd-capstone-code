@@ -1,6 +1,5 @@
 import abc
 import six
-from ..game.utils import utility  # fix
 
 
 @six.add_metaclass(abc.ABCMeta)
