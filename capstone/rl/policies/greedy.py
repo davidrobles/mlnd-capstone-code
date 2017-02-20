@@ -12,5 +12,5 @@ class Greedy(Policy):
         if not actions:
             raise ValueError('Must have at least one available action.')
         state_actions = [(state, action) for action in actions]
-        _, best_action = max(state_actions, key=lambda sa: qf[sa])
+        _, best_action = max(state_actions, key=lambda sa: self.qf[sa])
         return best_action
