@@ -10,16 +10,18 @@ class QLearning(Learner):
     def __init__(self, env, policy=None, qf=None, alpha=0.1, gamma=0.99,
                  n_episodes=1000, random_state=None, verbose=None):
         super(QLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
-        self.env = env
         self.alpha = alpha
         self.gamma = gamma
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
-        self.cur_episode = 1
 
     def best_action_value(self, state, actions):
         return max_action_value(self.qf, state, actions)
+
+    ###########
+    # Learner #
+    ###########
 
     def episode(self):
         while not self.env.is_terminal():

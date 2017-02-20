@@ -1,38 +1,31 @@
+from ..learner import Learner
 from ..policies import RandomPolicy
 from ..value_functions import TabularF
 from ...utils import check_random_state
 
 
-class Sarsa(object):
+class Sarsa(Learner):
 
     def __init__(self, env, policy=None, qf=None, alpha=0.1, gamma=0.99,
-                 n_episodes=1000, random_state=None):
-        self.env = env
+                 n_episodes=1000, random_state=None, verbose=None):
+        super(Sarsa, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
         self.policy = policy
         self.alpha = alpha
         self.gamma = gamma
-        self.n_episodes = n_episodes
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
-        self.cur_episode = 1
 
-    def learn(self):
-        for _ in range(self.n_episodes):
-            self.episode()
+    ###########
+    # Learner #
+    ###########
 
     def episode(self):
-        print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
-        step = 1
-        self.env.reset()
         state, actions = self.env.cur_state_and_actions()
         action = self.policy.action(state, actions, self.qf)
         while not self.env.is_terminal():
-            print('Step {}'.format(step))
             reward, next_state, next_actions = self.env.do_action(action)
             next_action = self.policy.action(next_state, next_actions, self.qf)
             td_error = reward + (self.gamma * self.qf[next_state, next_action]) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error
             state, action = next_state, next_action
-            step += 1
-        self.cur_episode += 1
