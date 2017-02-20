@@ -5,32 +5,6 @@ from ...utils import check_random_state
 
 
 class QLearning(object):
-    """
-    Q-learning is a model-free reinforcement learning technique. Can be used
-    to find an optimal action-selection policy for any given (finite) MDP by
-    interacting with an environment.
-
-    Parameters
-    ----------
-    env : Environment
-
-    policy : the behavior policy used to generate the trajectory data
-
-    qf : Value function (default TabularF)
-        Q-function, aka, action-value function
-
-    alpha : float (default 0.1)
-        learning rate
-
-    gamma : float (default 0.99)
-        discount factor
-
-    n_episodes : int (default 1000)
-        number of episodes
-
-    random_state : int or RandomState
-        Pseudo-random number generator state used for random sampling.
-    """
 
     def __init__(self, env, policy=None, qf=None, alpha=0.1, gamma=0.99,
                  n_episodes=1000, random_state=None):

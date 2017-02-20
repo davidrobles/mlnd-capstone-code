@@ -3,9 +3,9 @@ from ..policy import Policy
 
 class Greedy(Policy):
 
-    def action(self, state, actions=None, vf=None):
+    def action(self, state, actions, qf):
         if not actions:
-            raise ValueError('Environment must have at least one available action.')
+            raise ValueError('Must have at least one available action.')
         state_actions = [(state, action) for action in actions]
-        _, best_action = max(state_actions, key=lambda sa: vf[sa])
+        _, best_action = max(state_actions, key=lambda sa: qf[sa])
         return best_action

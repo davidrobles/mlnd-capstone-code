@@ -8,10 +8,10 @@ class EGreedy(Policy):
 
     def __init__(self, e, random_state=None):
         self.e = e
-        self.greedy = Greedy()
-        self.rand = RandomPolicy()
         self.random_state = check_random_state(random_state)
+        self.rand = RandomPolicy(self.random_state)
+        self.greedy = Greedy()
 
-    def action(self, state, actions=None, vf=None):
+    def action(self, state, actions, qf):
         policy = self.rand if self.random_state.rand() < self.e else self.greedy
-        return policy.action(state, actions, vf)
+        return policy.action(state, actions, qf)

@@ -10,5 +10,5 @@ class Policy(object):
     '''
 
     @abc.abstractmethod
-    def action(self, state, actions=None, vf=None):
+    def action(self, state, actions, qf):
         pass
