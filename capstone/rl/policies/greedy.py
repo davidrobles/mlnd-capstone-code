@@ -3,8 +3,9 @@ from ..policy import Policy
 
 class Greedy(Policy):
 
-    def __init__(self, provider):
+    def __init__(self, provider, qf):
         self.provider = provider
+        self.qf = qf
 
     def action(self, state):
         actions = self.provider(state)

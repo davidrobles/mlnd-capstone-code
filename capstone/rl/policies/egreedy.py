@@ -6,12 +6,13 @@ from ...utils import check_random_state
 
 class EGreedy(Policy):
 
-    def __init__(self, provider, e, random_state=None):
+    def __init__(self, provider, qf, e, random_state=None):
         self.provider = provider
+        self.qf = qf
         self.e = e
         self.random_state = check_random_state(random_state)
         self.rand = RandomPolicy(provider, self.random_state)
-        self.greedy = Greedy(provider)
+        self.greedy = Greedy(provider, self.qf)
 
     def action(self, state):
         policy = self.rand if self.random_state.rand() < self.e else self.greedy
