@@ -7,11 +7,12 @@ from ...utils import check_random_state
 
 class QLearning(Learner):
 
-    def __init__(self, env, policy=None, qf=None, alpha=0.1, gamma=0.99,
-                 n_episodes=1000, random_state=None, verbose=None):
+    def __init__(self, env, policy=None, qf=None, learning_rate=0.1,
+                 discount_factor=0.99, n_episodes=1000, random_state=None,
+                 verbose=None):
         super(QLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
-        self.alpha = alpha
-        self.gamma = gamma
+        self.learning_rate = learning_rate
+        self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(env.actions, self.random_state)
         self.qf = qf or TabularF(self.random_state)
@@ -29,6 +30,6 @@ class QLearning(Learner):
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
             best_qvalue = self.best_qvalue(next_state, next_actions)
-            target = reward + (self.gamma * best_qvalue)
+            target = reward + (self.discount_factor * best_qvalue)
             td_error = target - self.qf[state, action]
-            self.qf[state, action] += self.alpha * td_error
+            self.qf[state, action] += self.learning_rate * td_error
