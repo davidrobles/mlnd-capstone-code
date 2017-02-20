@@ -3,7 +3,11 @@ from ..policy import Policy
 
 class Greedy(Policy):
 
-    def action(self, state, actions, qf):
+    def __init__(self, provider):
+        self.provider = provider
+
+    def action(self, state):
+        actions = self.provider(state)
         if not actions:
             raise ValueError('Must have at least one available action.')
         state_actions = [(state, action) for action in actions]

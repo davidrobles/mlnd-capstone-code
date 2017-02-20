@@ -13,7 +13,7 @@ class Sarsa(Learner):
         self.alpha = alpha
         self.gamma = gamma
         self.random_state = check_random_state(random_state)
-        self.policy = policy or RandomPolicy(self.random_state)
+        self.policy = policy or RandomPolicy(env.actions, self.random_state)
         self.qf = qf or TabularF(self.random_state)
 
     ###########
@@ -21,11 +21,11 @@ class Sarsa(Learner):
     ###########
 
     def episode(self):
-        state, actions = self.env.cur_state_and_actions()
-        action = self.policy.action(state, actions, self.qf)
+        state = self.env.cur_state()
+        action = self.policy.action(state)
         while not self.env.is_terminal():
             reward, next_state, next_actions = self.env.do_action(action)
-            next_action = self.policy.action(next_state, next_actions, self.qf)
+            next_action = self.policy.action(next_state)
             td_error = reward + (self.gamma * self.qf[next_state, next_action]) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error
             state, action = next_state, next_action

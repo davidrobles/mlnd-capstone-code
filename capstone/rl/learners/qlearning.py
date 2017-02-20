@@ -13,7 +13,7 @@ class QLearning(Learner):
         self.alpha = alpha
         self.gamma = gamma
         self.random_state = check_random_state(random_state)
-        self.policy = policy or RandomPolicy(self.random_state)
+        self.policy = policy or RandomPolicy(env.actions, self.random_state)
         self.qf = qf or TabularF(self.random_state)
 
     def best_action_value(self, state, actions):
@@ -26,7 +26,7 @@ class QLearning(Learner):
     def episode(self):
         while not self.env.is_terminal():
             state, actions = self.env.cur_state_and_actions()
-            action = self.policy.action(state, actions, self.qf)
+            action = self.policy.action(state)
             reward, next_state, next_actions = self.env.do_action(action)
             best_action_value = self.best_action_value(next_state, next_actions)
             td_error = reward + (self.gamma * best_action_value) - self.qf[state, action]
