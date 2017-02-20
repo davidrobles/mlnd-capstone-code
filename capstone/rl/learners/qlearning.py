@@ -17,8 +17,8 @@ class QLearning(Learner):
         self.policy = policy or RandomPolicy(env.actions, self.random_state)
         self.qf = qf or TabularF(self.random_state)
 
-    def best_qvalue(self, state, actions):
-        return max_action_value(self.qf, state, actions)
+    def best_qvalue(self, state):
+        return max_action_value(self.qf, state, self.env.actions(state))
 
     ###########
     # Learner #
@@ -29,7 +29,7 @@ class QLearning(Learner):
             state = self.env.cur_state()
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
-            best_qvalue = self.best_qvalue(next_state, next_actions)
+            best_qvalue = self.best_qvalue(next_state)
             target = reward + (self.discount_factor * best_qvalue)
             td_error = target - self.qf[state, action]
             self.qf[state, action] += self.learning_rate * td_error
