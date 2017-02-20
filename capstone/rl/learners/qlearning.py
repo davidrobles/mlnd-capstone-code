@@ -25,9 +25,9 @@ class QLearning(Learner):
 
     def episode(self):
         while not self.env.is_terminal():
-            state, actions = self.env.cur_state_and_actions()
+            state= self.env.cur_state()
             action = self.policy.action(state)
-            reward, next_state, next_actions = self.env.do_action(action)
+            reward, next_state = self.env.do_action(action)
             best_action_value = self.best_action_value(next_state, next_actions)
             td_error = reward + (self.gamma * best_action_value) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error

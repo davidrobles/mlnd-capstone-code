@@ -20,12 +20,6 @@ class Environment(object):
         return self._cur_state.copy()
 
     @abc.abstractmethod
-    def cur_state_and_actions(self):
-        '''Returns the current state and available actions.'''
-        cur_state = self._cur_state.copy()
-        return cur_state, self.actions(self._cur_state)
-
-    @abc.abstractmethod
     def do_action(self, action):
         '''
         Performs the given action in the current state.

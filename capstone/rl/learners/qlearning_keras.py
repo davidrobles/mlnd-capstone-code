@@ -44,9 +44,9 @@ class QLearningKeras(Learner):
 
     def episode(self):
         while not self.env.is_terminal():
-            state, actions = self.env.cur_state_and_actions()
+            state = self.env.cur_state()
             action = self.policy.action(state)
-            reward, next_state, next_actions = self.env.do_action(action)
+            reward, next_state = self.env.do_action(action)
             if next_state.is_over():
                 update = reward
             else:

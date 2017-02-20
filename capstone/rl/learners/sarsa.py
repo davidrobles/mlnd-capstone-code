@@ -24,7 +24,7 @@ class Sarsa(Learner):
         state = self.env.cur_state()
         action = self.policy.action(state)
         while not self.env.is_terminal():
-            reward, next_state, next_actions = self.env.do_action(action)
+            reward, next_state = self.env.do_action(action)
             next_action = self.policy.action(next_state)
             td_error = reward + (self.gamma * self.qf[next_state, next_action]) - self.qf[state, action]
             self.qf[state, action] += self.alpha * td_error
