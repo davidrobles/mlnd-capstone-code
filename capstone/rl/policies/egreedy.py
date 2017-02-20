@@ -1,4 +1,3 @@
-import random
 from .greedy import Greedy
 from .random_policy import RandomPolicy
 from ..policy import Policy
@@ -15,4 +14,4 @@ class EGreedy(Policy):
 
     def action(self, state, actions=None, vf=None):
         policy = self.rand if self.random_state.rand() < self.e else self.greedy
-        return policy.action(vf, state, actions)
+        return policy.action(state, actions, vf)
