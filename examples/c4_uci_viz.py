@@ -1,8 +1,8 @@
 from __future__ import division, print_function
 import random
 from capstone.datasets import load_uci_c4
-from capstone.game import Connect4 as C4
-from capstone.utils import c42pdf
+from capstone.game.games import Connect4 as C4
+from capstone.game.utils import c42pdf
 
 def series_to_game(series):
     '''Converts a Pandas Series to a Connect 4 game'''

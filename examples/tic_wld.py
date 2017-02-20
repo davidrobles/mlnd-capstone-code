@@ -1,4 +1,4 @@
-from capstone.utils import tic2pdf
+from capstone.game.utils import tic2pdf
 
 tic2pdf('figures/tic_env_win.pdf', [['X', 'O', 'X'],
                                     ['O', 'X', ' '],

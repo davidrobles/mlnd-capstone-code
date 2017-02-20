@@ -1,6 +1,6 @@
-from capstone.game import Connect4
-from capstone.player import RandPlayer
-from capstone.utils import play_match
+from capstone.game.games import Connect4
+from capstone.game.players import RandPlayer
+from capstone.game.utils import play_match
 
 game = Connect4(
     'XO-----'

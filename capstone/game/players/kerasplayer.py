@@ -1,5 +1,5 @@
 from keras.models import load_model
-from . import Player
+from ..player import Player
 from ..utils import normalize_board, utility
 
 

@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
-from . import Game
-from ..utils import print_aec, str_aec, ZobristHashing
+from ..game import Game
+from ..utils import ZobristHashing
+from ...utils import print_aec, str_aec
 
 SIZE = 3
 

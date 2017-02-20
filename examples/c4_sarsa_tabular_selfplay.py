@@ -2,10 +2,10 @@
 Sarsa via self-play is used to learn the state-action values, Q(s, a),
 for the legal moves of a Connect 4 position.
 '''
-
-from capstone.game import Connect4
-from capstone.rl import Environment, GameMDP, Sarsa
-from capstone.utils import c42pdf
+from capstone.game.games import Connect4
+from capstone.game.utils import c42pdf
+from capstone.rl import Environment, GameMDP
+from capstone.rl.learners import Sarsa
 
 board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
          ['X', 'O', 'X', ' ', 'X', ' ', ' '],

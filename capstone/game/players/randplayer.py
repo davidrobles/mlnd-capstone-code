@@ -1,5 +1,5 @@
 import random
-from . import Player
+from ..player import Player
 
 
 class RandPlayer(Player):

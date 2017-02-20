@@ -2,11 +2,11 @@
 Q-Learning is used to learn the state-action values, Q(s, a) for all
 Tic-Tac-Toe board positions against a fixed Alpha-Beta opponent.
 '''
-from capstone.game import TicTacToe
-from capstone.mdp import FixedGameMDP
-from capstone.player import AlphaBeta
-from capstone.rl import Environment, QLearning
-from capstone.utils import tic2pdf
+from capstone.game.games import TicTacToe
+from capstone.game.players import AlphaBeta
+from capstone.game.utils import tic2pdf
+from capstone.rl import Environment, FixedGameMDP
+from capstone.rl.learners import QLearning
 
 game = TicTacToe()
 mdp = FixedGameMDP(game, AlphaBeta(), 1)

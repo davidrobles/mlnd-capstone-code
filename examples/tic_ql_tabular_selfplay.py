@@ -2,10 +2,11 @@
 In this example we use Q-learning via self-play to learn
 the value function of a Tic-Tac-Toe position.
 '''
-from capstone.game import TicTacToe
-from capstone.rl import Environment, GameMDP, QLearningSelfPlay
-from capstone.rl.tabularf import TabularF
-from capstone.utils import tic2pdf
+from capstone.game.games import TicTacToe
+from capstone.game.utils import tic2pdf
+from capstone.rl import Environment, GameMDP
+from capstone.rl.learners import QLearningSelfPlay
+from capstone.rl.value_functions import TabularF
 
 # generate a board from this position for the report
 board = [['X', 'X', ' '],

@@ -8,8 +8,9 @@ https://github.com/qu1j0t3/fhourstones/blob/master/Connect4.java
 from __future__ import division, unicode_literals
 
 import six
-from . import Game
-from ..utils import print_aec, str_aec, ZobristHashing
+from ..game import Game
+from ..utils import ZobristHashing
+from ...utils import print_aec, str_aec
 
 
 ROWS = 6

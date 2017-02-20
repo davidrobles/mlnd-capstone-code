@@ -1,5 +1,5 @@
 import random
-from . import Player
+from ..player import Player
 from ..utils import utility
 
 

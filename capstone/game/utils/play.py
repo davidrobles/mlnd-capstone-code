@@ -1,6 +1,5 @@
 from __future__ import print_function
-import random
-from . import print_header
+from ...utils import print_header
 
 
 def play_match(game, players, verbose=True):

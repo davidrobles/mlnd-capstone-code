@@ -1,4 +1,4 @@
-from capstone.utils import c42pdf
+from capstone.game.utils import c42pdf
 
 c42pdf('figures/c4_env_win.pdf', [
     [' ', ' ', ' ', 'O', 'X', ' ', ' '],

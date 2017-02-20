@@ -1,6 +1,6 @@
 import random
 from collections import defaultdict, Counter
-from . import Player
+from ..player import Player
 from ..utils import utility
 
 
