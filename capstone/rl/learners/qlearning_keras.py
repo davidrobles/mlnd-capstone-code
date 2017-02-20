@@ -38,14 +38,19 @@ class QLearningKeras(Learner):
             #         best = value
         return best
 
-    def step(self):
-        state, actions = self.env.cur_state_and_actions()
-        action = self.policy.action(state, actions, self.qf)
-        reward, next_state, next_actions = self.env.do_action(action)
-        if next_state.is_over():
-            update = reward
-        else:
-            best_action_value = self.get_max(next_state)
-            update = reward + (self.gamma * best_action_value)
-        assert update >= -1.0 and update <= 1.0
-        self.qf.update(state, update)
+    ###########
+    # Learner #
+    ###########
+
+    def episode(self):
+        while not self.env.is_terminal():
+            state, actions = self.env.cur_state_and_actions()
+            action = self.policy.action(state, actions, self.qf)
+            reward, next_state, next_actions = self.env.do_action(action)
+            if next_state.is_over():
+                update = reward
+            else:
+                best_action_value = self.get_max(next_state)
+                update = reward + (self.gamma * best_action_value)
+            assert update >= -1.0 and update <= 1.0
+            self.qf.update(state, update)

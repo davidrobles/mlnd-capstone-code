@@ -1,6 +1,6 @@
-from capstone.game import TicTacToe
-from capstone.player import KerasPlayer, RandPlayer
-from capstone.utils import play_series
+from capstone.game.games import TicTacToe
+from capstone.game.players import KerasPlayer, RandPlayer
+from capstone.game.utils import play_series
 
 players = [KerasPlayer('models/qltic.h5'), RandPlayer()]
 game = TicTacToe()

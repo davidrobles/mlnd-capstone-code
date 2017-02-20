@@ -13,16 +13,15 @@ class Learner(object):
 
     def learn(self):
         for _ in range(self.n_episodes):
+            if self.verbose:
+                print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
+            self.env.reset()
             self.episode()
-
-    def episode(self):
-        if self.verbose:
-            print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
-        self.env.reset()
-        while not self.env.is_terminal():
-            self.step()
         self.cur_episode += 1
 
+    def reset(self):
+        self.cur_episode = 1
+
     @abc.abstractmethod
-    def step(self):
+    def episode(self):
         pass

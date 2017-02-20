@@ -1,9 +1,9 @@
-from capstone.game import TicTacToe
-from capstone.player import AlphaBeta, RandPlayer
+from capstone.game.games import TicTacToe
+from capstone.game.players import AlphaBeta, RandPlayer
+from capstone.game.utils import normalize_board
 from capstone.rl import GameMDP, FixedGameMDP, Environment
 from capstone.rl.learners import QLearningKeras
 from capstone.rl.value_functions import MLP
-from capstone.utils import normalize_board
 
 board = [[' ', ' ', ' '],
          [' ', ' ', ' '],
