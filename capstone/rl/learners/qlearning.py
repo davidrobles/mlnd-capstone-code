@@ -8,7 +8,7 @@ from ...utils import check_random_state
 class QLearning(Learner):
 
     def __init__(self, env, policy=None, learning_rate=0.1, discount_factor=0.99,
-                 n_episodes=1000, random_state=None, verbose=None):
+                 n_episodes=1000, verbose=True, random_state=None):
         super(QLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
