@@ -6,13 +6,14 @@ _STD = 0.3
 
 class TabularQ(dict):
 
-    def __init__(self, random_state=None):
+    def __init__(self, init=True, random_state=None):
+        self.init = init
         self.random_state = check_random_state(random_state)
 
     def __getitem__(self, key):
         if key not in self:
             state, action = key
-            if action is None:
+            if action is None or not self.init:
                 self[key] = 0
             else:
                 self[key] = self.random_state.normal(_MEAN, _STD)
