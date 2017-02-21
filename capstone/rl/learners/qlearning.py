@@ -32,3 +32,31 @@ class QLearning(Learner):
             target = reward + (self.discount_factor * best_qvalue)
             td_error = target - self.qf[state, action]
             self.qf[state, action] += self.learning_rate * td_error
+
+
+class ApproximateQLearning(Learner):
+
+    def __init__(self, env, qf, policy=None, discount_factor=0.99, n_episodes=1000,
+                 verbose=True, random_state=None):
+        super(ApproximateQLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
+        self.qf = qf
+        self.discount_factor = discount_factor
+        self.random_state = check_random_state(random_state)
+        self.policy = policy or RandomPolicy(env.actions, random_state=self.random_state)
+
+    def best_qvalue(self, state, actions):
+        return max_qvalue(state, actions, self.qf)
+
+    ###########
+    # Learner #
+    ###########
+
+    def episode(self):
+        while not self.env.is_terminal():
+            state = self.env.cur_state()
+            action = self.policy.action(state)
+            reward, next_state = self.env.do_action(action)
+            next_actions = self.env.actions(next_state)
+            best_qvalue = self.best_qvalue(next_state, next_actions)
+            update = reward + (self.discount_factor * best_qvalue)
+            self.qf.update(state, update)
