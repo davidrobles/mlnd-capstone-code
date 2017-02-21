@@ -13,7 +13,7 @@ class QLearning(Learner):
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
-        self.policy = policy or RandomPolicy(env.actions, self.random_state)
+        self.policy = policy or RandomPolicy(env.actions, random_state=self.random_state)
         self.qf = TabularQ(random_state=self.random_state)
 
     def best_qvalue(self, state):
