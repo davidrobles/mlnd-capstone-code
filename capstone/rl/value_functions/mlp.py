@@ -21,3 +21,8 @@ class MLP(object):
     def get_value(self, state):
         value = self.model.predict(normalize_board(state.board), batch_size=1)
         return value[0][0]
+
+    def __getitem__(self, state_action):
+        state, action = state_action
+        copy = state.copy().make_move(action)
+        return self.get_value(copy)

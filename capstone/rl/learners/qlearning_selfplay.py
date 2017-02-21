@@ -1,5 +1,5 @@
 from .qlearning import QLearning
-from ..util import max_action_value, min_action_value
+from ..util import max_qvalue, min_qvalue
 
 
 class QLearningSelfPlay(QLearning):
@@ -13,5 +13,5 @@ class QLearningSelfPlay(QLearning):
     '''
 
     def best_qvalue(self, state, actions):
-        best = max_action_value if state.cur_player() == 0 else min_action_value
+        best = max_qvalue if state.cur_player() == 0 else min_qvalue
         return best(self.qf, state, actions)
