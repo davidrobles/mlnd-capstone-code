@@ -1,7 +1,7 @@
 from ..learner import Learner
 from ..policies import RandomPolicy
 from ..util import max_action_value
-from ..value_functions import TabularF
+from ..value_functions import TabularQ
 from ...utils import check_random_state
 
 
@@ -15,7 +15,7 @@ class QLearning(Learner):
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(env.actions, self.random_state)
-        self.qf = qf or TabularF(self.random_state)
+        self.qf = qf or TabularQ(self.random_state)
 
     def best_qvalue(self, state):
         return max_action_value(self.qf, state, self.env.actions(state))

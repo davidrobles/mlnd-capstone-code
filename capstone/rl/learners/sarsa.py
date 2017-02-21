@@ -1,6 +1,6 @@
 from ..learner import Learner
 from ..policies import RandomPolicy
-from ..value_functions import TabularF
+from ..value_functions import TabularQ
 from ...utils import check_random_state
 
 
@@ -14,7 +14,7 @@ class Sarsa(Learner):
         self.gamma = gamma
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(env.actions, self.random_state)
-        self.qf = qf or TabularF(self.random_state)
+        self.qf = qf or TabularQ(self.random_state)
 
     ###########
     # Learner #

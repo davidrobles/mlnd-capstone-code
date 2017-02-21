@@ -1,2 +1,2 @@
 from .mlp import MLP
-from .tabularf import TabularF
+from .tabularq import TabularQ
