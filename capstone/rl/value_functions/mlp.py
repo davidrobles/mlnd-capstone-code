@@ -2,10 +2,11 @@ import numpy as np
 from keras.layers.core import Dense
 from keras.models import Sequential
 from keras.optimizers import RMSprop
+from ..qfunction import QFunction
 from ...game.utils import normalize_board
 
 
-class MLP(object):
+class MLP(QFunction):
 
     def __init__(self):
         self.model = Sequential()
@@ -17,6 +18,10 @@ class MLP(object):
         x = normalize_board(state.board)
         y = np.array([[value]])
         self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)
+
+    #############
+    # QFunction #
+    #############
 
     def __getitem__(self, state_action):
         state, action = state_action
