@@ -12,6 +12,13 @@ class TabularQ(QFunction):
         self.random_state = check_random_state(random_state)
         self._d = {}
 
+    def __setitem__(self, key, value):
+        self._d[key] = value
+
+    #############
+    # QFunction #
+    #############
+
     def __getitem__(self, key):
         if key not in self._d:
             state, action = key
@@ -20,6 +27,3 @@ class TabularQ(QFunction):
             else:
                 self._d[key] = self.random_state.normal(_MEAN, _STD)
         return self._d[key]
-
-    def __setitem__(self, key, value):
-        self._d[key] = value
