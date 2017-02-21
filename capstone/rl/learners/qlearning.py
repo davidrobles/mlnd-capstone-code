@@ -17,7 +17,7 @@ class QLearning(Learner):
         self.qf = TabularQ(random_state=self.random_state)
 
     def best_qvalue(self, state):
-        return max_qvalue(self.qf, state, self.env.actions(state))
+        return max_qvalue(state, self.env.actions(state), self.qf)
 
     ###########
     # Learner #
