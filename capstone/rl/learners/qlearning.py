@@ -8,8 +8,8 @@ from ...utils import check_random_state
 class QLearning(Learner):
 
     def __init__(self, env, policy=None, learning_rate=0.1, discount_factor=0.99,
-                 n_episodes=1000, verbose=True, random_state=None):
-        super(QLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
+                 random_state=None, **kwargs):
+        super(QLearning, self).__init__(env, **kwargs)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
@@ -36,9 +36,8 @@ class QLearning(Learner):
 
 class ApproximateQLearning(Learner):
 
-    def __init__(self, env, qf, policy=None, discount_factor=0.99, n_episodes=1000,
-                 verbose=True, random_state=None):
-        super(ApproximateQLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
+    def __init__(self, env, qf, policy=None, discount_factor=0.99, random_state=None, **kwargs):
+        super(ApproximateQLearning, self).__init__(env, **kwargs)
         self.qf = qf
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
