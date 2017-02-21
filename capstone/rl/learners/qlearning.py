@@ -7,15 +7,14 @@ from ...utils import check_random_state
 
 class QLearning(Learner):
 
-    def __init__(self, env, policy=None, qf=None, learning_rate=0.1,
-                 discount_factor=0.99, n_episodes=1000, random_state=None,
-                 verbose=None):
+    def __init__(self, env, policy=None, learning_rate=0.1, discount_factor=0.99,
+                 n_episodes=1000, random_state=None, verbose=None):
         super(QLearning, self).__init__(env, n_episodes=n_episodes, verbose=verbose)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(env.actions, self.random_state)
-        self.qf = qf or TabularQ(self.random_state)
+        self.qf = TabularQ(random_state=self.random_state)
 
     def best_qvalue(self, state):
         return max_action_value(self.qf, state, self.env.actions(state))
