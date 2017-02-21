@@ -17,7 +17,7 @@ class Learner(object):
                 print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
             self.env.reset()
             self.episode()
-        self.cur_episode += 1
+            self.cur_episode += 1
 
     def reset(self):
         self.cur_episode = 1
