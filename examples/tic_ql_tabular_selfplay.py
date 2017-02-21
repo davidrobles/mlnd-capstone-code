@@ -6,7 +6,6 @@ from capstone.game.games import TicTacToe
 from capstone.game.utils import tic2pdf
 from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearningSelfPlay
-from capstone.rl.value_functions import TabularF
 
 # generate a board from this position for the report
 board = [['X', 'X', ' '],
@@ -19,7 +18,7 @@ qlearning.learn()
 
 for move in game.legal_moves():
     print('-' * 80)
-    value = qlearning.qf[(game, move)]
+    value = qlearning.qf[game, move]
     new_game = game.copy().make_move(move)
     print(value)
     print(new_game)
