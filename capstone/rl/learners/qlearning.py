@@ -6,6 +6,7 @@ from ...utils import check_random_state
 
 
 class QLearning(Learner):
+    '''Tabular Q-learning'''
 
     def __init__(self, env, policy=None, learning_rate=0.1, discount_factor=0.99,
                  random_state=None, **kwargs):
@@ -35,6 +36,7 @@ class QLearning(Learner):
 
 
 class ApproximateQLearning(Learner):
+    '''Q-learning with a function approximator'''
 
     def __init__(self, env, qf, policy=None, discount_factor=0.99, random_state=None, **kwargs):
         super(ApproximateQLearning, self).__init__(env, **kwargs)
