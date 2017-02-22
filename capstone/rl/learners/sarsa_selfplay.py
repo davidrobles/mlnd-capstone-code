@@ -1,5 +1,5 @@
-from ..tabularf import TabularF
 from ..policies import RandomPolicy
+from ..tabularq import TabularQ
 from ...utils import check_random_state
 
 
@@ -16,4 +16,3 @@ class Sarsa(object):
         self.policy = policy or RandomPolicy(self.random_state)
         self.qf = qf or TabularF(self.random_state)
         self.cur_episode = 1
-

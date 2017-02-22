@@ -33,7 +33,6 @@ class TestConnect4(unittest.TestCase):
         # self.assertEqual(game._height, [1, 8, 18, 23, 29, 35, 42])
         # self.assertEqual(game.legal_moves(), [])
 
-
     def test_init_with_mdlist_board_that_is_over(self):
         game = Connect4(
             [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
