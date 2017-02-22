@@ -14,21 +14,26 @@ def play_match(game, players, verbose=True):
             print(game)
 
 
-def play_series(game, players, n_matches=100):
+def play_series(game, players, n_matches=100, verbose=True):
     """
     Plays a series of 'n_matches' of a 'game' between
     the given 'players'.
     """
-    print_header('Series')
-    print('Game:', game.name)
-    print('Players:', players)
-    print('No. Matches: %d\n' % n_matches)
+    if verbose:
+        print_header('Series')
+        print('Game:', game.name)
+        print('Players:', players)
+        print('No. Matches: %d\n' % n_matches)
     counters = {'W': 0, 'L': 0, 'D': 0}
     for n_match in range(1, n_matches + 1):
-        print('Match %d/%d:' % (n_match, n_matches), end=' ')
+        if verbose:
+            print('Match %d/%d:' % (n_match, n_matches), end=' ')
         new_game = game.copy()
         play_match(new_game, players, verbose=False)
         outcomes = new_game.outcomes()
         counters[outcomes[0]] += 1
-        print(outcomes)
-    print('\nOutcomes:', counters)
+        if verbose:
+            print(outcomes)
+    if verbose:
+        print('\nOutcomes:', counters)
+    return counters
