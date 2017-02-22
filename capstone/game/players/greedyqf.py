@@ -3,22 +3,13 @@ import random
 
 class GreedyQF(object):
     '''
-    Takes a greedy action based on a given q-valeu function
+    Takes a greedy action based on a given q-value function
     '''
 
     def __init__(self, qf):
         self.qf = qf
 
     def choose_move(self, game):
-        best_value = -100000
-        best_move = None
-        for move in game.legal_moves():
-            if (game, move) not in self.qf:
-                continue
-            temp_value = self.qf[(game, move)]
-            if temp_value > best_value:
-                best_value = temp_value
-                best_move = move
-        if best_move is None:
-            return random.choice(game.legal_moves())
+        game_moves = [(game, move) for move in game.legal_moves()]
+        _, best_move = max(game_moves, key=lambda gm: self.qf[gm])
         return best_move
