@@ -1,9 +1,6 @@
-import random
-
-
-class GreedyQF(object):
+class GreedyQ(object):
     '''
-    Takes a greedy action based on a given q-value function
+    Selects a greedy move based on a given Q-function.
     '''
 
     def __init__(self, qf):
