@@ -1,4 +1,3 @@
-import random
 import numpy as np
 from ..player import Player
 from ..utils import utility
