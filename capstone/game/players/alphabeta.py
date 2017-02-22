@@ -1,4 +1,5 @@
 import random
+import numpy as np
 from ..player import Player
 from ..utils import utility
 
@@ -7,7 +8,7 @@ class AlphaBeta(Player):
 
     name = 'Alpha-Beta'
 
-    def __init__(self, eval_func=utility, max_depth=1000):
+    def __init__(self, eval_func=utility, max_depth=np.inf):
         self._eval = eval_func
         self._max_depth = max_depth
 
@@ -21,7 +22,7 @@ class AlphaBeta(Player):
         if game.is_over() or cur_depth == self._max_depth:
             return None, self._eval(game, game.cur_player())
         best_move = None
-        best_score = -100000000
+        best_score = -np.inf
         for move in game.legal_moves():
             _, score = self._ab(game=game.copy().make_move(move),
                                 cur_depth=cur_depth + 1,
@@ -40,5 +41,5 @@ class AlphaBeta(Player):
     ##########
 
     def choose_move(self, game):
-        move, _ = self._ab(game, cur_depth=0, alpha=-100000000, beta=100000000)
+        move, _ = self._ab(game, cur_depth=0, alpha=-np.inf, beta=np.inf)
         return move
