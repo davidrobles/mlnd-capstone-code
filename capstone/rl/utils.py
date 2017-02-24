@@ -1,0 +1,57 @@
+def max_qvalue(state, actions, qf):
+    if not actions or actions[0] is None:
+        return 0
+    return max([qf[state, action] for action in actions])
+
+
+def min_qvalue(state, actions, qf):
+    if not actions or actions[0] is None:
+        return 0
+    return min([qf[state, action] for action in actions])
+
+
+class CallbackList(object):
+    '''Container abstracting a list of callbacks (inspired by Keras).'''
+
+    def __init__(self, callbacks=None):
+        self.callbacks = callbacks or []
+
+    def on_episode_begin(self, episode):
+        '''Called at the beginning of every episode.'''
+        for callback in self.callbacks:
+            callback.on_episode_begin(epoch)
+
+    def on_episode_end(self, episode):
+        '''Called at the end of every episode.'''
+        for callback in self.callbacks:
+            callback.on_episode_end(epoch)
+
+    def on_train_begin(self):
+        '''Called at the beginning of model training.'''
+        for callback in self.callbacks:
+            callback.on_train_begin()
+
+    def on_train_end(self):
+        '''Called at the end of model training.'''
+        for callback in self.callbacks:
+            callback.on_train_end()
+
+
+class Callback(object):
+    '''Abstract base class used to build new callbacks (inspired by Keras).'''
+
+    def on_episode_begin(self, episode):
+        '''Called at the beginning of every episode.'''
+        pass
+
+    def on_episode_end(self, episode):
+        '''Called at the end of every episode.'''
+        pass
+
+    def on_train_begin(self):
+        '''Called at the beginning of model training.'''
+        pass
+
+    def on_train_end(self):
+        '''Called at the end of model training.'''
+        pass
