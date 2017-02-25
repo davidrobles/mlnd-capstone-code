@@ -10,7 +10,7 @@ from capstone.rl.learners import QLearningSelfPlay
 
 game = TicTacToe()
 env = Environment(GameMDP(game))
-qlearning = QLearningSelfPlay(env, n_episodes=100000, verbose=0)
+qlearning = QLearningSelfPlay(env, n_episodes=10000, verbose=0)
 qlearning.learn()
 
 for move in game.legal_moves():

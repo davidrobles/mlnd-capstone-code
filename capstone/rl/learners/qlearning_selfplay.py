@@ -1,5 +1,5 @@
 from .qlearning import QLearning
-from ..util import max_qvalue, min_qvalue
+from ..utils import max_qvalue, min_qvalue
 
 
 class QLearningSelfPlay(QLearning):

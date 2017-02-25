@@ -1,6 +1,6 @@
 from ..learner import Learner
 from ..policies import RandomPolicy
-from ..util import max_qvalue
+from ..utils import max_qvalue
 from ..value_functions import TabularQ
 from ...utils import check_random_state
 

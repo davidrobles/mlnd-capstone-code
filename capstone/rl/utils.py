@@ -18,6 +18,7 @@ class CallbackList(object):
 
     def on_episode_begin(self, episode):
         '''Called at the beginning of every episode.'''
+        print('Episode {episode}'.format(episode=episode))
         for callback in self.callbacks:
             callback.on_episode_begin(epoch)
 
@@ -55,3 +56,6 @@ class Callback(object):
     def on_train_end(self):
         '''Called at the end of model training.'''
         pass
+
+
+

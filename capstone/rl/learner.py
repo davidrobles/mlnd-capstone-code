@@ -1,26 +1,28 @@
 import abc
 import six
+from .utils import CallbackList
 
 
 @six.add_metaclass(abc.ABCMeta)
 class Learner(object):
 
-    def __init__(self, env, n_episodes=1000, verbose=True):
+    def __init__(self, env, n_episodes=1000, callbacks=None, verbose=True):
         self.env = env
         self.n_episodes = n_episodes
+        self.callbacks = CallbackList(callbacks)
         self.verbose = verbose
-        self.cur_episode = 1
 
     def learn(self):
-        for _ in range(self.n_episodes):
+        '''Trains the model for a fixed number of episodes.'''
+        self.callbacks.on_train_begin()
+        for episode in range(self.n_episodes):
+            self.callbacks.on_episode_begin(episode)
             if self.verbose:
                 print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
             self.env.reset()
             self.episode()
-            self.cur_episode += 1
-
-    def reset(self):
-        self.cur_episode = 1
+            self.callbacks.on_episode_end(episode)
+        self.callbacks.on_train_end()
 
     @abc.abstractmethod
     def episode(self):
