@@ -45,21 +45,21 @@ class Plotter(Callback):
         fig = plt.figure()
         ax = fig.add_subplot(111)
         w_line, = ax.plot(self.x, self.y_wins, label='Win')
-        d_line, = ax.plot(self.x, self.y_draws, label='Draw')
         l_line, = ax.plot(self.x, self.y_losses, label='Loss')
+        d_line, = ax.plot(self.x, self.y_draws, label='Draw')
         ax.set_xlim([0, self.n_episodes])
         ax.set_ylim([0, 1.0])
         plt.xlabel('Episodes')
         formatter = FuncFormatter(lambda y, pos: '{}%'.format(y * 100))
         plt.gca().yaxis.set_major_formatter(formatter)
-        plt.legend(handles=[w_line, d_line, l_line])
+        plt.legend(handles=[w_line, l_line, d_line], loc=7)
         plt.savefig(self.filename)
 
-n_episodes = 80000
+n_episodes = 60000
 plotter = Plotter(
     opp_player=RandPlayer(),
     n_episodes=n_episodes,
-    n_matches=1000,
+    n_matches=2000,
     period=1000,
     filename='tic_ql_tabular_selfplay_all.pdf'
 )
