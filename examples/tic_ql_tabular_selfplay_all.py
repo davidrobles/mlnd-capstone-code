@@ -12,9 +12,9 @@ from capstone.rl.value_functions import TabularQ
 
 game = TicTacToe()
 env = Environment(GameMDP(game))
-tabularq = TabularQ(random_state=23)
-egreedy = EGreedy(env.actions, tabularq, epsilon=0.5, random_state=23)
-rand_policy = RandomPolicy(env.actions, random_state=23)
+tabularq = TabularQ(random_state=0)
+egreedy = EGreedy(env.actions, tabularq, epsilon=0.5, random_state=0)
+rand_policy = RandomPolicy(env.actions, random_state=0)
 qlearning = QLearningSelfPlay(
     env=env,
     qf=tabularq,
@@ -26,7 +26,7 @@ qlearning = QLearningSelfPlay(
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
-            opp_player=RandPlayer(random_state=23),
+            opp_player=RandPlayer(random_state=0),
             n_matches=2000,
             period=1000,
             filename='figures/tic_ql_tabular_selfplay_all.pdf'
