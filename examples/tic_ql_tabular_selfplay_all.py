@@ -21,7 +21,7 @@ qlearning = QLearningSelfPlay(
     policy=rand_policy,
     learning_rate=0.1,
     discount_factor=0.99,
-    n_episodes=3000,
+    n_episodes=60000,
     verbose=0,
     callbacks=[
         EpisodicWLDPlotter(
