@@ -14,15 +14,6 @@ game = TicTacToe()
 env = Environment(GameMDP(game))
 n_episodes = 60000
 
-plotter = EpisodicWLDPlotter(
-    game=game,
-    opp_player=RandPlayer(random_state=23),
-    n_episodes=n_episodes,
-    n_matches=2000,
-    period=1000,
-    filename='tic_ql_tabular_selfplay_all.pdf'
-)
-
 tabularq = TabularQ(random_state=23)
 egreedy = EGreedy(env.actions, tabularq, epsilon=0.5, random_state=23)
 rand_policy = RandomPolicy(env.actions, random_state=23)
@@ -34,6 +25,15 @@ qlearning = QLearningSelfPlay(
     discount_factor=0.99,
     n_episodes=n_episodes,
     verbose=0,
-    callbacks=[plotter]
+    callbacks=[
+        EpisodicWLDPlotter(
+            game=game,
+            opp_player=RandPlayer(random_state=23),
+            n_episodes=n_episodes,
+            n_matches=2000,
+            period=1000,
+            filename='tic_ql_tabular_selfplay_all.pdf'
+        )
+    ]
 )
 qlearning.learn()
