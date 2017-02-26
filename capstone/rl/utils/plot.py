@@ -14,9 +14,9 @@ class EpisodicWLDPlotter(Callback):
     against a fixed opponent
     '''
 
-    def __init__(self, Game, opp_player=RandPlayer(), n_episodes=10,
+    def __init__(self, game, opp_player=RandPlayer(), n_episodes=10,
                  n_matches=1000, period=1, filename='test.pdf'):
-        self.Game = Game
+        self.game = game
         self.opp_player = opp_player
         self.n_matches = n_matches
         self.n_episodes = n_episodes
@@ -30,8 +30,12 @@ class EpisodicWLDPlotter(Callback):
     def on_episode_end(self, episode, qf):
         if (episode != (self.n_episodes - 1)) and episode % self.period != 0:
             return
-        players = [GreedyQ(qf), self.opp_player]
-        results = play_series(self.Game(), players, n_matches=self.n_matches, verbose=0)
+        results = play_series(
+            game=self.game.copy(),
+            players=[GreedyQ(qf), self.opp_player],
+            n_matches=self.n_matches,
+            verbose=False
+        )
         self.x.append(episode)
         self.y_wins.append(results['W'] / self.n_matches)
         self.y_draws.append(results['D'] / self.n_matches)
