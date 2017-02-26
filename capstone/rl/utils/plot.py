@@ -14,7 +14,7 @@ class EpisodicWLDPlotter(Callback):
     against a fixed opponent
     '''
 
-    def __init__(self, game, opp_player=RandPlayer(), n_matches=1000,
+    def __init__(self, game, opp_player=None, n_matches=1000,
                  period=1, filename='test.pdf'):
         self.game = game
         self.opp_player = opp_player

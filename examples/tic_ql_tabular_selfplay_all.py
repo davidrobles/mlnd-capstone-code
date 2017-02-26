@@ -18,12 +18,11 @@ egreedy = EGreedy(env.actions, tabularq, epsilon=0.5, random_state=seed)
 rand_policy = RandomPolicy(env.actions, random_state=seed)
 qlearning = QLearningSelfPlay(
     env=env,
-    qf=tabularq,
+    qfunction=tabularq,
     policy=rand_policy,
     learning_rate=0.1,
     discount_factor=0.99,
     n_episodes=65000,
-    verbose=0,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
