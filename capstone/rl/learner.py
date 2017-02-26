@@ -17,11 +17,9 @@ class Learner(object):
         self.callbacks.on_train_begin()
         for episode in range(self.n_episodes):
             self.callbacks.on_episode_begin(episode)
-            if self.verbose:
-                print('Episode {self.cur_episode} / {self.n_episodes}'.format(self=self))
             self.env.reset()
             self.episode()
-            self.callbacks.on_episode_end(episode)
+            self.callbacks.on_episode_end(episode, self.qf)
         self.callbacks.on_train_end()
 
     @abc.abstractmethod
