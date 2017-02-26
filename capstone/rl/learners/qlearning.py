@@ -8,14 +8,14 @@ from ...utils import check_random_state
 class QLearning(Learner):
     '''Tabular Q-learning'''
 
-    def __init__(self, env, policy=None, learning_rate=0.1, discount_factor=0.99,
+    def __init__(self, env, policy=None, qf=None, learning_rate=0.1, discount_factor=0.99,
                  random_state=None, **kwargs):
         super(QLearning, self).__init__(env, **kwargs)
         self.learning_rate = learning_rate
         self.discount_factor = discount_factor
         self.random_state = check_random_state(random_state)
         self.policy = policy or RandomPolicy(env.actions, random_state=self.random_state)
-        self.qf = TabularQ(random_state=self.random_state)
+        self.qf = qf or TabularQ(random_state=self.random_state)
 
     def best_qvalue(self, state):
         return max_qvalue(state, self.env.actions(state), self.qf)
