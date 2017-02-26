@@ -1,10 +1,13 @@
-import random
 from ..player import Player
+from ...utils import check_random_state
 
 
 class RandPlayer(Player):
 
     name = 'RandPlayer'
+
+    def __init__(self, random_state=None):
+        self.random_state = check_random_state(random_state)
 
     def __str__(self):
         return 'RandPlayer'
@@ -17,4 +20,4 @@ class RandPlayer(Player):
     ##########
 
     def choose_move(self, game):
-        return random.choice(game.legal_moves())
+        return self.random_state.choice(game.legal_moves())
