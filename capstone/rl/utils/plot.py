@@ -54,7 +54,7 @@ class EpisodicWLDPlotter(Callback):
         ax.set_xlim([0, n_episodes])
         ax.set_ylim([0, 1.0])
         plt.xlabel('Episodes')
-        formatter = FuncFormatter(lambda y, pos: '{}%'.format(y * 100))
+        formatter = FuncFormatter(lambda y, _: '{:d}%'.format(int(y * 100)))
         plt.gca().yaxis.set_major_formatter(formatter)
         plt.legend(handles=[w_line, l_line, d_line], loc=7)
         plt.savefig(self.filename)
