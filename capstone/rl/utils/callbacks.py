@@ -21,10 +21,10 @@ class CallbackList(object):
         for callback in self.callbacks:
             callback.on_train_begin()
 
-    def on_train_end(self):
+    def on_train_end(self, qf):
         '''Called at the end of model training.'''
         for callback in self.callbacks:
-            callback.on_train_end()
+            callback.on_train_end(qf)
 
 
 class Callback(object):
@@ -42,6 +42,6 @@ class Callback(object):
         '''Called at the beginning of model training.'''
         pass
 
-    def on_train_end(self):
+    def on_train_end(self, qf):
         '''Called at the end of model training.'''
         pass

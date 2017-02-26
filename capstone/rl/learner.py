@@ -20,7 +20,7 @@ class Learner(object):
             self.env.reset()
             self.episode()
             self.callbacks.on_episode_end(episode, self.qf)
-        self.callbacks.on_train_end()
+        self.callbacks.on_train_end(self.qf)
 
     @abc.abstractmethod
     def episode(self):
