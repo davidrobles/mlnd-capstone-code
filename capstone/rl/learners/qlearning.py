@@ -37,12 +37,11 @@ class QLearning(Learner):
 class ApproximateQLearning(Learner):
     '''Q-learning with a function approximator'''
 
-    def __init__(self, env, qfunction, policy=None, discount_factor=0.99, random_state=None, **kwargs):
+    def __init__(self, env, policy, qfunction, discount_factor=0.99, **kwargs):
         super(ApproximateQLearning, self).__init__(env, **kwargs)
+        self.policy = policy
         self.qfunction = qfunction
         self.discount_factor = discount_factor
-        self.random_state = check_random_state(random_state)
-        self.policy = policy or RandomPolicy(env.actions, random_state=self.random_state)
 
     def best_qvalue(self, state, actions):
         return max_qvalue(state, actions, self.qfunction)
