@@ -15,12 +15,12 @@ class EpisodicWLDPlotter(Callback):
     '''
 
     def __init__(self, game, opp_player=None, n_matches=1000,
-                 period=1, filename='test.pdf'):
+                 period=1, filepath='test.pdf'):
         self.game = game
         self.opp_player = opp_player
         self.n_matches = n_matches
         self.period = period
-        self.filename = filename
+        self.filepath = filepath
         self.x = []
         self.y_wins = []
         self.y_draws = []
@@ -57,4 +57,4 @@ class EpisodicWLDPlotter(Callback):
         formatter = FuncFormatter(lambda y, _: '{:d}%'.format(int(y * 100)))
         plt.gca().yaxis.set_major_formatter(formatter)
         plt.legend(handles=[w_line, l_line, d_line], loc=7)
-        plt.savefig(self.filename)
+        plt.savefig(self.filepath)

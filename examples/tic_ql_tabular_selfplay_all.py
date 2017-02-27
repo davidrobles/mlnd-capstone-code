@@ -29,7 +29,7 @@ qlearning = QLearningSelfPlay(
             opp_player=RandPlayer(random_state=seed),
             n_matches=2000,
             period=1000,
-            filename='figures/tic_ql_tabular_selfplay_all.pdf'
+            filepath='figures/tic_ql_tabular_selfplay_all.pdf'
         )
     ]
 )
