@@ -6,7 +6,7 @@ from capstone.game.games import TicTacToe
 from capstone.game.players import RandPlayer
 from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearningSelfPlay
-from capstone.rl.policies import EGreedy, RandomPolicy
+from capstone.rl.policies import RandomPolicy
 from capstone.rl.utils import EpisodicWLDPlotter
 from capstone.rl.value_functions import TabularQ
 
