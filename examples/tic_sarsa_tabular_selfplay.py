@@ -22,7 +22,7 @@ sarsa = SarsaSelfPlay(
     discount_factor=0.99,
     n_episodes=60000
 )
-sarsa.learn(
+sarsa.train(
     callbacks=[
         EpisodicWLDPlotter(
             game=game,

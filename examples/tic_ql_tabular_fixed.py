@@ -14,7 +14,7 @@ board = [['X', ' ', ' '],
 game = TicTacToe(board)
 env = Environment(FixedGameMDP(game, AlphaBeta(), 1))
 qlearning = QLearning(env, n_episodes=1000, random_state=0)
-qlearning.learn()
+qlearning.train()
 tic2pdf('figures/tic_ql_current.pdf', game.board)
 
 for move in game.legal_moves():

@@ -31,4 +31,4 @@ qlearning = QLearningSelfPlay(
         )
     ]
 )
-qlearning.learn()
+qlearning.train()

@@ -12,7 +12,7 @@ game = TicTacToe(board)
 env = Environment(FixedGameMDP(game, RandPlayer(), 1))
 mlp = MLP()
 qlearning = ApproximateQLearning(env, qf=mlp, n_episodes=10000, verbose=False)
-qlearning.learn()
+qlearning.train()
 mlp.model.save('models/qltic.h5')
 
 for move in game.legal_moves():

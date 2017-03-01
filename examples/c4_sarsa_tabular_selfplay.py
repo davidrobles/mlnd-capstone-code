@@ -17,7 +17,7 @@ game = Connect4(board)
 mdp = GameMDP(game)
 env = Environment(mdp)
 sarsa = Sarsa(env, n_episodes=1000, random_state=0)
-sarsa.learn()
+sarsa.train()
 c42pdf('figures/c4_sarsa_tabular_selfplay_current.pdf', game.board)
 print(game)
 

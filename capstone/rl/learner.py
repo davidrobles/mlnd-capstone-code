@@ -10,7 +10,7 @@ class Learner(object):
         self.env = env
         self.n_episodes = n_episodes
 
-    def learn(self, callbacks=None):
+    def train(self, callbacks=None):
         '''Trains the model for a fixed number of episodes.'''
         callbacks = CallbackList(callbacks)
         callbacks.on_train_begin()

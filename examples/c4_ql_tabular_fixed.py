@@ -17,7 +17,7 @@ board = [['X', 'O', 'O', ' ', 'O', ' ', ' '],
 game = Connect4(board)
 env = Environment(FixedGameMDP(game, AlphaBeta(), 1))
 qlearning = QLearning(env, n_episodes=1000)
-qlearning.learn()
+qlearning.train()
 c42pdf('figures/c4_ql_current.pdf', game.board)
 
 for move in game.legal_moves():
