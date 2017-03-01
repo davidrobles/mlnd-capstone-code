@@ -4,7 +4,6 @@ Tic-Tac-Toe board position against a Random opponent
 '''
 from capstone.game.games import TicTacToe
 from capstone.game.players import RandPlayer
-from capstone.game.utils import tic2pdf
 from capstone.rl import FixedGameMDP, Environment
 from capstone.rl.learners import Sarsa
 from capstone.rl.policies import RandomPolicy
@@ -13,7 +12,8 @@ from capstone.rl.utils import EpisodicWLDPlotter
 
 seed = 23
 game = TicTacToe()
-env = Environment(FixedGameMDP(game, RandPlayer(), 1))
+mdp = FixedGameMDP(game, RandPlayer(random_state=seed), 1)
+env = Environment(mdp)
 sarsa = Sarsa(
     env=env,
     qfunction=TabularQ(random_state=seed),
