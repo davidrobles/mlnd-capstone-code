@@ -1,7 +1,4 @@
 from ..learner import Learner
-from ..policies import RandomPolicy
-from ..value_functions import TabularQ
-from ...utils import check_random_state
 
 
 class Sarsa(Learner):
@@ -28,3 +25,10 @@ class Sarsa(Learner):
             td_error = target - self.qfunction[state, action]
             self.qfunction[state, action] += self.learning_rate * td_error
             state, action = next_state, next_action
+
+
+class SarsaSelfPlay(Sarsa):
+
+    def best_qvalue(self, state):
+        best_qvalue = max_qvalue if state.cur_player() == 0 else min_qvalue
+        return best_qvalue(state, self.env.actions(state), self.qfunction)

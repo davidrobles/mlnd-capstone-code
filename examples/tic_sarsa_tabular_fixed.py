@@ -1,6 +1,6 @@
 '''
-Sarsa is used to learn the state-action values for a
-Tic-Tac-Toe board position against a Random opponent
+Sarsa is used to learn the state-action values for all
+Tic-Tac-Toe board positions against a Random opponent.
 '''
 from capstone.game.games import TicTacToe
 from capstone.game.players import RandPlayer

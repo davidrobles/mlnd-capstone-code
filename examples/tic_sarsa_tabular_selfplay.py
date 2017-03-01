@@ -1,28 +1,35 @@
 '''
-Sarsa is used to learn the state-action values for a
-Tic-Tac-Toe board position against a fixed Alpha-Beta opponent
+Sarsa with self-play is used to learn the state-action values
+for all Tic-Tac-Toe board positions.
 '''
 from capstone.game.games import TicTacToe
-from capstone.game.players import AlphaBeta
-from capstone.game.utils import tic2pdf
+from capstone.game.players import RandPlayer
 from capstone.rl import FixedGameMDP, Environment
-from capstone.rl.learners import Sarsa
+from capstone.rl.learners import SarsaSelfPlay
+from capstone.rl.policies import RandomPolicy
+from capstone.rl.value_functions import TabularQ
+from capstone.rl.utils import EpisodicWLDPlotter
 
-board = [['X', ' ', ' '],
-         ['O', 'X', ' '],
-         [' ', 'O', ' ']]
-game = TicTacToe(board)
-env = Environment(FixedGameMDP(game, AlphaBeta(), 1))
-sarsa = Sarsa(env, n_episodes=1000, random_state=0)
-sarsa.learn()
-tic2pdf('figures/tic_sarsa_current.pdf', game.board)
-
-for move in game.legal_moves():
-    print('*' * 80)
-    value = sarsa.qf[(game, move)]
-    print('Move: %d' % move)
-    print('Value: %f' % value)
-    new_game = game.copy().make_move(move)
-    print(new_game)
-    filename = 'figures/tic_sarsa_move_%d_value_%.4f.pdf' % (move, value)
-    tic2pdf(filename, new_game.board)
+seed = 23
+game = TicTacToe()
+mdp = FixedGameMDP(game, RandPlayer(random_state=seed), 1)
+env = Environment(mdp)
+sarsa = SarsaSelfPlay(
+    env=env,
+    qfunction=TabularQ(random_state=seed),
+    policy=RandomPolicy(env.actions, random_state=seed),
+    learning_rate=0.1,
+    discount_factor=0.99,
+    n_episodes=60000
+)
+sarsa.learn(
+    callbacks=[
+        EpisodicWLDPlotter(
+            game=game,
+            opp_player=RandPlayer(random_state=seed),
+            n_matches=2000,
+            period=1000,
+            filepath='figures/tic_sarsa_tabular_selfplay.pdf'
+        )
+    ]
+)
