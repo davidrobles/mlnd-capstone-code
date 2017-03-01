@@ -20,7 +20,9 @@ sarsa = Sarsa(
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=0.99,
-    n_episodes=60000,
+    n_episodes=60000
+)
+sarsa.learn(
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
@@ -31,4 +33,3 @@ sarsa = Sarsa(
         )
     ]
 )
-sarsa.learn()
