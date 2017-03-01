@@ -1,28 +1,34 @@
 '''
-Sarsas is used to learn the state-action values for a
-Tic-Tac-Toe board position against a fixed Alpha-Beta opponent
+Sarsa is used to learn the state-action values for a
+Tic-Tac-Toe board position against a Random opponent
 '''
 from capstone.game.games import TicTacToe
-from capstone.game.players import AlphaBeta
+from capstone.game.players import RandPlayer
 from capstone.game.utils import tic2pdf
 from capstone.rl import FixedGameMDP, Environment
 from capstone.rl.learners import Sarsa
+from capstone.rl.policies import RandomPolicy
+from capstone.rl.value_functions import TabularQ
+from capstone.rl.utils import EpisodicWLDPlotter
 
-board = [['X', ' ', ' '],
-         ['O', 'X', ' '],
-         [' ', 'O', ' ']]
-game = TicTacToe(board)
-env = Environment(FixedGameMDP(game, AlphaBeta(), 1))
-sarsa = Sarsa(env, n_episodes=1000, random_state=0)
+seed = 23
+game = TicTacToe()
+env = Environment(FixedGameMDP(game, RandPlayer(), 1))
+sarsa = Sarsa(
+    env=env,
+    qfunction=TabularQ(random_state=seed),
+    policy=RandomPolicy(env.actions, random_state=seed),
+    learning_rate=0.1,
+    discount_factor=0.99,
+    n_episodes=60000,
+    callbacks=[
+        EpisodicWLDPlotter(
+            game=game,
+            opp_player=RandPlayer(random_state=seed),
+            n_matches=2000,
+            period=1000,
+            filepath='figures/tic_sarsa_tabular_fixed.pdf'
+        )
+    ]
+)
 sarsa.learn()
-tic2pdf('figures/tic_sarsa_current.pdf', game.board)
-
-for move in game.legal_moves():
-    print('*' * 80)
-    value = sarsa.qf[(game, move)]
-    print('Move: %d' % move)
-    print('Value: %f' % value)
-    new_game = game.copy().make_move(move)
-    print(new_game)
-    filename = 'figures/tic_sarsa_move_%d_value_%.4f.pdf' % (move, value)
-    tic2pdf(filename, new_game.board)

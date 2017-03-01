@@ -40,8 +40,8 @@ class ApproximateQLearning(Learner):
         self.qfunction = qfunction
         self.discount_factor = discount_factor
 
-    def best_qvalue(self, state, actions):
-        return max_qvalue(state, actions, self.qfunction)
+    def best_qvalue(self, state):
+        return max_qvalue(state, self.env.actions(state), self.qfunction)
 
     ###########
     # Learner #
@@ -52,7 +52,6 @@ class ApproximateQLearning(Learner):
             state = self.env.cur_state()
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
-            next_actions = self.env.actions(next_state)
-            best_qvalue = self.best_qvalue(next_state, next_actions)
+            best_qvalue = self.best_qvalue(next_state)
             update = reward + (self.discount_factor * best_qvalue)
             self.qfunction.update(state, update)
