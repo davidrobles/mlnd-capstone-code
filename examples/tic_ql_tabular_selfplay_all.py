@@ -32,3 +32,10 @@ qlearning = QLearningSelfPlay(
     ]
 )
 qlearning.train()
+
+for move in game.legal_moves():
+    print('-' * 80)
+    value = qlearning.qfunction[game, move]
+    new_game = game.copy().make_move(move)
+    print(value)
+    print(new_game)
