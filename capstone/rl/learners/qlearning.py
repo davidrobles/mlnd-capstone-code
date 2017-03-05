@@ -7,7 +7,7 @@ class QLearning(Learner):
     '''Tabular Q-learning'''
 
     def __init__(self, env, policy, qfunction, learning_rate=0.1,
-                 discount_factor=0.99, **kwargs):
+                 discount_factor=1.0, **kwargs):
         super(QLearning, self).__init__(env, **kwargs)
         self.policy = policy
         self.qfunction = qfunction
@@ -35,7 +35,7 @@ class QLearning(Learner):
 class ApproximateQLearning(Learner):
     '''Q-learning with a function approximator'''
 
-    def __init__(self, env, policy, qfunction, discount_factor=0.99,
+    def __init__(self, env, policy, qfunction, discount_factor=1.0,
                  experience_replay=True, **kwargs):
         super(ApproximateQLearning, self).__init__(env, **kwargs)
         self.policy = policy
