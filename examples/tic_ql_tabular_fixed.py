@@ -12,9 +12,9 @@ from capstone.rl.utils import EpisodicWLDPlotter
 from capstone.rl.value_functions import TabularQ
 
 seed = 23
-board = [['X', ' ', ' '],
-         ['O', 'X', ' '],
-         [' ', 'O', ' ']]
+board = [[' ', ' ', 'X'],
+         [' ', 'X', ' '],
+         ['O', 'O', ' ']]
 game = TicTacToe(board)
 mdp = FixedGameMDP(game, AlphaBeta(), 1)
 env = Environment(mdp)
@@ -24,17 +24,17 @@ qlearning = QLearning(
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
-    n_episodes=10000,
+    n_episodes=5000,
 )
 qlearning.train(
     callbacks=[
-        EpisodicWLDPlotter(
-            game=game,
-            opp_player=RandPlayer(random_state=seed),
-            n_matches=100,
-            period=100,
-            filepath='figures/tic_ql_tabular_fixed.pdf'
-        )
+        # EpisodicWLDPlotter(
+        #     game=game,
+        #     opp_player=RandPlayer(random_state=seed),
+        #     n_matches=100,
+        #     period=100,
+        #     filepath='figures/tic_ql_tabular_fixed.pdf'
+        # )
     ]
 )
 
@@ -42,7 +42,7 @@ qlearning.train(
 # Generate figures #
 ####################
 
-tic2pdf('figures/tic_ql_current.pdf', game.board)
+tic2pdf('figures/tic_ql_tab_current.pdf', game.board)
 
 for move in game.legal_moves():
     print('*' * 80)
@@ -51,5 +51,5 @@ for move in game.legal_moves():
     print('Value: %f' % value)
     new_game = game.copy().make_move(move)
     print(new_game)
-    filename = 'figures/tic_ql_move_%d_value_%.4f.pdf' % (move, value)
+    filename = 'figures/tic_ql_tab_move_{}.pdf'.format(move)
     tic2pdf(filename, new_game.board)
