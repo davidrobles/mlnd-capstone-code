@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from keras.layers import Activation, Dense, Dropout
 from keras.models import Sequential
@@ -10,13 +11,13 @@ dropoutRate = 0
 dropoutRateInput = 0
 
 
-class DQN(QFunction):
-    '''Deep Q-Network'''
+class QNetwork(QFunction):
+    '''A Q-Network is a neural network function approximator with θ weights.'''
 
-    def __init__(self, n_hidden_units=410, n_hidden_layers=3):
+    def __init__(self, n_input_units, n_hidden_units=410, n_hidden_layers=3):
         model = Sequential()
         # input layer
-        model.add(Dense(n_hidden_units, input_shape=(42,), init='uniform'))
+        model.add(Dense(n_hidden_units, input_shape=(n_input_units,), init='uniform'))
         model.add(Activation('relu'))
         model.add(Dropout(dropoutRateInput))
         # hidden layers
@@ -27,7 +28,7 @@ class DQN(QFunction):
         # output layer
         model.add(Dense(1, init='uniform'))
         model.add(Activation('tanh'))
-        model.compile(loss='mse', optimizer='adam')
+        model.compile(loss='mse', optimizer='sgd')
         self.model = model
 
     def update(self, state, value):
