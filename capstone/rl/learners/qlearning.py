@@ -1,3 +1,4 @@
+import random
 from ..learner import Learner
 from ..utils import max_qvalue
 
@@ -34,11 +35,15 @@ class QLearning(Learner):
 class ApproximateQLearning(Learner):
     '''Q-learning with a function approximator'''
 
-    def __init__(self, env, policy, qfunction, discount_factor=0.99, **kwargs):
+    def __init__(self, env, policy, qfunction, discount_factor=0.99,
+                 experience_replay=True, **kwargs):
         super(ApproximateQLearning, self).__init__(env, **kwargs)
         self.policy = policy
         self.qfunction = qfunction
         self.discount_factor = discount_factor
+        self.experience_replay = experience_replay
+        if self.experience_replay:
+            self.memory = set()
 
     def best_qvalue(self, state):
         return max_qvalue(state, self.env.actions(state), self.qfunction)
@@ -52,6 +57,9 @@ class ApproximateQLearning(Learner):
             state = self.env.cur_state()
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
+            if self.experience_replay:
+                self.memory.add((state, action, reward, next_state))
+                state, _, reward, next_state = random.choice(tuple(self.memory))
             best_qvalue = self.best_qvalue(next_state)
             update = reward + (self.discount_factor * best_qvalue)
             self.qfunction.update(state, update)
