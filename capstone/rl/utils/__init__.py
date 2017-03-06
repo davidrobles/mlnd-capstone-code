@@ -1,5 +1,5 @@
 from .callbacks import Callback, CallbackList
-from .plot import EpisodicWLDPlotter
+from .plot import EpisodicWLDPlotter, QValuesPlotter
 
 
 def max_qvalue(state, actions, qf):
