@@ -8,7 +8,7 @@ from capstone.game.utils import tic2pdf
 from capstone.rl import FixedGameMDP, Environment
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
-from capstone.rl.utils import EpisodicWLDPlotter, QValuesPlotter
+from capstone.rl.utils import QValuesPlotter
 from capstone.rl.value_functions import TabularQ
 
 seed = 23
