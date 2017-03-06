@@ -8,7 +8,7 @@ from capstone.game.utils import tic2pdf
 from capstone.rl import FixedGameMDP, Environment
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
-from capstone.rl.utils import EpisodicWLDPlotter
+from capstone.rl.utils import EpisodicWLDPlotter, QValuesPlotter
 from capstone.rl.value_functions import TabularQ
 
 seed = 23
@@ -24,19 +24,9 @@ qlearning = QLearning(
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
-    n_episodes=5000,
+    n_episodes=800,
 )
-qlearning.train(
-    callbacks=[
-        # EpisodicWLDPlotter(
-        #     game=game,
-        #     opp_player=RandPlayer(random_state=seed),
-        #     n_matches=100,
-        #     period=100,
-        #     filepath='figures/tic_ql_tabular_fixed.pdf'
-        # )
-    ]
-)
+qlearning.train(callbacks=[QValuesPlotter(game, game.legal_moves())])
 
 ####################
 # Generate figures #
