@@ -26,7 +26,15 @@ qlearning = QLearning(
     discount_factor=1.0,
     n_episodes=800,
 )
-qlearning.train(callbacks=[QValuesPlotter(game, game.legal_moves())])
+qlearning.train(
+    callbacks=[
+        QValuesPlotter(
+            state=game,
+            actions=game.legal_moves(),
+            filepath='figures/tic_ql_tab_qvalues.pdf'
+        )
+    ]
+)
 
 ####################
 # Generate figures #
