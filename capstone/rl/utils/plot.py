@@ -70,26 +70,30 @@ class QValuesPlotter(Callback):
     Plots the Q-values of the given state and actions during training.
     '''
 
-    def __init__(self, state, actions, filepath='qvaluesplot.pdf'):
+    def __init__(self, state, actions, period=1, filepath='qvaluesplot.pdf'):
         self.state = state
         self.actions = actions
+        self.period = period
         self.filepath = filepath
         self.x = []
         self.y = [[] for _ in range(len(self.actions))]
 
     def on_episode_end(self, episode, qfunction):
+        if episode % self.period != 0:
+            return
         self.x.append(episode)
         for i, action in enumerate(self.actions):
             self.y[i].append(qfunction[self.state, action])
 
     def on_train_end(self, qf):
+        n_episodes = len(self.x) * self.period
         fig = plt.figure()
         ax = fig.add_subplot(111)
         lines = []
         for i, action in enumerate(self.actions):
             line, = ax.plot(self.x, self.y[i], label='Q(s,{})'.format(action))
             lines.append(line)
-        ax.set_xlim([0, 800])
+        ax.set_xlim([0, n_episodes])
         ax.set_ylim([-1.0, 1.0])
         plt.xlabel('Episodes')
         plt.ylabel('Action Value (Q)')
