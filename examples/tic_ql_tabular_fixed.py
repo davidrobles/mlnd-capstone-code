@@ -1,5 +1,5 @@
 '''
-Q-Learning is used to learn the state-action values for a
+Q-Learning is used to estimate the state-action values for a
 Tic-Tac-Toe board position against a fixed Alpha-Beta opponent
 '''
 from capstone.game.games import TicTacToe
