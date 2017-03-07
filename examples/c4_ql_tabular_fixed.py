@@ -32,7 +32,7 @@ qlearning = QLearning(
 qlearning.train(
     callbacks=[
         QValuesPlotter(
-            game=game,
+            state=game,
             actions=game.legal_moves(),
             filepath='figures/c4_ql_tab_qvalues.pdf'
         )
