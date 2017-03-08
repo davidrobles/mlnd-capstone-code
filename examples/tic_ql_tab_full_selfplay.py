@@ -8,7 +8,7 @@ from capstone.game.utils import tic2pdf
 from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearningSelfPlay
 from capstone.rl.policies import RandomPolicy
-from capstone.rl.utils import EpisodicWLDPlotter, QValuesPlotter
+from capstone.rl.utils import EpisodicWLDPlotter
 from capstone.rl.value_functions import TabularQ
 
 seed = 23
@@ -25,18 +25,12 @@ qlearning = QLearningSelfPlay(
 )
 qlearning.train(
     callbacks=[
-        QValuesPlotter(
-            state=game,
-            actions=game.legal_moves(),
-            period=100,
-            filepath='figures/tic_ql_tab_full_selfplay_qvalues_plot.pdf'
-        ),
         EpisodicWLDPlotter(
             game=game,
             opp_player=RandPlayer(random_state=seed),
             n_matches=1000,
             period=1000,
-            filepath='figures/tic_ql_tab_full_selfplay_wld_plot.pdf'
+            filepath='../mlnd-capstone-report/figures/tic_ql_tab_full_selfplay_wld_plot.pdf'
         )
     ]
 )
