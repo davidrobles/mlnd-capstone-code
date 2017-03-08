@@ -21,7 +21,7 @@ qlearning = QLearningSelfPlay(
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
-    n_episodes=80000
+    n_episodes=70000
 )
 qlearning.train(
     callbacks=[
