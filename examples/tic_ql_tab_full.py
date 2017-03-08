@@ -1,6 +1,6 @@
 '''
 Q-Learning is used to estimate the state-action values for all
-Tic-Tac-Toe board position against a Random opponent.
+Tic-Tac-Toe positions against a Random opponent.
 '''
 from capstone.game.games import TicTacToe
 from capstone.game.players import AlphaBeta, RandPlayer
@@ -21,7 +21,7 @@ qlearning = QLearning(
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
-    n_episodes=65000,
+    n_episodes=65000
 )
 qlearning.train(
     callbacks=[
