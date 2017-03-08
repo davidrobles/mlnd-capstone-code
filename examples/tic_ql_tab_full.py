@@ -25,34 +25,12 @@ qlearning = QLearning(
 )
 qlearning.train(
     callbacks=[
-        QValuesPlotter(
-            state=game,
-            actions=game.legal_moves(),
-            period=100,
-            filepath='figures/tic_ql_tab_full_qvalues_plot.pdf'
-        ),
         EpisodicWLDPlotter(
             game=game,
             opp_player=RandPlayer(random_state=seed),
             n_matches=1000,
             period=1000,
-            filepath='figures/tic_ql_tab_full_wld_plot.pdf'
+            filepath='../mlnd-capstone-report/figures/tic_ql_tab_full_wld_plot.pdf'
         )
     ]
 )
-
-####################
-# Generate figures #
-####################
-
-tic2pdf('figures/tic_ql_tab_full_start_board.pdf', game.board)
-
-for move in game.legal_moves():
-    print('*' * 80)
-    value = qlearning.qfunction[(game, move)]
-    print('Move: %d' % move)
-    print('Value: %f' % value)
-    new_game = game.copy().make_move(move)
-    print(new_game)
-    filename = 'figures/tic_ql_tab_full_move_{}_board.pdf'.format(move)
-    tic2pdf(filename, new_game.board)
