@@ -1,11 +1,11 @@
 from __future__ import division
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 from .callbacks import Callback
 from ...game.players import GreedyQ, RandPlayer
 from ...game.utils import play_series
+matplotlib.use('Agg')
 
 
 class EpisodicWLDPlotter(Callback):
