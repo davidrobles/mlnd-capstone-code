@@ -1,4 +1,5 @@
 from .callbacks import Callback, CallbackList
+from .linear_annealing import LinearAnnealing
 from .plot import EpisodicWLDPlotter, QValuesPlotter
 
 
