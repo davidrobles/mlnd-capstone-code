@@ -31,6 +31,7 @@ class EpisodicWLDPlotter(Callback):
         self._plot(episode, qf)
 
     def _plot(self, episode, qf):
+        print('  - Playing series...')
         results = play_series(
             game=self.game.copy(),
             players=[GreedyQ(qf), self.opp_player],
@@ -41,9 +42,9 @@ class EpisodicWLDPlotter(Callback):
         win_pct = results['W'] / self.n_matches
         draw_pct = results['D'] / self.n_matches
         loss_pct = results['L'] / self.n_matches
-        print('-  Win %: {}'.format(win_pct * 100))
-        print('-  Draw %: {}'.format(draw_pct * 100))
-        print('-  Loss %: {}'.format(loss_pct * 100))
+        print('    -  Win %: {}'.format(win_pct * 100))
+        print('    -  Draw %: {}'.format(draw_pct * 100))
+        print('    -  Loss %: {}'.format(loss_pct * 100))
         self.y_wins.append(win_pct)
         self.y_draws.append(draw_pct)
         self.y_losses.append(loss_pct)
