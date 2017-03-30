@@ -1,4 +1,5 @@
 import random
+from collections import deque
 from ..learner import Learner
 from ..utils import max_qvalue
 
@@ -43,7 +44,7 @@ class ApproximateQLearning(Learner):
         self.discount_factor = discount_factor
         self.experience_replay = experience_replay
         if self.experience_replay:
-            self.memory = set()
+            self.memory = deque(maxlen=10000)
 
     def best_qvalue(self, state):
         return max_qvalue(state, self.env.actions(state), self.qfunction)
@@ -58,8 +59,8 @@ class ApproximateQLearning(Learner):
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
             if self.experience_replay:
-                self.memory.add((state, action, reward, next_state))
-                state, _, reward, next_state = random.choice(tuple(self.memory))
+                self.memory.append((state, action, reward, next_state))
+                state, _, reward, next_state = random.choice(self.memory)
             best_qvalue = self.best_qvalue(next_state)
             update = reward + (self.discount_factor * best_qvalue)
             self.qfunction.update(state, update)
