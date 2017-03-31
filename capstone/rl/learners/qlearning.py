@@ -63,4 +63,4 @@ class ApproximateQLearning(Learner):
                 state, _, reward, next_state = random.choice(self.memory)
             best_qvalue = self.best_qvalue(next_state)
             update = reward + (self.discount_factor * best_qvalue)
-            self.qfunction.update(state, update)
+            self.qfunction.update(state, action, update)
