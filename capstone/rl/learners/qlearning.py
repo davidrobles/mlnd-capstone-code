@@ -33,6 +33,21 @@ class QLearning(Learner):
             self.qfunction[state, action] += self.learning_rate * td_error
 
 
+class QLearningSelfPlay(QLearning):
+
+    '''
+    An specialization of the Q-learning algorithm that assumes
+    a Game environment. In standard Q-learning the best action
+    is the one that selects the maximum reward. In this version
+    we maximize for the first player of the game, and minimize
+    for the second player.
+    '''
+
+    def best_qvalue(self, state):
+        best_qvalue = max_qvalue if state.cur_player() == 0 else min_qvalue
+        return best_qvalue(state, self.env.actions(state), self.qfunction)
+
+
 class ApproximateQLearning(Learner):
     '''Q-learning with a function approximator'''
 
@@ -45,6 +60,10 @@ class ApproximateQLearning(Learner):
         self.experience_replay = experience_replay
         if self.experience_replay:
             self.memory = deque(maxlen=10000)
+
+    def best_qvalue(self, state):
+        best_qvalue = max_qvalue if state.cur_player() == 0 else min_qvalue
+        return best_qvalue(state, self.env.actions(state), self.qfunction)
 
     def best_qvalue(self, state):
         return max_qvalue(state, self.env.actions(state), self.qfunction)
@@ -64,3 +83,10 @@ class ApproximateQLearning(Learner):
             best_qvalue = self.best_qvalue(next_state)
             update = reward + (self.discount_factor * best_qvalue)
             self.qfunction.update(state, action, update)
+
+
+class ApproximateQLearningSelfPlay(ApproximateQLearning):
+
+    def best_qvalue(self, state):
+        best_qvalue = max_qvalue if state.cur_player() == 0 else min_qvalue
+        return best_qvalue(state, self.env.actions(state), self.qfunction)
