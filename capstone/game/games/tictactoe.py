@@ -94,10 +94,13 @@ class TicTacToe(Game):
         return True
 
     def __repr__(self):
-        return TicTacToeView(self).render()
+        return '<TicTacToe n_legal_moves={}>'.format(len(self.legal_moves()))
 
     def __str__(self):
-        return TicTacToeView(self).render()
+        return '<TicTacToe n_legal_moves={}>'.format(len(self.legal_moves()))
+
+    def print_summary(self):
+        print(TicTacToeView(self).render())
 
     ########
     # Game #
