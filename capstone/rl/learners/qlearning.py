@@ -52,14 +52,16 @@ class ApproximateQLearning(Learner):
     '''Q-learning with a function approximator'''
 
     def __init__(self, env, policy, qfunction, discount_factor=1.0,
-                 experience_replay=True, **kwargs):
+                 experience_replay=True, batch_size=32, replay_memory_size=10000, **kwargs):
         super(ApproximateQLearning, self).__init__(env, **kwargs)
         self.policy = policy
         self.qfunction = qfunction
         self.discount_factor = discount_factor
         self.experience_replay = experience_replay
+        self.batch_size = batch_size
+        self.replay_memory_size = replay_memory_size
         if self.experience_replay:
-            self.memory = deque(maxlen=10000)
+            self.memory = deque(maxlen=self.replay_memory_size)
 
     def best_qvalue(self, state):
         best_qvalue = max_qvalue if state.cur_player() == 0 else min_qvalue
@@ -73,31 +75,26 @@ class ApproximateQLearning(Learner):
     ###########
 
     def episode(self):
-        # print('yes')
         while not self.env.is_terminal():
             state = self.env.cur_state()
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
-            # state.print_summary()
             if self.experience_replay:
                 self.memory.append((state, action, reward, next_state))
-                # state, action, reward, next_state = random.choice(self.memory)
-                if len(self.memory) >= 32:
+                if len(self.memory) >= self.batch_size:
                     experiences = []
                     updates = []
-                    for _ in range(32):
+                    for _ in range(self.batch_size):
                         ss, aa, rr, ns = random.choice(self.memory)
                         experiences.append((ss, aa, rr, ns))
                         best_qvalue = self.best_qvalue(ns)
                         update = rr + (self.discount_factor * best_qvalue)
                         updates.append(update)
-                    # import pdb; pdb.set_trace()
-                    self.qfunction.minibatch(experiences, updates)
-                    # continue
-            # best_qvalue = self.best_qvalue(next_state)
-            # # minibatches
-            # update = reward + (self.discount_factor * best_qvalue)
-            # self.qfunction.update(state, action, update)
+                    self.qfunction.minibatch_update(experiences, updates)
+            else:
+                best_qvalue = self.best_qvalue(next_state)
+                update = reward + (self.discount_factor * best_qvalue)
+                self.qfunction.update(state, action, update)
 
 
 from ..utils import max_qvalue, min_qvalue

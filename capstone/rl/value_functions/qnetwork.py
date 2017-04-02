@@ -37,7 +37,7 @@ class QNetwork(QFunction):
         self.model = model
         self.count = 0
 
-    def minibatch(self, experiences, updates):
+    def minibatch_update(self, experiences, updates):
         assert len(experiences) == len(updates)
         xlist = []
         ylist = []
@@ -49,20 +49,13 @@ class QNetwork(QFunction):
             a = mapping[action]
             y[0][a] = updates[i]
             ylist.append(y[0])
-
         x = np.array(xlist)
         y = np.array(ylist)
-
-        # self.model.train_on_batch(x, y)
         self.model.fit(x, y, batch_size=32, verbose=0)
-        # print(self.count)
-        # self.count += 1
 
     def update(self, state, action, value):
         x = normalize_board(state.board)
-        # y = self.model.predict(x, batch_size=1)
         y = self.model.predict(x)
-        # import pdb; pdb.set_trace()
         a = mapping[action]
         y[0][a] = value
         self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)

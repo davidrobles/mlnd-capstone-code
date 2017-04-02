@@ -6,7 +6,8 @@ class CallbackList(object):
 
     def on_episode_begin(self, episode):
         '''Called at the beginning of every episode.'''
-        print('Episode {}'.format(episode))
+        if episode % 50 == 0:
+            print('Episode {}'.format(episode))
         for callback in self.callbacks:
             callback.on_episode_begin(episode)
 

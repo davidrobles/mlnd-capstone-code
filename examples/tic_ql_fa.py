@@ -21,8 +21,9 @@ qlearning = ApproximateQLearning(
     qfunction=qnetwork,
     policy=egreedy,
     discount_factor=1.0,
-    n_episodes=5000,
-    experience_replay=True
+    n_episodes=4000,
+    experience_replay=True,
+    batch_size=32
 )
 qlearning.train(
     callbacks=[
@@ -30,9 +31,9 @@ qlearning.train(
             game=game,
             opp_player=RandPlayer(),
             n_matches=1000,
-            period=500,
+            period=250,
             filepath='figures/tic_ql_qnetwork.pdf'
         ),
-        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=2500)
+        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=2000)
     ]
 )
