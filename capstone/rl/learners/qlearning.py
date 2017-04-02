@@ -73,16 +73,34 @@ class ApproximateQLearning(Learner):
     ###########
 
     def episode(self):
+        # print('yes')
         while not self.env.is_terminal():
             state = self.env.cur_state()
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
+            # state.print_summary()
             if self.experience_replay:
                 self.memory.append((state, action, reward, next_state))
-                state, _, reward, next_state = random.choice(self.memory)
-            best_qvalue = self.best_qvalue(next_state)
-            update = reward + (self.discount_factor * best_qvalue)
-            self.qfunction.update(state, action, update)
+                # state, action, reward, next_state = random.choice(self.memory)
+                if len(self.memory) >= 32:
+                    experiences = []
+                    updates = []
+                    for _ in range(32):
+                        ss, aa, rr, ns = random.choice(self.memory)
+                        experiences.append((ss, aa, rr, ns))
+                        best_qvalue = self.best_qvalue(ns)
+                        update = rr + (self.discount_factor * best_qvalue)
+                        updates.append(update)
+                    # import pdb; pdb.set_trace()
+                    self.qfunction.minibatch(experiences, updates)
+                    # continue
+            # best_qvalue = self.best_qvalue(next_state)
+            # # minibatches
+            # update = reward + (self.discount_factor * best_qvalue)
+            # self.qfunction.update(state, action, update)
+
+
+from ..utils import max_qvalue, min_qvalue
 
 
 class ApproximateQLearningSelfPlay(ApproximateQLearning):
