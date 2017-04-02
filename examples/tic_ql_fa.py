@@ -32,7 +32,7 @@ qlearning.train(
             opp_player=RandPlayer(),
             n_matches=1000,
             period=250,
-            filepath='figures/tic_ql_qnetwork.pdf'
+            filepath='figures/tic_deep_ql.pdf'
         ),
         LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=2000)
     ]
