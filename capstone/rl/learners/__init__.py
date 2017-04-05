@@ -1,4 +1,3 @@
-from .qlearning import QLearning, QLearningSelfPlay, ApproximateQLearning, ApproximateQLearningSelfPlay
-# from .qlearning import QLearning, ApproximateQLearning
-# from .qlearning_selfplay import QLearningSelfPlay
+from .qlearning import QLearning
+from .qlearning_approx import ApproximateQLearning
 from .sarsa import Sarsa, SarsaSelfPlay

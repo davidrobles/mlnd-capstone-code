@@ -7,7 +7,7 @@ This example worked very well, it achieved a win % of ~97%, with a loss % of ~3%
 from capstone.game.games import Connect4
 from capstone.game.players import RandPlayer
 from capstone.rl import Environment, GameMDP, FixedGameMDP
-from capstone.rl.learners import ApproximateQLearningSelfPlay, ApproximateQLearning
+from capstone.rl.learners import ApproximateQLearning
 from capstone.rl.policies import EGreedy
 from capstone.rl.utils import EpisodicWLDPlotter, Callback, LinearAnnealing
 from capstone.rl.value_functions import QNetwork
@@ -37,12 +37,12 @@ qlearning = ApproximateQLearning(
     qfunction=qnetwork,
     policy=egreedy,
     discount_factor=1.0,
-    n_episodes=30000,
     experience_replay=True,
     replay_memory_size=10000,
     batch_size=32
 )
 qlearning.train(
+    n_episodes=30000,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,

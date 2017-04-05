@@ -10,6 +10,8 @@ from capstone.rl.policies import EGreedy
 from capstone.rl.utils import EpisodicWLDPlotter, Callback, LinearAnnealing
 from capstone.rl.value_functions import QNetwork
 
+mapping = { int(x): int(x) - 1 for x in range(1, 10)}
+
 game = TicTacToe()
 # mdp = GameMDP(game)
 mdp = FixedGameMDP(game, RandPlayer(), 1)

@@ -23,10 +23,10 @@ qlearning = QLearning(
     qfunction=TabularQ(random_state=seed),
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
-    discount_factor=1.0,
-    n_episodes=800,
+    discount_factor=1.0
 )
 qlearning.train(
+    n_episodes=800,
     callbacks=[
         QValuesPlotter(
             state=game,
