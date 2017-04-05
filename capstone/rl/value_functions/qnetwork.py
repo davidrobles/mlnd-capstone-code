@@ -11,14 +11,15 @@ from ...game.utils import normalize_board
 
 dropoutRate = 0
 dropoutRateInput = 0
-# mapping = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}
-mapping = { int(x): int(x) - 1 for x in range(1, 10)}
+mapping = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}
+# mapping = { int(x): int(x) - 1 for x in range(1, 10)}
 
 
 class QNetwork(QFunction):
     '''A Q-Network is a neural network function approximator with θ weights.'''
 
-    def __init__(self, n_input_units, n_hidden_layers, n_output_units, n_hidden_units=10):
+    def __init__(self, mapping, n_input_units, n_hidden_layers, n_output_units, n_hidden_units=10):
+        self.mapping = mapping
         model = Sequential()
         # input layer
         model.add(Dense(n_hidden_units, input_shape=(n_input_units,)))
@@ -35,7 +36,6 @@ class QNetwork(QFunction):
         sgd = SGD(lr=0.01)
         model.compile(loss='mse', optimizer=sgd)
         self.model = model
-        self.count = 0
 
     def minibatch_update(self, experiences, updates):
         assert len(experiences) == len(updates)
@@ -46,7 +46,7 @@ class QNetwork(QFunction):
             x = normalize_board(state.board)
             xlist.append(x)
             y = self.model.predict(np.array([x]))
-            a = mapping[action]
+            a = self.mapping[action]
             y[0][a] = updates[i]
             ylist.append(y[0])
         x = np.array(xlist)
@@ -56,7 +56,7 @@ class QNetwork(QFunction):
     def update(self, state, action, value):
         x = normalize_board(state.board)
         y = self.model.predict(x)
-        a = mapping[action]
+        a = self.mapping[action]
         y[0][a] = value
         self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)
 
@@ -69,6 +69,6 @@ class QNetwork(QFunction):
         x = normalize_board(state.board)
         x = np.array([x])
         value = self.model.predict(x, batch_size=1)
-        a = mapping[action]
+        a = self.mapping[action]
         assert isinstance(a, int)
         return value[0][a]
