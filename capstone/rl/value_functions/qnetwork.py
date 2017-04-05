@@ -7,12 +7,8 @@ from ..qfunction import QFunction
 from ...game.utils import normalize_board
 
 
-
-
 dropoutRate = 0
 dropoutRateInput = 0
-mapping = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}
-# mapping = { int(x): int(x) - 1 for x in range(1, 10)}
 
 
 class QNetwork(QFunction):
