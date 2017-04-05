@@ -84,6 +84,7 @@ class ApproximateQLearning(Learner):
                 if len(self.memory) >= self.batch_size:
                     experiences = []
                     updates = []
+                    # TODO use random.sample
                     for _ in range(self.batch_size):
                         ss, aa, rr, ns = random.choice(self.memory)
                         experiences.append((ss, aa, rr, ns))
