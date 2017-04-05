@@ -37,7 +37,8 @@ class ApproximateQLearning(Learner):
             action = self.policy.action(state)
             reward, next_state = self.env.do_action(action)
             if self.experience_replay:
-                self.replay_memory.append((state, action, reward, next_state))
+                experience = (state, action, reward, next_state)
+                self.replay_memory.append(experience)
                 if len(self.replay_memory) >= self.batch_size:
                     experiences = []
                     updates = []
