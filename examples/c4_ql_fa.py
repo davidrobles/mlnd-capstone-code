@@ -36,21 +36,22 @@ qlearning = ApproximateQLearning(
     env=env,
     qfunction=qnetwork,
     policy=egreedy,
-    discount_factor=1.0,
+    discount_factor=0.99,
+    selfplay=False,
     experience_replay=True,
     replay_memory_size=10000,
     batch_size=32
 )
 qlearning.train(
-    n_episodes=30000,
+    n_episodes=200000,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
             opp_player=RandPlayer(),
             n_matches=1000,
             period=500,
-            filepath='figures/c4_ql_fa.pdf'
+            filepath='figures/c4_ql_fa_selfplay.pdf'
         ),
-        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=15000)
+        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=10000)
     ]
 )
