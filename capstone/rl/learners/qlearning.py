@@ -18,8 +18,7 @@ class QLearning(Learner):
         if self.selfplay:
             best_func = max_qvalue if state.cur_player() == 0 else min_qvalue
             return best_func(state, self.env.actions(state), self.qfunction)
-        else:
-            return max_qvalue(state, self.env.actions(state), self.qfunction)
+        return max_qvalue(state, self.env.actions(state), self.qfunction)
 
     ###########
     # Learner #
