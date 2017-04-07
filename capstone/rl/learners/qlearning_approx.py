@@ -39,7 +39,7 @@ class ApproximateQLearning(Learner):
             if self.experience_replay:
                 experience = (state, action, reward, next_state)
                 self.replay_memory.append(experience)
-                batch_size = len(self.replay_memory) if len(self.replay_memory) < self.batch_size else self.batch_size
+                batch_size = min(len(self.replay_memory), self.batch_size)
                 experiences = random.sample(self.replay_memory, batch_size)
                 updates = []
                 for experience in experiences:
