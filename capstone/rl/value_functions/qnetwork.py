@@ -63,8 +63,12 @@ class QNetwork(QFunction):
         assert isinstance(a, int)
         return value[0][a]
 
-    # def predict(self, state):
-    #     x = normalize_board(state.board)
-    #     x = np.array([x])
-    #     value = self.model.predict(x)
-    #     return value[0]
+    def best_value(self, state, actions, max_or_min):
+        board = normalize_board(state.board)
+        x = np.array([board])
+        output = self.model.predict(x, batch_size=1)
+        vals = []
+        for aa in actions:
+            hey = self.mapping[aa]
+            vals.append(output[0][self.mapping[aa]])
+        return max_or_min(vals)

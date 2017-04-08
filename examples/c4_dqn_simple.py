@@ -55,12 +55,12 @@ class Monitor(Callback):
         if episode % 50 == 0:
             print('Episode {}'.format(episode))
 qlearning.train(
-    n_episodes=500,
+    n_episodes=10000,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
             opp_player=RandPlayer(),
-            n_matches=100,
+            n_matches=1000,
             period=250,
             filepath='figures/c4_dqn_simple.pdf'
         ),
@@ -69,8 +69,8 @@ qlearning.train(
     ]
 )
 
-
 from capstone.game.players import GreedyQ
-
 g = GreedyQ(qnetwork)
 print 'Move:', g.choose_move(game)
+
+# IMPORTANT: dont forget to filter the best value, ignore the ilegal moves

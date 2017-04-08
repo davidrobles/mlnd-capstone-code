@@ -1,3 +1,4 @@
+import numpy as np
 import random
 from collections import deque
 from ..learner import Learner
@@ -21,11 +22,12 @@ class ApproximateQLearning(Learner):
             self.replay_memory = deque(maxlen=self.replay_memory_size)
 
     def best_qvalue(self, state):
+        func = None
         if self.selfplay:
-            best_func = max_qvalue if state.cur_player() == 0 else min_qvalue
-            return best_func(state, self.env.actions(state), self.qfunction)
+            func = np.max if state.cur_player() == 0 else np.min
         else:
-            return max_qvalue(state, self.env.actions(state), self.qfunction)
+            func = np.max
+        return self.qfunction.best_value(state, self.env.actions(state), func)
 
     ###########
     # Learner #
@@ -44,8 +46,11 @@ class ApproximateQLearning(Learner):
                 updates = []
                 for experience in experiences:
                     ss, aa, rr, ns = experience
-                    best_qvalue = self.best_qvalue(ns)
-                    update = rr + (self.discount_factor * best_qvalue)
+                    if ns.is_over():
+                        update = rr
+                    else:
+                        best_qvalue = self.best_qvalue(ns)
+                        update = rr + (self.discount_factor * best_qvalue)
                     updates.append(update)
                 self.qfunction.minibatch_update(experiences, updates)
             else:
