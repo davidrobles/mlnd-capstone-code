@@ -20,15 +20,15 @@ class QNetwork(QFunction):
         # input layer
         model.add(Dense(n_hidden_units, input_shape=(n_input_units,)))
         model.add(Activation('relu'))
-        model.add(Dropout(dropoutRateInput))
+        # model.add(Dropout(dropoutRateInput))
         # hidden layers
         for _ in xrange(n_hidden_layers):
             model.add(Dense(n_hidden_units))
             model.add(Activation('relu'))
-            model.add(Dropout(dropoutRate))
+            # model.add(Dropout(dropoutRate))
         # output layer
         model.add(Dense(n_output_units))
-        model.add(Activation('linear'))
+        # model.add(Activation('linear'))
         sgd = SGD(lr=0.01)
         model.compile(loss='mse', optimizer=sgd)
         self.model = model
@@ -69,3 +69,9 @@ class QNetwork(QFunction):
         a = self.mapping[action]
         assert isinstance(a, int)
         return value[0][a]
+
+    # def predict(self, state):
+    #     x = normalize_board(state.board)
+    #     x = np.array([x])
+    #     value = self.model.predict(x)
+    #     return value[0]

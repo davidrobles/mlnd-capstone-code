@@ -4,12 +4,10 @@ class CallbackList(object):
     def __init__(self, callbacks=None):
         self.callbacks = callbacks or []
 
-    def on_episode_begin(self, episode):
+    def on_episode_begin(self, episode, qf):
         '''Called at the beginning of every episode.'''
-        if episode % 50 == 0:
-            print('Episode {}'.format(episode))
         for callback in self.callbacks:
-            callback.on_episode_begin(episode)
+            callback.on_episode_begin(episode, qf)
 
     def on_episode_end(self, episode, qf):
         '''Called at the end of every episode.'''
@@ -30,7 +28,7 @@ class CallbackList(object):
 class Callback(object):
     '''Abstract base class used to build new callbacks (inspired by Keras).'''
 
-    def on_episode_begin(self, episode):
+    def on_episode_begin(self, episode, qf):
         '''Called at the beginning of every episode.'''
         pass
 

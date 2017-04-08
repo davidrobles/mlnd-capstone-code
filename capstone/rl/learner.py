@@ -14,7 +14,7 @@ class Learner(object):
         callbacks = CallbackList(callbacks)
         callbacks.on_train_begin()
         for episode in range(n_episodes):
-            callbacks.on_episode_begin(episode)
+            callbacks.on_episode_begin(episode, self.qfunction)
             self.env.reset()
             self.episode()
             callbacks.on_episode_end(episode, self.qfunction)
