@@ -33,7 +33,7 @@ class EpisodicWLDPlotter(Callback):
     def _plot(self, episode, qf):
         print('  - Playing series...')
         results = play_series(
-            game=self.game.copy(),
+            game=self.game,
             players=[GreedyQ(qf), self.opp_player],
             n_matches=self.n_matches,
             verbose=False
@@ -48,6 +48,8 @@ class EpisodicWLDPlotter(Callback):
         self.y_wins.append(win_pct)
         self.y_draws.append(draw_pct)
         self.y_losses.append(loss_pct)
+        if episode % 500 == 0:
+            qf.model.save('models/episode-%s-winpct-%s' % (episode, win_pct))
 
     def on_train_end(self, qf):
         n_episodes = len(self.x) * self.period

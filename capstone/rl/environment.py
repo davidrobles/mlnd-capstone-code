@@ -9,6 +9,10 @@ class Environment(object):
         self._mdp = mdp
         self._cur_state = self._mdp.start_state()
 
+    # @property
+    # def action_space(self):
+    #     return self._mdp.actions
+
     @abc.abstractmethod
     def actions(self, state):
         '''Returns the available actions in the given state.'''

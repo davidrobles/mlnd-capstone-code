@@ -3,13 +3,13 @@ from ..policy import Policy
 
 class Greedy(Policy):
 
-    def __init__(self, provider, qfunction, selfplay=False):
-        self.provider = provider
+    def __init__(self, action_space, qfunction, selfplay=False):
+        self.action_space = action_space
         self.qfunction = qfunction
         self.selfplay = selfplay
 
     def action(self, state):
-        actions = self.provider(state)
+        actions = self.action_space(state)
         if not actions:
             raise ValueError('Must have at least one available action.')
         if self.selfplay:
