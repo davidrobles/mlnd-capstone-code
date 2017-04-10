@@ -25,16 +25,16 @@ class EpisodicWLDPlotter(Callback):
         self.y_draws = []
         self.y_losses = []
 
-    def on_episode_end(self, episode, qf):
+    def on_episode_end(self, episode, qfunction):
         if episode % self.period != 0:
             return
-        self._plot(episode, qf)
+        self._plot(episode, qfunction)
 
-    def _plot(self, episode, qf):
+    def _plot(self, episode, qfunction):
         print('  - Playing series...')
         results = play_series(
             game=self.game,
-            players=[GreedyQ(qf), self.opp_player],
+            players=[GreedyQ(qfunction), self.opp_player],
             n_matches=self.n_matches,
             verbose=False
         )
@@ -48,12 +48,12 @@ class EpisodicWLDPlotter(Callback):
         self.y_wins.append(win_pct)
         self.y_draws.append(draw_pct)
         self.y_losses.append(loss_pct)
-        if episode % 500 == 0:
-            qf.model.save('models/episode-%s-winpct-%s' % (episode, win_pct))
+        # if episode % 500 == 0:
+        #     qfunction.model.save('models/episode-%s-winpct-%s' % (episode, win_pct))
 
-    def on_train_end(self, qf):
+    def on_train_end(self, qfunction):
         n_episodes = len(self.x) * self.period
-        self._plot(n_episodes - 1, qf)
+        self._plot(n_episodes - 1, qfunction)
         fig = plt.figure()
         ax = fig.add_subplot(111)
         w_line, = ax.plot(self.x, self.y_wins, label='Win')
