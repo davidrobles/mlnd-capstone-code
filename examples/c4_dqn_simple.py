@@ -8,6 +8,7 @@ experience replay are working correctly.
 '''
 from capstone.game.games import Connect4
 from capstone.game.players import RandPlayer
+from capstone.game.utils import c42pdf
 from capstone.rl import Environment, GameMDP, FixedGameMDP
 from capstone.rl.learners import ApproximateQLearning
 from capstone.rl.policies import EGreedy
@@ -17,13 +18,70 @@ import numpy as np
 
 move_mapper = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}
 
-board = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-         [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-         [' ', ' ', ' ', 'O', ' ', 'O', ' '],
-         [' ', ' ', 'O', 'X', ' ', 'X', ' '],
-         [' ', ' ', 'X', 'O', ' ', 'X', ' '],
-         [' ', 'O', 'O', 'X', 'X', 'X', 'O']]
-game = Connect4(board)
+# The Complete Book of Connect 4 
+# Problem Set A (Easy)
+# Problem 1, Page 16
+# Red wins with C4
+#         A    B    C    D    E    F    G
+easy = [[' ', ' ', ' ', ' ', ' ', ' ', ' '], # 6
+        [' ', ' ', ' ', ' ', ' ', ' ', ' '], # 5
+        [' ', ' ', ' ', 'O', ' ', 'O', ' '], # 4
+        [' ', ' ', 'O', 'X', ' ', 'X', ' '], # 3
+        [' ', ' ', 'X', 'O', ' ', 'X', ' '], # 2
+        [' ', 'O', 'O', 'X', 'X', 'X', 'O']] # 1
+
+# The Complete Book of Connect 4 
+# Problem Set D (Medium)
+# Problem 94, Page 37
+# Red wins with E1
+#           A    B    C    D    E    F    G
+medium = [[' ', ' ', ' ', 'O', ' ', ' ', ' '], # 6
+          [' ', ' ', ' ', 'O', ' ', ' ', ' '], # 5
+          [' ', ' ', 'X', 'X', ' ', ' ', ' '], # 4
+          [' ', ' ', 'O', 'O', ' ', ' ', ' '], # 3
+          [' ', ' ', 'X', 'X', ' ', ' ', ' '], # 2
+          [' ', ' ', 'O', 'X', ' ', ' ', 'X']] # 1
+
+# The Complete Book of Connect 4 
+# Problem Set D (Hard)
+# Problem 151, Page 51
+# Red wins with A2
+#         A    B    C    D    E    F    G
+hard = [[' ', ' ', ' ', ' ', ' ', ' ', ' '], # 6
+        [' ', ' ', ' ', 'O', ' ', ' ', ' '], # 5
+        [' ', ' ', ' ', 'X', ' ', ' ', ' '], # 4
+        [' ', ' ', ' ', 'X', 'O', ' ', ' '], # 3
+        [' ', ' ', ' ', 'O', 'X', ' ', ' '], # 2
+        ['X', ' ', 'O', 'X', 'O', ' ', ' ']] # 1
+
+# The Complete Book of Connect 4 
+# Problem Set H (Expert)
+# Problem 211, Page 65
+# Red wins with G2
+#           A    B    C    D    E    F    G
+expert = [[' ', ' ', ' ', 'X', ' ', ' ', ' '], # 6
+          [' ', 'O', ' ', 'O', ' ', ' ', ' '], # 5
+          [' ', 'X', ' ', 'O', ' ', ' ', ' '], # 4
+          [' ', 'X', ' ', 'X', ' ', ' ', ' '], # 3
+          [' ', 'X', ' ', 'O', ' ', ' ', ' '], # 2
+          [' ', 'O', 'X', 'X', 'O', ' ', 'O']] # 1
+
+# The Complete Book of Connect 4 
+# Problem Set J (Challenger)
+# Problem 273, Page 79
+# Red wins with E2
+#           A    B    C    D    E    F    G
+challenger = [[' ', ' ', ' ', ' ', ' ', ' ', ' '], # 6
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '], # 5
+              [' ', ' ', ' ', ' ', ' ', 'O', ' '], # 4
+              [' ', ' ', ' ', ' ', ' ', 'X', ' '], # 3
+              [' ', ' ', ' ', ' ', ' ', 'O', ' '], # 2
+              [' ', ' ', 'O', 'X', 'O', 'X', 'X']] # 1
+
+
+# c42pdf(filename, c4.board)
+
+game = Connect4(challenger)
 mdp = GameMDP(game)
 env = Environment(mdp)
 qnetwork = QNetwork(
@@ -55,7 +113,7 @@ class Monitor(Callback):
         if episode % 50 == 0:
             print('Episode {}'.format(episode))
 qlearning.train(
-    n_episodes=10000,
+    n_episodes=1750,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
