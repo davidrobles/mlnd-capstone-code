@@ -10,7 +10,7 @@ class MLP(QFunction):
 
     def __init__(self):
         self.model = Sequential()
-        self.model.add(Dense(150, input_dim=9, init='lecun_uniform', activation='tanh'))
+        self.model.add(Dense(150, input_dim=42, init='lecun_uniform', activation='tanh'))
         self.model.add(Dense(1, init='lecun_uniform', activation='tanh'))
         self.model.compile(loss='mse', optimizer=RMSprop())
 
@@ -26,5 +26,6 @@ class MLP(QFunction):
     def __getitem__(self, state_action):
         state, action = state_action
         copy = state.copy().make_move(action)
-        value = self.model.predict(normalize_board(copy.board), batch_size=1)
+        x = normalize_board(copy.board)
+        value = self.model.predict(np.array([x]), batch_size=1)
         return value[0][0]
