@@ -27,7 +27,7 @@ qlearning = ApproximateQLearning(
     batch_size=32
 )
 qlearning.train(
-    n_episodes=4000,
+    n_episodes=10000,
     callbacks=[
         EpisodicWLDPlotter(
             game=game,
@@ -36,6 +36,11 @@ qlearning.train(
             period=250,
             filepath='figures/tic_deep_ql.pdf'
         ),
-        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=2000)
+        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=5000)
     ]
 )
+
+# n_episodes = 4,000
+# n_episodes_annearling = 2,000
+
+# mention that I tried adam and rmsprop but they did not work
