@@ -17,17 +17,14 @@ class QNetwork(QFunction):
         # input layer
         model.add(Dense(n_hidden_units, input_shape=(n_input_units,)))
         model.add(Activation('relu'))
-        # model.add(Dropout(dropoutRate))
         # hidden layers
         for _ in xrange(n_hidden_layers):
             model.add(Dense(n_hidden_units))
             model.add(Activation('relu'))
-            # model.add(Dropout(dropoutRateInput))
         # output layer
         model.add(Dense(n_output_units))
         model.add(Activation('tanh'))
         model.compile(loss='mse', optimizer=SGD(lr=learning_rate))
-        # model.compile(loss='mse', optimizer='adam')
         self.model = model
 
     def minibatch_update(self, experiences, updates):
