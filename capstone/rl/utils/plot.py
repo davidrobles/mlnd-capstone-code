@@ -48,8 +48,8 @@ class EpisodicWLDPlotter(Callback):
         self.y_wins.append(win_pct)
         self.y_draws.append(draw_pct)
         self.y_losses.append(loss_pct)
-        # if episode % 500 == 0:
-        #     qfunction.model.save('models/episode-%s-winpct-%s' % (episode, win_pct))
+        if episode % 500 == 0:
+            qfunction.model.save('models/episode-%s-winpct-%s' % (episode, win_pct))
 
     def on_train_end(self, qfunction):
         n_episodes = len(self.x) * self.period
