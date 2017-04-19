@@ -59,8 +59,8 @@ class Connect4QNetwork(QFunction):
             x = normalize_board(state.board)
             xlist.append(x)
             y = self.model.predict(np.array([x]))
-            a = mapping[action]
-            y[0][a] = updates[i]
+            action_idx = mapping[action]
+            y[0][action_idx] = updates[i]
             ylist.append(y[0])
         x = np.array(xlist)
         y = np.array(ylist)
