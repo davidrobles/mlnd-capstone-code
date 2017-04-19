@@ -4,8 +4,8 @@ from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling
 from keras.models import Sequential
 from keras.optimizers import SGD
 from ..qfunction import QFunction
+from ...game.games import Connect4 as C4
 from ...game.utils import normalize_board
-
 
 def convert_me(state):
     def mapper(t):
@@ -32,7 +32,7 @@ class Connect4QNetwork(QFunction):
     def __init__(self):
 
         model = Sequential()
-        model.add(Conv2D(64, kernel_size=(3, 3), input_shape=(6, 7, 1)))
+        model.add(Conv2D(64, kernel_size=(3, 3), input_shape=(C4.ROWS, C4.COLS, 1)))
         model.add(Activation('relu'))
         model.add(Conv2D(64, kernel_size=(3, 3), padding='same'))
         model.add(Activation('relu'))
