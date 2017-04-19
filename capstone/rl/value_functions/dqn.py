@@ -7,7 +7,7 @@ from ..qfunction import QFunction
 from ...game.games import Connect4 as C4
 from ...game.utils import normalize_board
 
-def convert_me(state):
+def normalize_board(board):
     def mapper(t):
         if t == 'X':
             return np.array([1.0])
@@ -16,9 +16,9 @@ def convert_me(state):
         else:
             return np.array([0.0])
     vfunc = np.vectorize(mapper)
-    robles = np.array(state.board)
+    robles = np.array(board)
     x = vfunc(robles)
-    x = x.reshape(6, 7, -1)
+    x = x.reshape(C4.ROWS, C4.COLS, -1)
     return x
 
 
@@ -56,7 +56,7 @@ class Connect4QNetwork(QFunction):
         ylist = []
         for i in range(len(experiences)):
             state, action, reward, next_state = experiences[i]
-            x = convert_me(state)
+            x = normalize_board(state.board)
             xlist.append(x)
             y = self.model.predict(np.array([x]))
             a = mapping[action]
@@ -72,17 +72,17 @@ class Connect4QNetwork(QFunction):
 
     def __getitem__(self, state_action):
         state, action = state_action
-        x = convert_me(state)
+        x = normalize_board(state.board)
         value = self.model.predict(np.array([x]), batch_size=1)
         a = mapping[action]
         assert isinstance(a, int)
         return value[0][a]
 
     def best_value(self, state, actions, max_or_min):
-        x = convert_me(state)
+        x = normalize_board(state.board)
         output = self.model.predict(np.array([x]))
-        vals = []
+        action_values = []
         for action in actions:
             action_idx = mapping[action]
-            vals.append(output[0][action_idx])
-        return max_or_min(vals)
+            action_values.append(output[0][action_idx])
+        return max_or_min(action_values)
