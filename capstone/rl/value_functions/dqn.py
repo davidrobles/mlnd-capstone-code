@@ -22,9 +22,6 @@ def normalize_board(board):
     return x
 
 
-mapping = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}
-
-
 class Connect4QNetwork(QFunction):
 
     '''DQN for Connect 4.'''
@@ -42,26 +39,31 @@ class Connect4QNetwork(QFunction):
         model.add(Activation('relu'))
         model.add(Flatten())
         model.add(Dense(256))
-        model.add(Dense(7))
+        model.add(Dense(1))
         model.add(Activation('tanh'))
 
         sgd = SGD(lr=0.001)
         model.compile(loss='mse', optimizer=sgd)
         self.model = model
 
-    def minibatch_update(self, experiences, updates):
-        batch_size = len(experiences)
-        assert len(experiences) == len(updates)
+    def minibatch_update(self, experiences):
         xlist = []
         ylist = []
-        for i in range(len(experiences)):
-            state, action, reward, next_state = experiences[i]
-            x = normalize_board(state.board)
+        for state, action, reward, next_state in experiences:
+            if next_state.is_over():
+                update = reward
+            else:
+                # best_qvalue = self.best_value(next_state, next_state.legal_moves(), max)
+                # best_qvalue = slef.model
+
+                x = normalize_board(next_state.board)
+                output = self.model.predict(np.array([x]))
+                update = reward + (0.99 * output[0][0])
+                # update = reward + (0.99 * best_qvalue)
+            x = normalize_board(next_state.board)
+            y = np.array([update])
             xlist.append(x)
-            y = self.model.predict(np.array([x]))
-            action_idx = mapping[action]
-            y[0][action_idx] = updates[i]
-            ylist.append(y[0])
+            ylist.append(y)
         x = np.array(xlist)
         y = np.array(ylist)
         self.model.train_on_batch(x, y)
@@ -72,17 +74,16 @@ class Connect4QNetwork(QFunction):
 
     def __getitem__(self, state_action):
         state, action = state_action
-        x = normalize_board(state.board)
+        copy = state.copy().make_move(action)
+        x = normalize_board(copy.board)
         value = self.model.predict(np.array([x]), batch_size=1)
-        a = mapping[action]
-        assert isinstance(a, int)
-        return value[0][a]
+        return value[0]
 
     def best_value(self, state, actions, max_or_min):
-        x = normalize_board(state.board)
-        output = self.model.predict(np.array([x]))
         action_values = []
         for action in actions:
-            action_idx = mapping[action]
-            action_values.append(output[0][action_idx])
+            copy = state.copy().make_move(action)
+            x = normalize_board(copy.board)
+            output = self.model.predict(np.array([x]))
+            action_values.append(output[0][0])
         return max_or_min(action_values)

@@ -43,16 +43,7 @@ class ApproximateQLearning(Learner):
                 self.replay_memory.append(experience)
                 batch_size = min(len(self.replay_memory), self.batch_size)
                 experiences = random.sample(self.replay_memory, batch_size)
-                updates = []
-                for experience in experiences:
-                    ss, aa, rr, ns = experience
-                    if ns.is_over():
-                        update = rr
-                    else:
-                        best_qvalue = self.best_qvalue(ns)
-                        update = rr + (self.discount_factor * best_qvalue)
-                    updates.append(update)
-                self.qfunction.minibatch_update(experiences, updates)
+                self.qfunction.minibatch_update(experiences)
             else:
                 best_qvalue = self.best_qvalue(next_state)
                 update = reward + (self.discount_factor * best_qvalue)

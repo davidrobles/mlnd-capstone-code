@@ -10,13 +10,14 @@ from capstone.rl.value_functions.dqn import Connect4QNetwork
 import numpy as np
 import random
 
-seed = 84
-random.seed(seed)
-np.random.seed(seed)
+seed = 383
+# random.seed(seed)
+# np.random.seed(seed)
 
 game = C4()
 # mdp = FixedGameMDP(game, RandPlayer(random_state=seed), 1)
 mdp = FixedGameMDP(get_random_game(), RandPlayer(random_state=seed), 1)
+mdp = FixedGameMDP(get_random_win_game(), RandPlayer(random_state=seed), 1)
 env = Environment(mdp)
 qnetwork = Connect4QNetwork()
 egreedy = EGreedy(
@@ -33,14 +34,14 @@ qlearning = ApproximateQLearning(
     discount_factor=0.99,
     selfplay=False,
     experience_replay=True,
-    replay_memory_size=10000,
+    replay_memory_size=20000,
     batch_size=32
 )
 
 
 class Monitor(Callback):
     def on_episode_begin(self, episode, qfunction):
-        mdp = FixedGameMDP(get_random_game(), RandPlayer(random_state=seed), 1)
+        mdp = FixedGameMDP(get_random_win_game(), RandPlayer(random_state=seed), 1)
         env = Environment(mdp)
         qlearning.env = env
         egreedy.action_space = env.actions
@@ -51,15 +52,15 @@ class Monitor(Callback):
 # prepopulate replay memory? read deepmind paper
 
 qlearning.train(
-    n_episodes=50000,
+    n_episodes=5000,
     callbacks=[
         EpisodicWLDPlotter(
-            game=get_random_game,
-            # game=get_random_win_game,
+            # game=get_random_game,
+            game=get_random_win_game,
             # game=game,
             opp_player=RandPlayer(random_state=seed),
             n_matches=1000,
-            period=500,
+            period=250,
             filepath='figures/c4_dqn_uci.pdf'
         ),
         LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=10000),

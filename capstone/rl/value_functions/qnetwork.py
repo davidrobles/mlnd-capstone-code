@@ -47,19 +47,24 @@ class QNetwork(QFunction):
                  n_hidden_units=10, learning_rate=0.01):
 
         self.mapping = mapping
-        s = (6, 7, 1)
         model = Sequential()
-        model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=s))
-        model.add(Conv2D(64, (3, 3), activation='relu'))
-
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+        model.add(Conv2D(64, kernel_size=(3, 3), input_shape=(6, 7, 1)))
+        model.add(Activation('relu'))
+        model.add(Conv2D(64, kernel_size=(3, 3), padding='same'))
+        model.add(Activation('relu'))
+        model.add(Conv2D(64, kernel_size=(3, 3), padding='same'))
+        model.add(Activation('relu'))
+        model.add(Conv2D(64, kernel_size=(3, 3), padding='same'))
+        model.add(Activation('relu'))
+        # model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Flatten())
-        model.add(Dense(128, activation='relu'))
-        model.add(Dropout(0.5))
+        model.add(Dense(256))
+        # model.add(Activation('relu'))
         model.add(Dense(7))
         model.add(Activation('tanh'))
-        model.compile(loss='mse', optimizer='rmsprop')
+
+        sgd = SGD(lr=learning_rate)
+        model.compile(loss='mse', optimizer=sgd)
         self.model = model
 
     def minibatch_update(self, experiences, updates):
