@@ -66,13 +66,6 @@ class Connect4QNetwork(QFunction):
         y = np.array(ylist)
         self.model.train_on_batch(x, y)
 
-    def update(self, state, action, value):
-        x = normalize_board(state.board)
-        y = self.model.predict(x)
-        a = mapping[action]
-        y[0][a] = value
-        self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)
-
     #############
     # QFunction #
     #############
