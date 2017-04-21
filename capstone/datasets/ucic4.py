@@ -37,14 +37,20 @@ def series_to_game(series):
 _df = load_dataframe()
 
 
-def get_random_game():
-    sample_df = _df.sample()
+def get_random_game(outcome=None):
+    if outcome:
+        sample_df = _df.loc[_df['outcome'] == outcome].sample()
+    else:
+        sample_df = _df.sample()
     row = sample_df.iloc[0]
     game, _ = series_to_game(row)
     return game
 
 def get_random_win_game():
-    sample_df = _df.loc[_df['outcome'] == 'win'].sample()
-    row = sample_df.iloc[0]
-    game, _ = series_to_game(row)
-    return game
+    return get_random_game('win')
+
+def get_random_loss_game():
+    return get_random_game('loss')
+
+def get_random_draw_game():
+    return get_random_game('draw')
