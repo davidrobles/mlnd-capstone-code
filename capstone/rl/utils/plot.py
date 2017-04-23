@@ -66,6 +66,11 @@ class EpisodicWLDPlotter(Callback):
         plt.gca().yaxis.set_major_formatter(formatter)
         plt.legend(handles=[w_line, l_line, d_line], loc=7)
         plt.savefig(self.filepath)
+        print('printing data for {}'.format(self.filepath))
+        print(self.x)
+        print(self.y_wins)
+        print(self.y_losses)
+        print(self.y_draws)
 
 
 class QValuesPlotter(Callback):
