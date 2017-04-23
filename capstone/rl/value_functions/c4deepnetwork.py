@@ -83,7 +83,7 @@ class Connect4DeepNetwork(QFunction):
 
     def __getitem__(self, state_action):
         state, action = state_action
-        copy = state.copy().make_move(action)
-        x = normalize_board(copy.board)
+        next_state = state.copy().make_move(action)
+        x = normalize_board(next_state.board)
         value = self.model.predict(np.array([x]), batch_size=1)
         return value[0]
