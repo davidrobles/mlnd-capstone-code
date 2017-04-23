@@ -16,7 +16,7 @@ class TabularTD0(Learner):
         action = self.policy.action(state)
         reward, next_state = self.env.do_action(action)
         target = reward + (self.discount_factor * self.vfunction[next_state])
-        td_error = target - self.vfunction[next_state, action]
+        td_error = target - self.vfunction[next_state]
         self.vfunction[state] += self.learning_rate * td_error
         # TODO: fix issue of afterstates
 

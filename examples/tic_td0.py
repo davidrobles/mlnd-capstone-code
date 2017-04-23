@@ -3,7 +3,7 @@ from capstone.game.players import AlphaBeta, RandPlayer
 from capstone.game.utils import tic2pdf
 from capstone.rl import GameMDP, Environment
 from capstone.rl.learners import TabularTD0
-from capstone.rl.policies import RandomPolicy
+from capstone.rl.policies import EGreedy, RandomPolicy
 from capstone.rl.policy import Policy
 from capstone.rl.utils import Callback
 from capstone.rl.value_functions import TabularV
@@ -13,9 +13,9 @@ board = [[' ', ' ', 'X'],
          [' ', 'X', ' '],
          ['O', 'O', ' ']]
 game = TicTacToe(board)
-# mdp = FixedGameMDP(game, AlphaBeta(), 1)
 mdp = GameMDP(game)
 env = Environment(mdp)
+vfunction = TabularV()
 
 
 class MyPolicy(Policy):
@@ -29,14 +29,20 @@ class MyPolicy(Policy):
 
     def action(self, state):
         if state.cur_player() == 0:
-            return RandomPolicy(self._action_space).action(state)
+            egreedy = EGreedy(
+                action_space=env.actions,
+                vfunction=vfunction,
+                epsilon=0.1,
+            )
+            egreedy.action(state)
+            # return RandomPolicy(self._action_space).action(state)
         return RandomPolicy(self._action_space).action(state)
         # return AlphaBeta().choose_move(state)
 
 
 td0 = TabularTD0(
     env=env,
-    vfunction=TabularV(),
+    vfunction=vfunction,
     policy=MyPolicy(env.actions),
     learning_rate=0.1,
     discount_factor=1.0
@@ -50,7 +56,7 @@ class Monitor(Callback):
 
 
 td0.train(
-    n_episodes=1000,
+    n_episodes=10000,
     callbacks=[Monitor()]
 )
 

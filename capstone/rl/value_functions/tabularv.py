@@ -22,6 +22,7 @@ class TabularV(QFunction):
 
     def __getitem__(self, state):
         assert state is not None
+        assert state is not tuple
         if state not in self._d:
             if self.init:
                 print('init')
