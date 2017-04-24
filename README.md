@@ -11,7 +11,7 @@ make test
 ## Run an example
 
 ```bash
-make file=examples/tictactoe_count_positions.py run
+make file=experiments/tictactoe_count_positions.py run
 ```
 
 ## List all environments
