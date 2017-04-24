@@ -5,7 +5,7 @@ from capstone.rl import GameMDP, Environment
 from capstone.rl.learners import TabularTD0
 from capstone.rl.policies import EGreedy, RandomPolicy
 from capstone.rl.policy import Policy
-from capstone.rl.utils import Callback
+from capstone.rl.utils import Callback, LinearAnnealing
 from capstone.rl.value_functions import TabularV
 
 seed = 23
@@ -17,33 +17,17 @@ mdp = GameMDP(game)
 env = Environment(mdp)
 vfunction = TabularV()
 
-
-class MyPolicy(Policy):
-
-    def __init__(self, action_space):
-        self._action_space = action_space
-
-    ##########
-    # Policy #
-    ##########
-
-    def action(self, state):
-        if state.cur_player() == 0:
-            egreedy = EGreedy(
-                action_space=env.actions,
-                vfunction=vfunction,
-                epsilon=0.1,
-            )
-            egreedy.action(state)
-            # return RandomPolicy(self._action_space).action(state)
-        return RandomPolicy(self._action_space).action(state)
-        # return AlphaBeta().choose_move(state)
-
+egreedy = EGreedy(
+    action_space=env.actions,
+    vfunction=vfunction,
+    epsilon=1.0,
+    selfplay=False
+)
 
 td0 = TabularTD0(
     env=env,
     vfunction=vfunction,
-    policy=MyPolicy(env.actions),
+    policy=egreedy,
     learning_rate=0.1,
     discount_factor=1.0
 )
@@ -56,10 +40,12 @@ class Monitor(Callback):
 
 
 td0.train(
-    n_episodes=10000,
-    callbacks=[Monitor()]
+    n_episodes=20000,
+    callbacks=[
+        Monitor(),
+        LinearAnnealing(egreedy, 'epsilon', init=1.0, final=0.1, n_episodes=8000)
+    ]
 )
-
 
 
 ####################
