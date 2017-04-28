@@ -1,11 +1,11 @@
-from ..qfunction import QFunction
+from ..value_function import ValueFunction
 from ...utils import check_random_state
 
 _MEAN = 0.0
 _STD = 0.3
 
 
-class TabularV(QFunction):
+class TabularV(ValueFunction):
     ''' Tabular V-Function'''
 
     def __init__(self, init=True, random_state=None):
@@ -16,11 +16,12 @@ class TabularV(QFunction):
     def __setitem__(self, state, value):
         self._d[state] = value
 
-    #############
-    # QFunction #
-    #############
+    ##################
+    # Value Function #
+    ##################
 
     def __getitem__(self, state):
+        ''' V(s) '''
         assert state is not None
         assert state is not tuple
         if state not in self._d:

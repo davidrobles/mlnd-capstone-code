@@ -3,7 +3,7 @@ import numpy as np
 from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import SGD
-from ..qfunction import QFunction
+from ..value_function import ValueFunction
 from ...game.utils import normalize_board
 
 
@@ -22,7 +22,7 @@ def convert_me(state):
     return x
 
 
-class QNetwork(QFunction):
+class QNetwork(ValueFunction):
     '''A Q-Network is a neural network function approximator with θ weights.'''
 
     # def __init__(self, mapping, n_input_units, n_hidden_layers, n_output_units,
@@ -93,19 +93,6 @@ class QNetwork(QFunction):
         y[0][a] = value
         self.model.fit(x, y, batch_size=1, nb_epoch=1, verbose=0)
 
-    #############
-    # QFunction #
-    #############
-
-    def __getitem__(self, state_action):
-        state, action = state_action
-        # x = normalize_board(state.board)
-        # x = np.array([x])
-        x = convert_me(state)
-        value = self.model.predict(np.array([x]), batch_size=1)
-        a = self.mapping[action]
-        assert isinstance(a, int)
-        return value[0][a]
 
     def best_value(self, state, actions, max_or_min):
         # def mapper(t):
@@ -127,3 +114,17 @@ class QNetwork(QFunction):
             hey = self.mapping[aa]
             vals.append(output[0][self.mapping[aa]])
         return max_or_min(vals)
+
+    ##################
+    # Value Function #
+    ##################
+
+    def __getitem__(self, state_action):
+        state, action = state_action
+        # x = normalize_board(state.board)
+        # x = np.array([x])
+        x = convert_me(state)
+        value = self.model.predict(np.array([x]), batch_size=1)
+        a = self.mapping[action]
+        assert isinstance(a, int)
+        return value[0][a]

@@ -2,7 +2,7 @@ import numpy as np
 from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import SGD
-from ..qfunction import QFunction
+from ..value_function import ValueFunction
 from ...game.games import Connect4 as C4
 
 
@@ -39,7 +39,7 @@ def normalize_board(board):
     return x
 
 
-class Connect4DeepNetwork(QFunction):
+class Connect4DeepNetwork(ValueFunction):
 
     '''DQN for Connect 4.'''
 
@@ -77,9 +77,9 @@ class Connect4DeepNetwork(QFunction):
         y = np.array(ylist)
         self.model.train_on_batch(x, y)
 
-    #############
-    # QFunction #
-    #############
+    ##################
+    # Value Function #
+    ##################
 
     def __getitem__(self, state_action):
         state, action = state_action

@@ -3,7 +3,7 @@ import numpy as np
 from keras.layers import Activation, Conv2D, Dense, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import SGD
-from ..qfunction import QFunction
+from ..value_function import ValueFunction
 from ...game.games import Connect4 as C4
 from ...game.utils import normalize_board
 
@@ -22,7 +22,7 @@ def normalize_board(board):
     return x
 
 
-class Connect4QNetwork(QFunction):
+class Connect4QNetwork(ValueFunction):
 
     '''DQN for Connect 4.'''
 
@@ -68,17 +68,6 @@ class Connect4QNetwork(QFunction):
         y = np.array(ylist)
         self.model.train_on_batch(x, y)
 
-    #############
-    # QFunction #
-    #############
-
-    def __getitem__(self, state_action):
-        state, action = state_action
-        copy = state.copy().make_move(action)
-        x = normalize_board(copy.board)
-        value = self.model.predict(np.array([x]), batch_size=1)
-        return value[0]
-
     def best_value(self, state, actions, max_or_min):
         action_values = []
         for action in actions:
@@ -87,3 +76,14 @@ class Connect4QNetwork(QFunction):
             output = self.model.predict(np.array([x]))
             action_values.append(output[0][0])
         return max_or_min(action_values)
+
+    ##################
+    # Value Function #
+    ##################
+
+    def __getitem__(self, state_action):
+        state, action = state_action
+        copy = state.copy().make_move(action)
+        x = normalize_board(copy.board)
+        value = self.model.predict(np.array([x]), batch_size=1)
+        return value[0]

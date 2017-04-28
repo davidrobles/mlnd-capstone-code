@@ -1,11 +1,11 @@
-from ..qfunction import QFunction
+from ..value_function import ValueFunction
 from ...utils import check_random_state
 
 _MEAN = 0.0
 _STD = 0.3
 
 
-class TabularQ(QFunction):
+class TabularQ(ValueFunction):
 
     def __init__(self, init=True, random_state=None):
         self.init = init
@@ -15,9 +15,9 @@ class TabularQ(QFunction):
     def __setitem__(self, key, value):
         self._d[key] = value
 
-    #############
-    # QFunction #
-    #############
+    ##################
+    # Value Function #
+    ##################
 
     def __getitem__(self, key):
         if key not in self._d:
