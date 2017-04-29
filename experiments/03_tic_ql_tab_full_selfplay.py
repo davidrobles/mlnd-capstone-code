@@ -8,7 +8,7 @@ from capstone.game.utils import tic2pdf
 from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
-from capstone.rl.utils import EpisodicWLDPlotter
+from capstone.rl.utils import Callback, EpisodicWLDPlotter
 from capstone.rl.value_functions import TabularVF
 
 seed = 23
@@ -23,9 +23,16 @@ qlearning = QLearning(
     discount_factor=1.0,
     selfplay=True
 )
+
+class Monitor(Callback):
+    def on_episode_begin(self, episode, qfunction):
+        if episode % 100 == 0:
+            print('Episode {}'.format(episode))
+
 qlearning.train(
     n_episodes=70000,
     callbacks=[
+        Monitor(),
         EpisodicWLDPlotter(
             game=game,
             opp_player=RandPlayer(random_state=seed),
