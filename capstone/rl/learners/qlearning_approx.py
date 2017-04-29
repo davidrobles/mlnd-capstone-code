@@ -1,16 +1,16 @@
 import numpy as np
 import random
 from collections import deque
-from ..learner import Learner
+from ..learner import EpisodicLearnerMixin
 from ..utils import max_qvalue, min_qvalue
 
 
-class ApproximateQLearning(Learner):
+class ApproximateQLearning(EpisodicLearnerMixin):
     '''Q-learning with a function approximator'''
 
     def __init__(self, env, policy, qfunction, discount_factor=1.0, selfplay=False,
                  experience_replay=True, batch_size=32, replay_memory_size=10000):
-        super(ApproximateQLearning, self).__init__(env)
+        self.env = env
         self.policy = policy
         self.qfunction = qfunction
         self.discount_factor = discount_factor

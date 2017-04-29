@@ -1,8 +1,8 @@
-from ..learner import Learner
+from ..learner import EpisodicLearnerMixin
 from ..utils import max_qvalue, min_qvalue
 
 
-class QLearning(Learner):
+class QLearning(EpisodicLearnerMixin):
     '''
     Tabular Q-learning.
 
@@ -17,7 +17,7 @@ class QLearning(Learner):
 
     def __init__(self, env, policy, qfunction, learning_rate=0.1,
                  discount_factor=1.0, selfplay=False):
-        super(QLearning, self).__init__(env)
+        self.env = env
         self.policy = policy
         self.qfunction = qfunction
         self.learning_rate = learning_rate
