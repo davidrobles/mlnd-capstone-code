@@ -13,8 +13,8 @@ class TabularVF(ValueFunction):
 
     # Arguments
 
-        init: boolean. Wheter to return randomly initialized value
-            when accessed for the first time.
+        init: boolean. Wheter to return a randomly initialized value
+            when accessed and does not exist in the table.
 
     # Examples
 
