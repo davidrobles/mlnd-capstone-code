@@ -12,20 +12,20 @@ class TabularVF(ValueFunction):
     Can be used for both state V(s) and state-action Q(s, a) values.
 
     # Arguments
-
         init: boolean. Wheter to return a randomly initialized value
             when accessed and does not exist in the table.
 
-    # Examples
+    # Example
+        ```python
+        >>> v = TabularVF()
+        >>> v[state] = 3.2
+        >>> print(q[state])
+        3.2
 
-        ```
-        v = TabularVF()
-        v[state] = 3.2
-        print(q[state]) # 3.2
-
-        q = TabularVF()
-        q[state, action] = 1.8
-        print(q[state, action]) # 1.8
+        >>> q = TabularVF()
+        >>> q[state, action] = 1.8
+        >>> print(q[state, action])
+        1.8
         ```
     '''
 
