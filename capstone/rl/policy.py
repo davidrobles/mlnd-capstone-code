@@ -10,5 +10,8 @@ class Policy(object):
     '''
 
     @abc.abstractmethod
-    def action(self, state):
+    def get_action(self, state):
+        '''
+        Returns one of the available actions from the given state.
+        '''
         pass

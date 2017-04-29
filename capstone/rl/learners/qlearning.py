@@ -37,7 +37,7 @@ class QLearning(Learner):
     def episode(self):
         while not self.env.is_terminal():
             state = self.env.cur_state()
-            action = self.policy.action(state)
+            action = self.policy.get_action(state)
             reward, next_state = self.env.do_action(action)
             best_qvalue = self.best_qvalue(next_state)
             target = reward + (self.discount_factor * best_qvalue)
