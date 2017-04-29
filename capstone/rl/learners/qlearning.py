@@ -3,7 +3,11 @@ from ..utils import max_qvalue, min_qvalue
 
 
 class QLearning(Learner):
-    '''Tabular Q-learning'''
+    '''
+    Tabular Q-learning
+
+    # Arguments:
+    '''
 
     def __init__(self, env, policy, qfunction, learning_rate=0.1,
                  discount_factor=1.0, selfplay=False):
