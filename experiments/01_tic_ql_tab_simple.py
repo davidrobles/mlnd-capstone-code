@@ -9,7 +9,7 @@ from capstone.rl import FixedGameMDP, Environment
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
 from capstone.rl.utils import QValuesPlotter
-from capstone.rl.value_functions import TabularQ
+from capstone.rl.value_functions import TabularVF
 
 seed = 23
 board = [[' ', ' ', 'X'],
@@ -20,7 +20,7 @@ mdp = FixedGameMDP(game, AlphaBeta(), 1)
 env = Environment(mdp)
 qlearning = QLearning(
     env=env,
-    qfunction=TabularQ(random_state=seed),
+    qfunction=TabularVF(random_state=seed),
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0
