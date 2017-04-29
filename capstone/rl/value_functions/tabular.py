@@ -38,8 +38,8 @@ class TabularVF(ValueFunction):
         Sets the state or state-action value.
 
         # Arguments
-            key: `state` or `(state, action)`
-            value: a scalar
+            key: `state` or `(state, action)`.
+            value: a scalar.
         '''
         self._table[key] = value
 
@@ -52,7 +52,7 @@ class TabularVF(ValueFunction):
         Returns the state or state-action value.
 
         # Arguments
-            key: `state` or `(state, action)`
+            key: `state` or `(state, action)`.
         # Returns
             a scalar value.
         '''
