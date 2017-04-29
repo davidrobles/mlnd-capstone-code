@@ -11,15 +11,22 @@ class TabularVF(ValueFunction):
 
     Can be used for both state V(s) and state-action Q(s, a) values.
 
-    Examples:
+    # Arguments
 
-    v = TabularVF()
-    v[state] = 3.2
-    print(q[state]) # 3.2
+        init: boolean. Wheter to return randomly initialized value
+            when accessed for the first time.
 
-    q = TabularVF()
-    q[state, action] = 1.8
-    print(q[state, action]) # 1.8
+    # Examples
+
+        ```
+        v = TabularVF()
+        v[state] = 3.2
+        print(q[state]) # 3.2
+
+        q = TabularVF()
+        q[state, action] = 1.8
+        print(q[state, action]) # 1.8
+        ```
     '''
 
     def __init__(self, init=True, random_state=None):
