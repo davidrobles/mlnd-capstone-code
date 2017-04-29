@@ -21,7 +21,7 @@ env = Environment(mdp)
 qlearning = QLearning(
     env=env,
     qfunction=TabularVF(random_state=seed),
-    policy=RandomPolicy(env.actions, random_state=seed),
+    policy=RandomPolicy(action_space=env.action_space, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
     selfplay=True
