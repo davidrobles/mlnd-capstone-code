@@ -19,7 +19,7 @@ class Environment(object):
         return self._mdp.actions(state)
 
     @abc.abstractmethod
-    def cur_state(self):
+    def get_state(self):
         '''Returns the current state.'''
         return self._cur_state.copy()
 
@@ -29,15 +29,15 @@ class Environment(object):
         Performs the given action in the current state.
         Returns (reward, next_state).
         '''
-        prev = self.cur_state()
-        transitions = self._mdp.transitions(self.cur_state(), action)
+        prev = self.get_state()
+        transitions = self._mdp.transitions(self.get_state(), action)
         for next_state, prob in transitions:
             self._cur_state = next_state
-        reward = self._mdp.reward(prev, action, self.cur_state())
-        return reward, self.cur_state()
+        reward = self._mdp.reward(prev, action, self.get_state())
+        return reward, self.get_state()
 
     def is_terminal(self):
-        return self._mdp.is_terminal(self.cur_state())
+        return self._mdp.is_terminal(self.get_state())
 
     @abc.abstractmethod
     def reset(self):
