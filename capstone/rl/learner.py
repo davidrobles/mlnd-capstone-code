@@ -5,6 +5,10 @@ from .utils import CallbackList
 
 @six.add_metaclass(abc.ABCMeta)
 class Learner(object):
+    '''
+    Interface for learning value functions by interacting with an
+    environment in an episodic setting.
+    '''
 
     def __init__(self, env):
         self.env = env
@@ -12,9 +16,9 @@ class Learner(object):
     @property
     def value_function(self):
         if hasattr(self, 'vfunc'):
-            callbacks.on_episode_begin(episode, self.vfunc)
+            return self.vfunc
         if hasattr(self, 'qfunction'):
-            callbacks.on_episode_begin(episode, self.qfunction)
+            return self.qfunction
 
     def train(self, n_episodes, callbacks=None):
         '''Trains the model for a fixed number of episodes.'''
