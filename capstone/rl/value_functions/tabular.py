@@ -54,6 +54,8 @@ class TabularVF(ValueFunction):
 
         # Arguments
             key: `state` or `(state, action)`
+        # Returns
+            a scalar value.
         '''
         if key not in self._d:
             if self.init:
