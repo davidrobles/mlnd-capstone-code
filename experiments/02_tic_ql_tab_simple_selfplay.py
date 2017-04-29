@@ -3,12 +3,11 @@ The Q-learning algorithm is used to estimate the state-action values for a
 simple Tic-Tac-Toe position by playing games against itself (self-play).
 '''
 from capstone.game.games import TicTacToe
-from capstone.game.players import RandPlayer
 from capstone.game.utils import tic2pdf
 from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
-from capstone.rl.utils import EpisodicWLDPlotter, QValuesPlotter
+from capstone.rl.utils import QValuesPlotter
 from capstone.rl.value_functions import TabularVF
 
 
