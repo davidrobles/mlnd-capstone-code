@@ -32,7 +32,7 @@ class TabularVF(ValueFunction):
     def __init__(self, init=True, random_state=None):
         self.init = init
         self.random_state = check_random_state(random_state)
-        self._d = {}
+        self._table = {}
 
     def __setitem__(self, key, value):
         '''
@@ -42,7 +42,7 @@ class TabularVF(ValueFunction):
             key: `state` or `(state, action)`
             value: a scalar
         '''
-        self._d[key] = value
+        self._table[key] = value
 
     #################
     # ValueFunction #
@@ -57,9 +57,9 @@ class TabularVF(ValueFunction):
         # Returns
             a scalar value.
         '''
-        if key not in self._d:
+        if key not in self._table:
             if self.init:
-                self._d[key] = self.random_state.normal(_MEAN, _STD)
+                self._table[key] = self.random_state.normal(_MEAN, _STD)
             else:
-                self._d[key] = 0
-        return self._d[key]
+                self._table[key] = 0
+        return self._table[key]
