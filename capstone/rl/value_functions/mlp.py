@@ -6,7 +6,7 @@ from ..value_function import ValueFunction
 from ...game.utils import normalize_board
 
 
-class MLP(Value Function):
+class MLP(ValueFunction):
 
     def __init__(self):
         self.model = Sequential()
