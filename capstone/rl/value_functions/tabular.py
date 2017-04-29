@@ -21,7 +21,6 @@ class TabularVF(ValueFunction):
         >>> v[state] = 3.2
         >>> print(q[state])
         3.2
-
         >>> q = TabularVF()
         >>> q[state, action] = 1.8
         >>> print(q[state, action])
