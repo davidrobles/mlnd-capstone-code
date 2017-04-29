@@ -9,7 +9,7 @@ from capstone.rl import Environment, GameMDP
 from capstone.rl.learners import QLearning
 from capstone.rl.policies import RandomPolicy
 from capstone.rl.utils import EpisodicWLDPlotter, QValuesPlotter
-from capstone.rl.value_functions import TabularQ
+from capstone.rl.value_functions import TabularVF
 
 
 seed = 23
@@ -21,7 +21,7 @@ mdp = GameMDP(game)
 env = Environment(mdp)
 qlearning = QLearning(
     env=env,
-    qfunction=TabularQ(random_state=seed),
+    qfunction=TabularVF(random_state=seed),
     policy=RandomPolicy(env.actions, random_state=seed),
     learning_rate=0.1,
     discount_factor=1.0,
