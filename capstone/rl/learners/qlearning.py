@@ -4,9 +4,15 @@ from ..utils import max_qvalue, min_qvalue
 
 class QLearning(Learner):
     '''
-    Tabular Q-learning
+    Tabular Q-learning.
 
-    # Arguments:
+    # Arguments
+        env: environment.
+        policy: behavior policy.
+        qfunction: a state-action value function.
+        learning_rate: float >= 0.
+        discount_factor: float >= 0.
+        selfplay: boolean. Whether to use the same policy 
     '''
 
     def __init__(self, env, policy, qfunction, learning_rate=0.1,
