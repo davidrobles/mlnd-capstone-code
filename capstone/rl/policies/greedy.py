@@ -11,8 +11,7 @@ class Greedy(Policy):
         self.qfunction = qfunction
         self.selfplay = selfplay
 
-    def action(self, state):
-        # import pdb; pdb.set_trace()
+    def get_action(self, state):
         if state.is_over():
             raise ValueError('fuck this shit')
         actions = self.action_space(state)

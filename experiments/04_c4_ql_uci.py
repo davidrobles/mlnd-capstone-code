@@ -18,7 +18,7 @@ np.random.seed(seed)
 mdp = FixedGameMDP(get_random_game(), RandPlayer(random_state=seed), 1)
 env = Environment(mdp)
 c4dn = Connect4DeepNetwork()
-egreedy = EGreedy(action_space=env.actions, qfunction=c4dn, epsilon=1.0,
+egreedy = EGreedy(action_space=env.action_space, qfunction=c4dn, epsilon=1.0,
                   selfplay=False, random_state=seed)
 qlearning = ApproxQLearning(env=env, qfunction=c4dn, policy=egreedy,
                             discount_factor=0.99, selfplay=False,
@@ -30,8 +30,8 @@ class Monitor(Callback):
         mdp = FixedGameMDP(get_random_game(), RandPlayer(random_state=seed), 1)
         env = Environment(mdp)
         qlearning.env = env
-        egreedy.action_space = env.actions
-        qlearning.policy.provider = env.actions
+        egreedy.action_space = env.action_space
+        qlearning.policy.provider = env.action_space
         if episode % 50 == 0:
             print('Episode {}'.format(episode))
 

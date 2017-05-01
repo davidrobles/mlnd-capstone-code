@@ -35,8 +35,8 @@ class ApproximateQLearning(EpisodicLearnerMixin):
 
     def episode(self):
         while not self.env.is_terminal():
-            state = self.env.cur_state()
-            action = self.policy.action(state)
+            state = self.env.get_state()
+            action = self.policy.get_action(state)
             reward, next_state = self.env.do_action(action)
             if self.experience_replay:
                 experience = (state, action, reward, next_state)
