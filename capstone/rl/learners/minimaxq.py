@@ -1,7 +1,20 @@
+import abc
+import six
 from ..policy import Policy
-from ..utils import max_qvalue, min_qvalue
 
-class MinimaxQ(Policy):
+
+@six.add_metaclass(abc.ABCMeta)
+class RLAgent(Policy):
+    '''
+    A reinforcement learning agent that learns by interacting with an environment.
+    '''
+
+    @abc.abstractmethod
+    def update(self, experience, max_or_min):
+        pass
+
+
+class MinimaxQ(RLAgent):
     '''
     Tabular Q-learning.
 
