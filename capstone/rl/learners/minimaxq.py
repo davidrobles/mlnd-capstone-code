@@ -42,8 +42,6 @@ class MinimaxQ(RLAgent):
         td_error = target - self.qfunction[state, action]
         self.qfunction[state, action] += self.learning_rate * td_error
 
-    # A learner interface needs an update policy
-
     ####################
     # Policy Interface # 
     ####################
