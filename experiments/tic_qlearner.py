@@ -19,8 +19,6 @@ qlearner = QLearner(
     action_space=amg.actions,
     qfunction=TabularVF(),
     policy=RandomPolicy(action_space=amg.actions),
-    # policy=egreedyRandomPolicy(action_space=amg.actions),
-    # policy=AlphaBeta(),
     learning_rate=0.1,
     discount_factor=1.0
 )
