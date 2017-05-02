@@ -66,7 +66,7 @@ class SAMTrainer(object):
                 done = self.amg.is_terminal(next_state)
                 if hasattr(policy, 'update'):
                     experience = Experience(state, action, reward, next_state, done)
-                    policy.update(experience, min if state.cur_player() == 0 else max)
+                    policy.update(experience, max if next_state.cur_player() == 0 else min)
                 state = next_state
 
 trainer = SAMTrainer(amg, policies)
