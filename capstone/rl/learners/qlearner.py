@@ -1,8 +1,7 @@
 from ..policy import Policy
 from ..utils import max_qvalue, min_qvalue
 
-# TODO rename as minimax q
-class QLearner(Policy):
+class MinimaxQ(Policy):
     '''
     Tabular Q-learning.
 

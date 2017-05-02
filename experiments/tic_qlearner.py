@@ -2,7 +2,7 @@ from capstone.game.games import TicTacToe
 from capstone.game.players import AlphaBeta
 from capstone.game.utils import tic2pdf
 from capstone.rl import GameMDP
-from capstone.rl.learners import QLearner
+from capstone.rl.learners import MinimaxQ
 from capstone.rl.policies import RandomPolicy, EGreedy
 from capstone.rl.utils import Experience
 from capstone.rl.value_functions import TabularVF
@@ -15,7 +15,7 @@ board = [[' ', ' ', 'X'],
 
 amg = AlternatingMarkovGame(TicTacToe(board))
 
-qlearner = QLearner(
+minimaxq = MinimaxQ(
     action_space=amg.actions,
     qfunction=TabularVF(),
     policy=RandomPolicy(action_space=amg.actions),
@@ -23,7 +23,7 @@ qlearner = QLearner(
     discount_factor=1.0
 )
 
-policies = [qlearner, qlearner]
+policies = [minimaxq, minimaxq]
 
 class MDPTrainer(object):
 
@@ -66,7 +66,7 @@ trainer.train(5000)
 game = TicTacToe(board)
 for move in game.legal_moves():
     print('*' * 80)
-    value = qlearner.qfunction[(game, move)]
+    value = minimaxq.qfunction[game, move]
     print('Move: %d' % move)
     print('Value: %f' % value)
     new_game = game.copy().make_move(move)

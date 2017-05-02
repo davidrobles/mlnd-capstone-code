@@ -1,3 +1,3 @@
 from .qlearning import QLearning
-from .qlearner import QLearner
+from .qlearner import MinimaxQ
 from .qlearning_approx import ApproximateQLearning
