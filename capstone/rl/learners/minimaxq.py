@@ -10,7 +10,7 @@ class RLAgent(Policy):
     '''
 
     @abc.abstractmethod
-    def update(self, experience, max_or_min):
+    def update(self, experience):
         pass
 
 
