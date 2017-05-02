@@ -30,14 +30,11 @@ class QLearner(Policy):
     def update(self, experience, max_or_min):
         '''This is called after an action was taken'''
         state, action, reward, next_state, done = experience
-        # assert state.cur_player() == 0
         if done:
             target = reward
         else:
             next_actions = self.action_space(next_state)
             qvalues = [self.qfunction[next_state, next_action] for next_action in next_actions]
-            # best_qvalue = max_or_min(qvalues)
-            # best_func = max if state.cur_player() == 0 else min
             best_qvalue = max_or_min(qvalues)
             target = reward + (self.discount_factor * best_qvalue)
         td_error = target - self.qfunction[state, action]
