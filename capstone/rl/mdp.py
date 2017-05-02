@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import abc
 import six
 from ..game.utils import utility
@@ -6,11 +7,10 @@ from ..game.utils import utility
 @six.add_metaclass(abc.ABCMeta)
 class MDP(object):
     '''
-    Markov Decision Process
+    Interface for a Markov Decision Process (MDP).
 
-    This interface is based on the one used in:
-    UC Berkeley CS188 (Intro to AI)
-    http://ai.berkeley.edu/
+    Based on the one used in:
+    UC Berkeley CS188 (Intro to AI) http://ai.berkeley.edu/
     '''
 
     @abc.abstractmethod
@@ -135,3 +135,108 @@ class FixedGameMDP(GameMDP):
             chosen_move = self._opp_player.choose_move(new_game)
             new_game.make_move(chosen_move)
         return [(new_game, 1.0)]
+
+
+@six.add_metaclass(abc.ABCMeta)
+class SAMGame(MDP):
+    '''
+    Symmetric alternating Markov game (SAM game).
+
+    A SAM game is an extension of a Markov Decision Process to zero-sum
+    perfect-information, two-player games such as Chess, Checkers, Backgammon
+    or Go.
+
+    # References
+
+        - David Silver, Richard S. Sutton, and Martin Müller. 2012.
+          Temporal-difference search in computer Go. Mach. Learn. 87, 2 (May 2012), 183-219.
+          DOI=http://dx.doi.org/10.1007/s10994-012-5280-0
+
+        - Michael L. Littman. 1994.
+          Markov games as a framework for multi-agent reinforcement learning.
+          Proc. 11th International Conference on Machine Learning. 157-163.
+    '''
+
+    def __init__(self, game):
+        self._game = game
+        self._states = {}
+
+    def cur_player(self, state):
+        '''
+        Returns the index of the player in turn: 0 (Player 1) or 1 (Player 2).
+        '''
+        return state.cur_player()
+
+    #################
+    # MDP Interface #
+    #################
+
+    def actions(self, state):
+        return [] if state.is_over() else state.legal_moves()
+
+    def is_terminal(self, state):
+        return state.is_over()
+
+    # TODO remove state and action
+    def reward(self, state, action, next_state):
+        # return the utility from the point of view of the first player
+        # return utility(next_state, 0) if next_state.is_over() else 0
+        # return utility(next_state, state.cur_player()) if next_state.is_over() else 0
+        # return utility(next_state, state.cur_player()) if next_state.is_over() else 0
+        return utility(next_state, 0) if next_state.is_over() else 0
+
+    def start_state(self):
+        return self._game.copy()
+
+    def states(self):
+        if not self._states:
+            def generate_states(game):
+                '''Generates all the states for the game'''
+                if game not in self._states:
+                    self._states[game] = game
+                for move in game.legal_moves():
+                    new_game = game.copy().make_move(move)
+                    generate_states(new_game)
+            generate_states(self._game)
+        return self._states
+
+    def transitions(self, state, action):
+        if state.is_over():
+            return []
+        new_game = state.copy().make_move(action)
+        return [(new_game, 1.0)]
+
+    # def __init__(self, game):
+    #     self._game = game
+    #     self._states = {}
+
+    # def actions(self, state):
+    #     return [None] if state.is_over() else state.legal_moves()
+
+    # def is_terminal(self, state):
+    #     return state.is_over()
+
+    # def reward(self, state, action, next_state):
+    #     # return the utility from the point of view of the first player
+    #     return utility(next_state, 0) if next_state.is_over() else 0
+
+    # def start_state(self):
+    #     return self._game.copy()
+
+    # def states(self):
+    #     if not self._states:
+    #         def generate_states(game):
+    #             '''Generates all the states for the game'''
+    #             if game not in self._states:
+    #                 self._states[game] = game
+    #             for move in game.legal_moves():
+    #                 new_game = game.copy().make_move(move)
+    #                 generate_states(new_game)
+    #         generate_states(self._game)
+    #     return self._states
+
+    # def transitions(self, state, action):
+    #     if state.is_over():
+    #         return [(state, 1.0)]
+    #     new_game = state.copy().make_move(action)
+    #     return [(new_game, 1.0)]

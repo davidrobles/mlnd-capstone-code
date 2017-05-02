@@ -42,3 +42,7 @@ class AlphaBeta(Player):
     def choose_move(self, game):
         move, _ = self._ab(game, cur_depth=0, alpha=-np.inf, beta=np.inf)
         return move
+
+    def get_action(self, game):
+        move, _ = self._ab(game, cur_depth=0, alpha=-np.inf, beta=np.inf)
+        return move

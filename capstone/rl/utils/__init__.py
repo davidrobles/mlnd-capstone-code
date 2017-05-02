@@ -1,3 +1,4 @@
+from collections import namedtuple
 from .callbacks import Callback, CallbackList
 from .linear_annealing import LinearAnnealing
 from .plot import EpisodicWLDPlotter, QValuesPlotter
@@ -13,3 +14,7 @@ def min_qvalue(state, actions, qf):
     if not actions or actions[0] is None:
         return 0
     return min([qf[state, action] for action in actions])
+
+
+# Experience tuple (s, a, r, s')
+Experience = namedtuple('Experience', ['state', 'action', 'reward', 'next_state', 'done'])
