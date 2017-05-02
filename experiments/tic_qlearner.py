@@ -6,18 +6,14 @@ from capstone.rl.learners import QLearner
 from capstone.rl.policies import RandomPolicy, EGreedy
 from capstone.rl.utils import Experience
 from capstone.rl.value_functions import TabularVF
-from capstone.rl.mdp import SAMGame
+from capstone.rl.mdp import AlternatingMarkovGame
 
 
 board = [[' ', ' ', 'X'],
          [' ', 'X', ' '],
          ['O', 'O', ' ']]
-# board = [['X', ' ', 'X'],
-#          ['O', 'X', 'X'],
-#          ['O', 'O', ' ']]
-amg = SAMGame(TicTacToe(board))
 
-# egreedy = EGreedy(action_space=amg.actions)
+amg = AlternatingMarkovGame(TicTacToe(board))
 
 qlearner = QLearner(
     action_space=amg.actions,
@@ -29,9 +25,6 @@ qlearner = QLearner(
     discount_factor=1.0
 )
 
-# game = GameMDP(TicTacToe())
-# policies = [qlearner, RandomPolicy(action_space=amg.actions)]
-# policies = [qlearner, AlphaBeta()]
 policies = [qlearner, qlearner]
 
 class MDPTrainer(object):

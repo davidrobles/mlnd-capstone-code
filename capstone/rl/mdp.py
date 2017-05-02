@@ -138,9 +138,9 @@ class FixedGameMDP(GameMDP):
 
 
 @six.add_metaclass(abc.ABCMeta)
-class SAMGame(MDP):
+class AlternatingMarkovGame(MDP):
     '''
-    Symmetric alternating Markov game (SAM game).
+    Alternating Markov game (AMG).
 
     A SAM game is an extension of a Markov Decision Process to zero-sum
     perfect-information, two-player games such as Chess, Checkers, Backgammon
@@ -148,13 +148,14 @@ class SAMGame(MDP):
 
     # References
 
+        - Michael L. Littman. 1994.
+          Markov games as a framework for multi-agent reinforcement learning.
+          Proc. 11th International Conference on Machine Learning. 157-163.
+
         - David Silver, Richard S. Sutton, and Martin Müller. 2012.
           Temporal-difference search in computer Go. Mach. Learn. 87, 2 (May 2012), 183-219.
           DOI=http://dx.doi.org/10.1007/s10994-012-5280-0
 
-        - Michael L. Littman. 1994.
-          Markov games as a framework for multi-agent reinforcement learning.
-          Proc. 11th International Conference on Machine Learning. 157-163.
     '''
 
     def __init__(self, game):
@@ -180,9 +181,6 @@ class SAMGame(MDP):
     # TODO remove state and action
     def reward(self, state, action, next_state):
         # return the utility from the point of view of the first player
-        # return utility(next_state, 0) if next_state.is_over() else 0
-        # return utility(next_state, state.cur_player()) if next_state.is_over() else 0
-        # return utility(next_state, state.cur_player()) if next_state.is_over() else 0
         return utility(next_state, 0) if next_state.is_over() else 0
 
     def start_state(self):
