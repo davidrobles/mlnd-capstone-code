@@ -16,19 +16,22 @@ class RLAgent(Policy):
 
 class MinimaxQ(RLAgent):
     '''
-    Tabular Q-learning.
+    Minimax-Q algorithm.
 
     # Arguments
-        env: environment.
+        action_space: action space.
         policy: behavior policy.
         qfunction: a state-action value function.
         learning_rate: float >= 0.
         discount_factor: float >= 0.
-        selfplay: boolean. Whether to use the same policy 
+
+    # References
+        - Michael L. Littman. 1994.
+          Markov games as a framework for multi-agent reinforcement learning.
+          Proc. 11th International Conference on Machine Learning. 157-163.
     '''
 
-    def __init__(self, action_space, policy, qfunction, learning_rate=0.1,
-                 discount_factor=1.0):
+    def __init__(self, action_space, policy, qfunction, learning_rate=0.1, discount_factor=1.0):
         self.action_space = action_space
         self.policy = policy
         self.qfunction = qfunction
