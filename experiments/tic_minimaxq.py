@@ -7,6 +7,7 @@ from capstone.rl.policies import RandomPolicy, EGreedy
 from capstone.rl.utils import Experience
 from capstone.rl.value_functions import TabularVF
 from capstone.rl.mdp import AlternatingMarkovGame
+from capstone.rl.interactions import AMGInteraction
 
 
 board = [[' ', ' ', 'X'],
@@ -25,43 +26,40 @@ minimaxq = MinimaxQ(
 
 policies = [minimaxq, minimaxq]
 
-class MDPTrainer(object):
 
-    def __init__(self, game, policy):
-        self.game = game
-        self.policy = policy
+amgi = AMGInteraction(amg, policies)
+amgi.train(5000)
 
+# class SAMTrainer(object):
+#     '''
+#     # Arguments
+#         amg: an alternating markov game.
+#         policies: a list of two policies.
+#     '''
 
-class SAMTrainer(object):
-    '''
-    # Arguments
-        amg: an alternating markov game.
-        policies: a list of two policies.
-    '''
+#     def __init__(self, amg, policies):
+#         self.amg = amg
+#         self.policies = policies
 
-    def __init__(self, amg, policies):
-        self.amg = amg
-        self.policies = policies
+#     def train(self, n_episodes, callbacks=None):
+#         for episode in range(n_episodes):
+#             print('Episode {}'.format(episode))
+#             state = self.amg.start_state()
+#             while not self.amg.is_terminal(state):
+#                 cur_player = self.amg.cur_player(state)
+#                 policy = self.policies[cur_player]
+#                 action = policy.get_action(state)
+#                 for ns, prob in self.amg.transitions(state, action):
+#                     next_state = ns
+#                 reward = self.amg.reward(state, action, next_state)
+#                 done = self.amg.is_terminal(next_state)
+#                 if hasattr(policy, 'update'):
+#                     experience = Experience(state, action, reward, next_state, done)
+#                     policy.update(experience, max if next_state.cur_player() == 0 else min)
+#                 state = next_state
 
-    def train(self, n_episodes, callbacks=None):
-        for episode in range(n_episodes):
-            print('Episode {}'.format(episode))
-            state = self.amg.start_state()
-            while not self.amg.is_terminal(state):
-                cur_player = self.amg.cur_player(state)
-                policy = self.policies[cur_player]
-                action = policy.get_action(state)
-                for ns, prob in self.amg.transitions(state, action):
-                    next_state = ns
-                reward = self.amg.reward(state, action, next_state)
-                done = self.amg.is_terminal(next_state)
-                if hasattr(policy, 'update'):
-                    experience = Experience(state, action, reward, next_state, done)
-                    policy.update(experience, max if next_state.cur_player() == 0 else min)
-                state = next_state
-
-trainer = SAMTrainer(amg, policies)
-trainer.train(5000)
+# trainer = SAMTrainer(amg, policies)
+# trainer.train(5000)
 
 game = TicTacToe(board)
 for move in game.legal_moves():
