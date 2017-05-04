@@ -7,10 +7,13 @@ from capstone.rl.mdp import AlternatingMarkovGame
 from capstone.rl.interactions import AMGInteraction
 
 
+# Create an 'Alternating Markov Game'
 board = [[' ', ' ', 'X'],
          [' ', 'X', ' '],
          ['O', 'O', ' ']]
 amg = AlternatingMarkovGame(TicTacToe(board))
+
+# Create the self-play policy
 minimaxq = MinimaxQ(
     action_space=amg.actions,
     qfunction=TabularVF(),
@@ -19,9 +22,11 @@ minimaxq = MinimaxQ(
     discount_factor=1.0
 )
 policies = [minimaxq, minimaxq]
+
+# Let the policy interact with the environment
 AMGInteraction(amg, policies).train(n_episodes=5000)
 
-
+# Print the results
 game = TicTacToe(board)
 for move in game.legal_moves():
     print('*' * 80)
