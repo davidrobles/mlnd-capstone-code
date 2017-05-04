@@ -24,7 +24,9 @@ minimaxq = MinimaxQ(
 policies = [minimaxq, minimaxq]
 
 # Let the policy interact with the environment
-AMGInteraction(amg, policies).train(n_episodes=5000)
+amgi = AMGInteraction(amg, policies)
+amgi.train(n_episodes=5000)
+import pdb; pdb.set_trace()
 
 # Print the results
 game = TicTacToe(board)

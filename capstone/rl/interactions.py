@@ -1,3 +1,4 @@
+from collections import Counter
 from .utils import CallbackList, Experience
 
 
@@ -45,6 +46,7 @@ class AMGInteraction(EpisodicInteraction):
     def __init__(self, amg, policies):
         self.amg = amg
         self.policies = policies
+        self.stats = Counter()
 
     def episode(self):
         state = self.amg.start_state()
@@ -60,3 +62,4 @@ class AMGInteraction(EpisodicInteraction):
                 experience = Experience(state, action, reward, next_state, done)
                 policy.update(experience, max if next_state.cur_player() == 0 else min)
             state = next_state
+        self.stats[reward] += 1
