@@ -11,7 +11,7 @@ This project requires the following dependencies:
 - matplotlib=2.0.0
 - pandas=0.18.1
 
-which are specified in [environment.yml](../master/environment.yml)
+which are specified in [environment.yml](../master/environment.yml).
 
 ## Create environment
 ```bash
