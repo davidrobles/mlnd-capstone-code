@@ -13,7 +13,7 @@ class Greedy(Policy):
 
     def get_action(self, state):
         if state.is_over():
-            raise ValueError('fuck this shit')
+            raise ValueError('No actions available when the game is over.')
         actions = self.action_space(state)
         if not actions:
             raise ValueError('Must have at least one available action.')
