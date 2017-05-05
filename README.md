@@ -1,22 +1,17 @@
 # Capstone Project Code - Udacity ML Nanodegree
 
-This repo contains the code for the final project of the [Udacity Machine Learning
-Nanodegree](https://www.udacity.com/course/machine-learning-engineer-nanodegree--nd009). The aim of
-this project is to use [reinforcement
-learning](https://en.wikipedia.org/wiki/Reinforcement_learning) with [deep
-learning](https://en.wikipedia.org/wiki/Deep_learning) to learn value functions that can be used by
-an agent to play the games of [Tic-Tac-Toe](https://en.wikipedia.org/wiki/Tic-tac-toe) and [Connect
-4](https://en.wikipedia.org/wiki/Connect_Four) by playing games against itself.
+This repo contains the code for the capstone project of the [Udacity Machine Learning Nanodegree](https://www.udacity.com/course/machine-learning-engineer-nanodegree--nd009). The aim of this project is to learn
+value functions to play board games using [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) with [deep learning](https://en.wikipedia.org/wiki/Deep_learning).
 
 This project requires the following dependencies:
 
 - python=2.7
-- ipython
-- scikit-learn=0.18
 - keras=2.0.2
-- numpy
+- numpy=1.11
 - matplotlib=2.0.0
-- pandas
+- pandas=0.18.1
+
+which are specified in [environment.yml](../master/environment.yml)
 
 ## Create environment
 ```bash
@@ -28,8 +23,8 @@ conda env create -f environment.yml
 source activate capstone
 ```
 
-## Run an example
+## Run an experiment
 
 ```bash
-make file=experiments/tictactoe_count_positions.py run
+make file=experiments/01_tic_ql_tab_simple.py run
 ```
