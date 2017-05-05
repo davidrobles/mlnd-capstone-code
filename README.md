@@ -15,17 +15,21 @@ This project requires the following dependencies:
 
 which are specified in [environment.yml](../master/environment.yml).
 
-## Create environment
+Using [conda](https://conda.io/docs/) we can have this project running in three steps:
+
+### 1. Create a conda environment
 ```bash
 conda env create -f environment.yml
 ```
 
-## Activate environment
+### 2. Activate environment
 ```bash
 source activate capstone
 ```
 
-## Run an experiment
+### 3. Run an experiment
+
+Experiments are located in [experiments/](experiments/).
 
 ```bash
 make file=experiments/01_tic_ql_tab_simple.py run
