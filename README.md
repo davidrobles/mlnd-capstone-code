@@ -3,6 +3,8 @@
 This repo contains the code for the capstone project of the [Udacity Machine Learning Nanodegree](https://www.udacity.com/course/machine-learning-engineer-nanodegree--nd009). The aim of this project is to learn
 value functions to play board games using [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) with [deep learning](https://en.wikipedia.org/wiki/Deep_learning).
 
+You can find the proposal for this project in [https://github.com/davidrobles/mlnd-capstone-report](https://github.com/davidrobles/mlnd-capstone-report).
+
 This project requires the following dependencies:
 
 - python=2.7
